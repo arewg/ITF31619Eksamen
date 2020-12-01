@@ -16,7 +16,7 @@ const Header = () => {
     const headerTitle = useContext(TitleContext);
     
     return (
-    <Title>{headerTitle.state}</Title>
+    <Title>{headerTitle.state ? headerTitle.state : "Velkommen til FG Rørleggerservice AS"}</Title>
     )
 };
 
