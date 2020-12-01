@@ -10,6 +10,8 @@ const Title = styled.h1`
     align-items: center;
     justify-content: center;
     background-color: #969696;
+    font-weight: bold;
+  font-size:25px;
 `;
 
 const Header = () => {

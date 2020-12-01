@@ -20,6 +20,7 @@ const NavMenu = styled.ul`
 const NavMenuItem = styled.li`
   padding: 0 20px;
 
+
   &:first-child {
     padding-left: 0;
   }
