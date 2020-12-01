@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useContext} from 'react';
 import styled from 'styled-components';
+import { TitleContext } from '../contexts/TitleProvider';
 
 const Title = styled.h1`
     width: 100%;
@@ -11,10 +12,12 @@ const Title = styled.h1`
     background-color: #969696;
 `;
 
-const Header = () => (
-
-    <Title>VELKOMMEN TIL FG RØRLEGGERSERVICE</Title>
-
-)
+const Header = () => {
+    const headerTitle = useContext(TitleContext);
+    
+    return (
+    <Title>{headerTitle.state}</Title>
+    )
+};
 
 export default Header;
