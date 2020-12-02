@@ -16,7 +16,7 @@ import  { TitleContext } from '../contexts/TitleProvider.jsx';
     `;
     
     const HomeCard = styled.article`
-        background-color: #aaaaaa;
+        background-color: #cecece;
         padding-top: 80px;
         padding-bottom: 80px;
         display: flex;
@@ -24,7 +24,7 @@ import  { TitleContext } from '../contexts/TitleProvider.jsx';
         justify-content: center;
         font-weight: bold;
         font-size:25px;
-  
+        cursor: pointer;
         &:nth-child(3){
             grid-area: 2 / 1 / 3 / 3;
         }

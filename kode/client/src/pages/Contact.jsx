@@ -11,7 +11,7 @@ import  { TitleContext } from '../contexts/TitleProvider.jsx';
     `;
 
 
-const Home = () => {
+const Contact = () => {
     const { updateState } = useContext(TitleContext);
     const history = useHistory();
     
@@ -26,4 +26,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Contact;

@@ -4,14 +4,14 @@ import { TitleContext } from '../contexts/TitleProvider';
 
 const Title = styled.h1`
     width: 100%;
-    padding-top: 80px;
-    padding-bottom: 80px;
+    padding-top: 110px;
+    padding-bottom: 110px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #969696;
+    background-color: #ebebeb;
     font-weight: bold;
-  font-size:25px;
+    font-size: 45px;
 `;
 
 const Header = () => {
