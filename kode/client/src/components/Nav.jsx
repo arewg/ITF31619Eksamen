@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { TitleContext } from '../contexts/TitleProvider.jsx'
+
 
 const StyledNav = styled.nav`
   width: 100%;
@@ -24,8 +26,8 @@ const NavMenuItem = styled.li`
   }
 
   &:last-child {
-        
-        background-color: blue;
+    background-color: blue;
+       
   }
 
   & > a {
@@ -55,25 +57,33 @@ const NavMenuItem = styled.li`
   `;
 
 
-const Nav = () => (
+const Nav = () => {
+
+    const { updateState } = useContext(TitleContext);
+
+    const updateTitle = (title) => {
+        updateState(title);
+    } 
+
+    return(
     <StyledNav>
         <NavMenu>
-            <NavMenuItem>
-                <NavLink exact to="/" activeClassName="active">
+            <NavMenuItem onClick={() => updateTitle("Velkommen til FG Rørleggerservice AS")}>
+                <NavLink exact to="/" activeClassName="active" >
                     Hjem
                 </NavLink>
             </NavMenuItem>
-            <NavMenuItem>
-                <NavLink exact to="/kontorer" activeClassName="active">
+            <NavMenuItem onClick={() => updateTitle("Våre kontorer")}>
+                <NavLink exact to="/kontorer" activeClassName="active" >
                     Kontorer
                 </NavLink>
             </NavMenuItem>
-            <NavMenuItem>
+            <NavMenuItem onClick={() => updateTitle("Fagartikler")}>
                 <NavLink exact to="/fagartikler" activeClassName="active">
                     Fagartikler
                 </NavLink>
             </NavMenuItem>
-            <NavMenuItem>
+            <NavMenuItem onClick={() => updateTitle("Kontakt oss")}>
                 <NavLink exact to="/kontakt" activeClassName="active">
                     Kontakt
                 </NavLink>
@@ -85,6 +95,7 @@ const Nav = () => (
             </NavMenuItem>
         </NavMenu>
   </StyledNav>
-);
+    )
+};
 
 export default Nav;

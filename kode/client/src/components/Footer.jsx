@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const FooterBar = styled.text`
+const FooterBar = styled.p`
     width: 100%;
     padding-top: 10px;
     padding-bottom: 10px;
