@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { TitleContext } from '../contexts/TitleProvider.jsx'
 
+
 const StyledNav = styled.nav`
   width: 100%;
   display: flex;
@@ -25,8 +26,8 @@ const NavMenuItem = styled.li`
   }
 
   &:last-child {
-        
-        background-color: blue;
+    background-color: blue;
+       
   }
 
   & > a {
