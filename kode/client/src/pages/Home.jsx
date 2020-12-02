@@ -1,5 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import  { TitleContext } from '../contexts/TitleProvider.jsx';
+
 
     const HomeSection = styled.section`
         display: grid;
@@ -18,6 +22,8 @@ import styled from 'styled-components';
         display: flex;
         align-items: center;
         justify-content: center;
+        font-weight: bold;
+        font-size:25px;
   
         &:nth-child(3){
             grid-area: 2 / 1 / 3 / 3;
@@ -25,14 +31,21 @@ import styled from 'styled-components';
     `;
 
 
-const Home = () => (
+const Home = () => {
+    const { updateState } = useContext(TitleContext);
+    const history = useHistory();
+    
+    const handleClick = (path) => {
+        history.push(path)
 
+    }
+    return(
         <HomeSection>
-            <HomeCard>Kontorer</HomeCard>
-            <HomeCard>Kontakt</HomeCard> 
-            <HomeCard>Se våre fagartikler om oppussing av bad</HomeCard> 
+            <HomeCard onClick={() => {handleClick("/kontorer"); updateState("Våre kontorer");}}>Kontorer</HomeCard>
+            <HomeCard onClick={() => {handleClick("/kontakt"); updateState("Kontakt oss");}}>Kontakt</HomeCard> 
+            <HomeCard onClick={() => {handleClick("/fagartikler"); updateState("Fagartikler");}}>Se våre fagartikler om oppussing av bad</HomeCard> 
         </HomeSection>
-        
-);
+    );
+};
 
 export default Home;

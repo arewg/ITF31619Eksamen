@@ -1,62 +1,83 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import OfficeData from './OfficeData';
+import OfficeGrid from '../components/OfficeGrid.jsx'
+import OfficeList from '../components/OfficeList.jsx'
+import Icon from '@material-ui/core/Icon';
 
 
+const FilterButtonDiv = styled.div`
+    width: 100%;
+    display: flex;
+    align-content: center;
+    flex-direction: row-reverse;
+    margin-bottom: 20px;
+`;
 
+const DropdownFilter = styled.select`
+    background-color: #999999;
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 10px 12px;
+    text-decoration: none;
+    cursor: pointer;
+`;
+
+const GridOrList = styled.span`
+    width: 40px;
+    margin-left: 20px;
+    margin-top: 12px;
+`;
 
 const Offices = () => {
-        const [offices, setOffices] = useState([]);
-        const [location, setLocation] = useState();
-        console.log("inni offices");
+        const [offices, setOffices] = useState(OfficeData);
+        const [filter, setFilter] = useState(filter ? filter : OfficeData);
+        const [gridOrView, setGridOrView] = useState();
         
-        return (<section>
-                    {offices && offices.map((office) => (
-                        <p key={office.navn}>
-                            <p>{office.navn}</p>
-                            <p>{office.adresse}</p>
-                            <p>{office.telefonnummer}</p>
-                            <p>{office.epost}</p>
-                        </p>
-                ))}
+        const handleFilter = (e) => {
+            if(e.target.value === "0"){
+                setFilter(offices);
+                return;
+            }
+            const filteredOffices = offices.filter((office) => office.kategori === e.target.value);
+            setFilter(filteredOffices);
+        }
 
-        </section>);
+        const switchMethod = (value) => {
+            console.log()
+            setGridOrView(value)
+        }
+
+        return (
+        <section>
+            <FilterButtonDiv>
+                <GridOrList onClick={() => switchMethod("2")}><Icon>reorder</Icon></GridOrList>
+                <GridOrList onClick={() => switchMethod("1")}><Icon>view_module</Icon></GridOrList>
+                <DropdownFilter id="selectFilter" onChange={handleFilter}>
+                    <option value="0">Filter</option>
+                    <option value="1">Fredrikstad</option>
+                    <option value="2">Sarpsborg</option>
+                    <option value="3">Moss</option>
+                    <option value="4">Oslo</option>
+            </DropdownFilter>
+            </FilterButtonDiv>
+                {(() => {
+                   switch (gridOrView) {
+                    case "1":
+                        return<OfficeGrid list={filter} />;
+                    case "2":
+                        return<OfficeList list={filter} />;
+                    default:
+                        return<OfficeGrid list={filter} />;
+                } 
+                })()}
+                <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+        </section>
+        
+        );
 };
 
 export default Offices;
 
-// const createOffices = async () => {
-//     await loop();
-    
-// };
 
-// const loop = () => {
-// for(let i = 0; i < 23; i++){   
-//     if( i <= 8 ) {
-//         setLocation("Fredrikstad");
-
-//     }
-//     else if( i >= 9 && i <= 13 ) {
-//         setLocation("Sarpsborg");
-        
-//     } 
-//     else if( i >= 14 && i <= 18 ) {
-//         setLocation("Moss");
-        
-//     } 
-//     else {
-//         setLocation("Oslo");
-        
-//     }
-    
-//     const officeData = {
-//         id: i,
-//         navn: "Rørlegger " + i,
-//         adresse: "Rørleggerveien " + i,
-//         telefonnummer: "69 99 00 00",
-//         epost: location + i + "@epost.no" 
-//     }
-
-//     setOffices([officeData, ...offices])
-   
-// }
-// };
