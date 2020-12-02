@@ -40,7 +40,7 @@ const OfficeGrid = ({ list }) => {
    <Grid>
        {list.map((listeobjekter) => (
         
-         <GridCard key={listeobjekter.id} value={listeobjekter.id} onClick={()=> {handleClick(`${listeobjekter.id}`); updateSingleOffice(listeobjekter.epost); updateState(`Kontor ${listeobjekter.navn}`)}}>
+         <GridCard key={listeobjekter.id} value={listeobjekter.id} onClick={()=> {handleClick(`${listeobjekter.id}`); updateSingleOffice(listeobjekter.epost); updateState(`${listeobjekter.navn}`)}}>
              <CardItem>{listeobjekter.navn}</CardItem>
              <CardItem>{listeobjekter.adresse}</CardItem>
              <CardItem>{listeobjekter.telefon}</CardItem>

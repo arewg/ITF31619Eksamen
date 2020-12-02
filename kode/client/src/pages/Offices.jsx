@@ -3,13 +3,37 @@ import styled from 'styled-components';
 import OfficeData from './OfficeData';
 import OfficeGrid from '../components/OfficeGrid.jsx'
 import OfficeList from '../components/OfficeList.jsx'
-import { SingleOfficeContext } from '../contexts/SingleOfficeProvider.jsx';
-import { useContext } from 'react';
+import Icon from '@material-ui/core/Icon';
+
+
+const FilterButtonDiv = styled.div`
+    width: 100%;
+    display: flex;
+    align-content: center;
+    flex-direction: row-reverse;
+    margin-bottom: 20px;
+`;
+
+const DropdownFilter = styled.select`
+    background-color: #999999;
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 10px 12px;
+    text-decoration: none;
+    cursor: pointer;
+`;
+
+const GridOrList = styled.span`
+    width: 40px;
+    margin-left: 20px;
+    margin-top: 12px;
+`;
 
 const Offices = () => {
         const [offices, setOffices] = useState(OfficeData);
         const [filter, setFilter] = useState(filter ? filter : OfficeData);
-        const [gridOrView, setGridOrView] = useState("1");
+        const [gridOrView, setGridOrView] = useState();
         
         const handleFilter = (e) => {
             if(e.target.value === "0"){
@@ -20,23 +44,24 @@ const Offices = () => {
             setFilter(filteredOffices);
         }
 
-        const switchMethod = (view) => {
-            setGridOrView(view.target.value)
+        const switchMethod = (value) => {
+            console.log()
+            setGridOrView(value)
         }
 
         return (
         <section>
-            <select id="selectFilter" onChange={handleFilter}>
-                <option value="0">Filter</option>
-                <option value="1">Fredrikstad</option>
-                <option value="2">Sarpsborg</option>
-                <option value="3">Moss</option>
-                <option value="4">Oslo</option>
-            </select>
-            <select id="selectView" onChange={switchMethod}>
-                <option value="1" >Grid</option>
-                <option value="2">List</option>
-            </select>
+            <FilterButtonDiv>
+                <GridOrList onClick={() => switchMethod("2")}><Icon>reorder</Icon></GridOrList>
+                <GridOrList onClick={() => switchMethod("1")}><Icon>view_module</Icon></GridOrList>
+                <DropdownFilter id="selectFilter" onChange={handleFilter}>
+                    <option value="0">Filter</option>
+                    <option value="1">Fredrikstad</option>
+                    <option value="2">Sarpsborg</option>
+                    <option value="3">Moss</option>
+                    <option value="4">Oslo</option>
+            </DropdownFilter>
+            </FilterButtonDiv>
                 {(() => {
                    switch (gridOrView) {
                     case "1":
@@ -47,7 +72,9 @@ const Offices = () => {
                         return<OfficeGrid list={filter} />;
                 } 
                 })()}
+                <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
         </section>
+        
         );
 };
 

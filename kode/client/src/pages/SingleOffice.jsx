@@ -7,12 +7,12 @@ import EmployeeData from './EmployeeData.jsx';
 const Title = styled.h1`
 font-weight: bold;
 font-size: 35px;
-margin-top: 50px;
 `;
 
 const Text = styled.p`
 width: 60%;
 min-width: 300px;
+margin-bottom: 50px;
 `;
 
 const Grid = styled.div`
@@ -40,6 +40,15 @@ height: 160px;
 background-color:#c7c7c7;
 `;
 
+const PhoneBox = styled.div`
+width: 100%;
+background-color: #cecece;
+height: 220px;
+display: flex;
+align-items: center;
+    justify-content: center;
+`;
+
 const SingleOffice = () => {
     const [employees, setEmployees] = useState(EmployeeData);
     const { state } = useContext(TitleContext);
@@ -63,6 +72,7 @@ const SingleOffice = () => {
             </GridCard>
         ))}
     </Grid>
+    <PhoneBox><Title>Kontakt oss på 69 99 00 00</Title></PhoneBox>
 </>
 
     );

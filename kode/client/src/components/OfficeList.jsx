@@ -38,7 +38,7 @@ const OfficeList = ({ list }) => {
    <List>
        {list.map((listeobjekter) => (
         
-        <ListItem key={listeobjekter.id} onClick={()=> {handleClick(`${listeobjekter.id}`); updateState(`Kontor ${listeobjekter.navn}`)}}>
+        <ListItem key={listeobjekter.id} onClick={()=> {handleClick(`${listeobjekter.id}`); updateState(`${listeobjekter.navn}`)}}>
              <StyledListItem>{listeobjekter.navn}</StyledListItem>
              <StyledListItem>{listeobjekter.adresse}</StyledListItem>
              <StyledListItem>{listeobjekter.telefon}</StyledListItem>

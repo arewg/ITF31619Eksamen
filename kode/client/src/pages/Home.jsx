@@ -42,7 +42,7 @@ const Home = () => {
     return(
         <HomeSection>
             <HomeCard onClick={() => {handleClick("/kontorer"); updateState("Våre kontorer");}}>Kontorer</HomeCard>
-            <HomeCard>Kontakt</HomeCard> 
+            <HomeCard onClick={() => {handleClick("/kontakt"); updateState("Kontakt oss");}}>Kontakt</HomeCard> 
             <HomeCard onClick={() => {handleClick("/fagartikler"); updateState("Fagartikler");}}>Se våre fagartikler om oppussing av bad</HomeCard> 
         </HomeSection>
     );
