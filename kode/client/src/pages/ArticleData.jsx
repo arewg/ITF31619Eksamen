@@ -1,6 +1,7 @@
 const ArticleData = () => [
 
     {
+        id: 1,
         tittel: "Artikkeltittel1",
         kategori: "Kategori",
         ingress: "Regjeringen anbefaler å unngå unødvendige reiser både innenlands og utenlands. Likevel sier de at reiser kan anses som nødvendig",
@@ -8,7 +9,8 @@ const ArticleData = () => [
         forfatter: "Harald Haraldsen",
         dato: "24.04.02"
     },
-    {
+    {   
+        id: 2,
         tittel: "Artikkeltittel2",
         kategori: "Kategori",
         ingress: "Regjeringen anbefaler å unngå unødvendige reiser både innenlands og utenlands. Likevel sier de at reiser kan anses som nødvendig",
@@ -17,6 +19,7 @@ const ArticleData = () => [
         dato: "24.04.02"
     },
     {
+        id: 3,
         tittel: "Artikkeltittel3",
         kategori: "Kategori",
         ingress: "Regjeringen anbefaler å unngå unødvendige reiser både innenlands og utenlands. Likevel sier de at reiser kan anses som nødvendig",
@@ -25,6 +28,7 @@ const ArticleData = () => [
         dato: "24.04.02"
     },
     {
+        id: 4,
         tittel: "Artikkeltittel4",
         kategori: "Kategori",
         ingress: "Regjeringen anbefaler å unngå unødvendige reiser både innenlands og utenlands. Likevel sier de at reiser kan anses som nødvendig",

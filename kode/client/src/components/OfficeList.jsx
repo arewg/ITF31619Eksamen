@@ -12,6 +12,12 @@ const List = styled.ul`
 
 const ListItem = styled.li`
 display:flex;
+margin-bottom: 8px;
+&:hover{
+    transform: scale(1.01);
+    cursor: pointer;
+    background-color:#e0e0e0;
+}
 `; 
 
 const StyledListItem = styled.a`

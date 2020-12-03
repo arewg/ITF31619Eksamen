@@ -54,6 +54,12 @@ import ArticleData from './ArticleData.jsx'
         grid-template-rows: 200px;
         grid-column-gap: 0px;
         grid-row-gap: 0px;
+        cursor: pointer;
+        &:hover{
+            transform: scale(1.01);
+            border: 0.3px solid #cecece;
+            box-shadow: 0px 2px 3px #cecece;
+        }
     `;
 
     const TextBox = styled.div`
@@ -105,10 +111,10 @@ const ArticleView = () => {
     const [articles, setArticles] = useState(ArticleData)
     const { updateState } = useContext(TitleContext);
     const history = useHistory();
-    
-    const handleClick = (path) => {
-        history.push(path)
 
+    
+    const handleClick = (id) => {
+        history.push("/fagartikler/"+id)
     }
     return(
         <ArticleWrapper>
@@ -118,7 +124,7 @@ const ArticleView = () => {
                 <Buttons>Søk</Buttons>
             </ButtonBar>
             {articles.map((article) => (  
-            <ArticleBox>
+            <ArticleBox onClick={() => {handleClick(article.id); updateState(article.tittel)}}>
                 <ArticleImage></ArticleImage>
                 
                     <TextBox>

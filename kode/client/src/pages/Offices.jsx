@@ -22,6 +22,7 @@ const DropdownFilter = styled.select`
     padding: 10px 12px;
     text-decoration: none;
     cursor: pointer;
+    
 `;
 
 const GridOrList = styled.span`
