@@ -21,13 +21,12 @@ const NavMenu = styled.ul`
 const NavMenuItem = styled.li`
   padding: 0 20px;
 
-
   &:first-child {
     padding-left: 0;
   }
 
   &:last-child {
-    background-color: blue;
+    background-color: #127275;
        
   }
 
@@ -41,8 +40,8 @@ const NavMenuItem = styled.li`
     text-decoration: none;
 
     &.active {
-      color: #007b5f;
-      border-bottom: 4px solid #007b5f;
+      color: #127275;
+      border-bottom: 4px solid #127275;
     }
   }
 `;
