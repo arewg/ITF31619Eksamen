@@ -48,6 +48,45 @@ align-items: center;
     justify-content: center;
 `;
 
+const DivAuthorAndDate = styled.div `
+display:flex;
+
+`
+
+const ContentsArticle = styled.div `
+
+`
+
+const DeleteButton = styled.button `
+background-color: red;
+margin-top:10px;
+margin-right: 10px;
+padding: 5px 15px 5px 15px;
+align-self: flex-end;
+font-size: 20px;
+color: white;
+border-radius: 8px;
+&:hover{
+    transform: scale(1.02);
+    background-color: #b8b8b8
+}
+`
+
+const EditButton = styled.button `
+background-color: green;
+margin-top:10px;
+margin-right: 10px;
+padding: 5px 15px 5px 15px;
+align-self: flex-end;
+font-size: 20px;
+color:white;
+border-radius: 8px;
+&:hover{
+    transform: scale(1.02);
+    background-color: #b8b8b8
+}
+`
+
 const SingleArticle = () => {
     const [article, setArticle] = useState(article);
     const { state } = useContext(TitleContext);
@@ -55,13 +94,16 @@ const SingleArticle = () => {
     return (
 
 <>
-    <Title>Velkommen til {state}</Title>
-    <Text>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-    ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-    dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
-    amet
-    </Text>
-    <Title>Våre Ansatte</Title>
+    <ContentsArticle>
+        <DivAuthorAndDate>
+            <Text>Av: Forfatternavn</Text>
+            <Text>Dato: </Text>
+        </DivAuthorAndDate>
+        <Text>Innhold kommer her</Text>
+        <Text>Kategorinavn</Text>
+        <DeleteButton>Slett</DeleteButton>
+        <EditButton>Rediger</EditButton>
+    </ContentsArticle>
     <Grid>
         {article && article.map((article) => (
             <GridCard>
@@ -71,7 +113,6 @@ const SingleArticle = () => {
             </GridCard>
         ))}
     </Grid>
-    <PhoneBox><Title>Kontakt oss på 69 99 00 00</Title></PhoneBox>
 </>
 
     );
