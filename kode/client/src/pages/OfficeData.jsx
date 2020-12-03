@@ -132,7 +132,72 @@ const OfficeData = () => [
         epost: "moss15@epost.no",
         kategori: "3"
 
-    }
+    },
+    {
+        id: 16,
+        navn: "Rørlegger 16",
+        adresse: "Rørleggergata 16",
+        telefon: "69 99 00 00",
+        epost: "moss16@epost.no",
+        kategori: "3"
+
+    },
+    {
+        id: 17,
+        navn: "Rørlegger 17",
+        adresse: "Rørleggergata 17",
+        telefon: "69 99 00 00",
+        epost: "moss17@epost.no",
+        kategori: "3"
+
+    },
+    {
+        id: 18,
+        navn: "Rørlegger 18",
+        adresse: "Rørleggergata 18",
+        telefon: "69 99 00 00",
+        epost: "oslo18@epost.no",
+        kategori: "4"
+
+    },
+    {
+        id: 19,
+        navn: "Rørlegger 19",
+        adresse: "Rørleggergata 19",
+        telefon: "69 99 00 00",
+        epost: "oslo19@epost.no",
+        kategori: "4"
+
+    },
+    {
+        id: 20,
+        navn: "Rørlegger 20",
+        adresse: "Rørleggergata 20",
+        telefon: "69 99 00 00",
+        epost: "oslo20@epost.no",
+        kategori: "4"
+
+    },
+    {
+        id: 21,
+        navn: "Rørlegger 21",
+        adresse: "Rørleggergata 21",
+        telefon: "69 99 00 00",
+        epost: "oslo21@epost.no",
+        kategori: "4"
+
+    },
+    {
+        id: 22,
+        navn: "Rørlegger 21",
+        adresse: "Rørleggergata 22",
+        telefon: "69 99 00 00",
+        epost: "oslo22@epost.no",
+        kategori: "4"
+
+    },
+
+    
 ];
 
 export default OfficeData;
