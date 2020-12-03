@@ -1,10 +1,13 @@
 import { articleService } from '../services/index.js';
 import catchAsyncErrors from '../middleware/catchAsync.js';
 import ErrorHandler from '../utils/errorHandler.js';
-//import Article from '../models/article.js';
+import Article from '../models/article.js';
+
+/*
+    Metoden her er inspirert av egne obligatoriske oppgaver og forelesers leksjon 11
+*/
 
 export const get = async (req, res, next) => {
-
     const article = await articleService.getArticleById(req.params.id);
     if(!article) {
         return res.status(404).json({error: 'Article not found'});
@@ -12,6 +15,11 @@ export const get = async (req, res, next) => {
 
     res.status(200).json(article);
 };
+
+export const list = async (req, res, next) => {
+        const result = await articleService.listArticles();
+        res.status(200).json(result)
+    }
 
 export const create = async (req, res, next) => {
     try{
@@ -22,13 +30,13 @@ export const create = async (req, res, next) => {
     }
 };
 
-export const removeArticle = catchAsyncErrors(async (req, res, next) => {
+export const remove = catchAsyncErrors(async (req, res, next) => {
     let article = await articleService.getArticleById(req.params.id);
     if(!article) {
         return next(
             new ErrorHandler(`Finner ikke artikkel med ID: ${req.params.id} i remove i controllers/article.js`)
         );
     }
-    article = await pollService.removeArticle(req.params.id);
+    article = await articleService.removeArticle(req.params.id);
     res.status(204).json({})
 })

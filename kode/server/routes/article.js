@@ -4,9 +4,9 @@ import { articleController } from '../controllers/index.js'
 const router = express.Router();
 
 router.get('/:id', articleController.get);
-//router.get('/', pollController.list);
+router.get('/', articleController.list);
 router.post('/', articleController.create);
 // router.put('/:id', pollController.update);
-router.delete('/:id', articleController.removeArticle);
+router.delete('/:id', articleController.remove);
 
 export default router;

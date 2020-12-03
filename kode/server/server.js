@@ -27,7 +27,7 @@ app.use(cors({
 
   app.use(errorMiddleware);
 
-  connectDatabase;
+  connectDatabase();
 
   const server = app.listen(
       PORT,
