@@ -14,6 +14,11 @@ grid-row-gap: 40px;
 
 const GridCard = styled.div`
 border: 1px solid black;
+&:hover{
+    transform: scale(1.02);
+    cursor: pointer;
+    background-color:#e0e0e0;
+}
 `; 
 
 const CardItem = styled.ul`

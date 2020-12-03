@@ -15,6 +15,8 @@ float: center;
 
 const Logo = styled.h1`
     align-self: center;
+    font-weight: bold;
+    font-size: 25px;
     padding-left: 20px;
     //fjerner logoen når skjermen er mindre enn 800px
     @media screen and (max-width: 800px) {
