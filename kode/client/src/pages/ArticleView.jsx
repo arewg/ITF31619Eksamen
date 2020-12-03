@@ -114,7 +114,7 @@ const ArticleView = () => {
 
     
     const handleClick = (id) => {
-        history.push("/fagartikler/"+id)
+        history.push("/fagartikler2/"+id)
     }
     return(
         <ArticleWrapper>

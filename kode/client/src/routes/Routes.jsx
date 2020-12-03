@@ -38,7 +38,7 @@ const Routes = () => (
             <Route exact path="/fagartikler/nyartikkel">
                 <NewArticle />
             </Route>
-            <Route exact path="/fagartikler/*">
+            <Route exact path="/fagartikler2/*">
                 <SingleArticle />
             </Route>
             <Route path="*">
