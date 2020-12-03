@@ -37,6 +37,7 @@ position: absolute;
         padding: 5px 15px 5px 15px;
         align-self: flex-end;
         font-size: 25px;
+        font-weight: bold;
         border-radius: 8px;
         border: 1px solid black;
         &:hover{
@@ -49,9 +50,16 @@ position: absolute;
     width: 100%-20px;
     margin-top: 20px;
     margin-left: 35px;
+    margin-bottom: 10px;
     font-weight: bold;
     font-size:30px;
 `;
+
+const DivButtonAndError = styled.div `
+margin-top: 20px;
+display: flex;
+align-items: center;
+`
 
 const CreateCategoryButton = styled.button`
         margin-bottom: 15px;
@@ -109,12 +117,14 @@ const AddCategoryModal = ({ modal, close }) => {
     return (   
 modal ? (
     <Modal>
-        <CloseButton onClick={() => {setNewCategory(""); close()}}>Lukk Modal</CloseButton>
+        <CloseButton onClick={() => {setNewCategory(""); close()}}>X</CloseButton>
         <Label>Skriv inn ny kategori</Label>
         <Input onChange={handleNewCategory}></Input>
         <div>
-        <CreateCategoryButton disabled={disableState} onClick={handleSubmit}>Opprett</CreateCategoryButton>
-        <ErrorMessage hidden={!disableState}>Feltet kan ikke være tomt</ErrorMessage>
+        <DivButtonAndError>
+            <CreateCategoryButton disabled={disableState} onClick={handleSubmit}>Opprett</CreateCategoryButton>
+            <ErrorMessage hidden={!disableState}>Feltet kan ikke være tomt</ErrorMessage>
+        </DivButtonAndError>
         </div>  
     </Modal>
 ) : (null));};
