@@ -11,6 +11,7 @@ import SingleOffice from '../pages/SingleOffice.jsx'
 import Contact from '../pages/Contact.jsx';
 import NewArticle from '../pages/NewArticle.jsx';
 import SingleArticle from '../pages/SingleArticle.jsx';
+import Login from '../pages/Login.jsx';
 
 
 
@@ -40,6 +41,9 @@ const Routes = () => (
             </Route>
             <Route exact path="/fagartikler2/*">
                 <SingleArticle />
+            </Route>
+            <Route exact path ="/loggInn">
+                <Login />
             </Route>
             <Route path="*">
                 <NoMatch />
