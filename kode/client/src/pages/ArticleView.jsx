@@ -126,13 +126,17 @@ const ArticleView = () => {
         fetchData();
       }, []);
     
-    const handleClick = (id) => {
-        history.push("/fagartikler2/"+id)
+    const handleNewArticleClick = (path) => {
+        history.replace("/fagartikler/"+path); 
+    }
+
+    const handleArticleClick= (path) => {
+        history.push("/fagartikler2/"+path);
     }
     return(
         <ArticleWrapper>
             <ButtonBar>
-                <Buttons onClick={() => {handleClick("/fagartikler/nyartikkel"); updateState("Ny artikkel");}}>Ny artikkel</Buttons>
+                <Buttons onClick={() => {handleNewArticleClick("nyartikkel"); updateState("Ny artikkel");}}>Ny artikkel</Buttons>
                 <Buttons>Filtrer</Buttons>
                 <Buttons>Søk</Buttons>
             </ButtonBar>
