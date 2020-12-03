@@ -113,18 +113,22 @@ const ArticleView = () => {
     const history = useHistory();
 
     
-    const handleClick = (id) => {
-        history.push("/fagartikler2/"+id)
+    const handleNewArticleClick = (path) => {
+        history.replace("/fagartikler/"+path); 
+    }
+
+    const handleArticleClick= (path) => {
+        history.push("/fagartikler2/"+path);
     }
     return(
         <ArticleWrapper>
             <ButtonBar>
-                <Buttons onClick={() => {handleClick("/fagartikler/nyartikkel"); updateState("Ny artikkel");}}>Ny artikkel</Buttons>
+                <Buttons onClick={() => {handleNewArticleClick("nyartikkel"); updateState("Ny artikkel");}}>Ny artikkel</Buttons>
                 <Buttons>Filtrer</Buttons>
                 <Buttons>Søk</Buttons>
             </ButtonBar>
             {articles.map((article) => (  
-            <ArticleBox onClick={() => {handleClick(article.id); updateState(article.tittel)}}>
+            <ArticleBox onClick={() => {handleArticleClick(article.id); updateState(article.tittel)}}>
                 <ArticleImage></ArticleImage>
                 
                     <TextBox>
