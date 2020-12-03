@@ -72,7 +72,7 @@ import AddCategoryModal from '../components/AddCategoryModal.jsx';
     const NewCategoryButton = styled.button`
         margin-top: 10px;
         margin-left: 5px;
-        background-color: #88ff84;
+        background-color: #127275;
         font-size: 22px;
         font-weight: bold;
         color: white;
@@ -123,13 +123,13 @@ const NewArticle = () => {
     const [disableState, setDisableState] = useState(true);
     const { updateState } = useContext(TitleContext);
     const history = useHistory();
-    const [ modal, setModal] = useState(true);
+    const [ modal, setModal] = useState(false);
     const [ titleValue, setTitleValue] = useState("");
     const [ ingressValue, setIngressValue] = useState("");
     const [ contentValue, setContentValue] = useState("");
     const [ dateValue, setDateValue] = useState("");
-    const [ categoryValue, setCategoryValue] = useState("");
-    const [ authorValue, setAuthorValue] = useState("");
+    const [ categoryValue, setCategoryValue] = useState("Generelt");
+    const [ authorValue, setAuthorValue] = useState("Lars Larsen");
 
 
 
@@ -217,8 +217,8 @@ const NewArticle = () => {
                 <Input onChange={handleDateChange}></Input>
                 <Label>Kategori</Label>
                 <CategoryBox>
-                    <Dropdown onChange={handleCategoryChange}>
-                    <option value="">Velg kategori</option>
+                    <Dropdown onChange={handleCategoryChange} value={categoryValue}>
+                    <option value="Generelt">Generelt</option>
                     <option value="Vannskade">Vannskade</option>
                     <option value="Varmtvannsbereder">Varmtvannsbereder</option>
                     <option value="Nytt kjøkken">Nytt kjøkken</option>
@@ -226,8 +226,7 @@ const NewArticle = () => {
                     <NewCategoryButton onClick={showModal}>NY</NewCategoryButton>
                 </CategoryBox>
                 <Label>Forfatter</Label>
-                <Dropdown onChange={handleAuthorChange} >
-                    <option value="">Velg forfatter</option>
+                <Dropdown onChange={handleAuthorChange} value={authorValue} >
                     <option value="Lars Larsen">Lars Larsen</option>
                     <option value="Gunn Gundersen">Gunn Gundersen</option>
                     <option value="Simen Simensen">Simen Simensen</option>

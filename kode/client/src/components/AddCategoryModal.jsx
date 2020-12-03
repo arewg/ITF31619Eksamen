@@ -69,16 +69,53 @@ const CreateCategoryButton = styled.button`
             background-color: #179397
         }
     `;
+
+const ErrorMessage = styled.h2`
+
+color: red;
+font-size: 22px;
+font-weight: bold;
+margin-left:10px;
+
+`;
 const AddCategoryModal = ({ modal, close }) => {
 
+    const [disableState, setDisableState] = useState(true);
+    const [ newCategory, setNewCategory ] = useState("");
 
-return (   
+    const handleNewCategory = (e) => {
+        setNewCategory(e.target.value);
+        disableButton();
+    }
+
+    const disableButton = () => {
+        if (newCategory === ""){
+            setDisableState(true);
+        } else {
+            setDisableState(false);
+        }
+    }
+
+    const handleSubmit= () => {
+        const data = {
+            kategori: newCategory
+        }
+
+        setNewCategory("");
+        setDisableState(true);
+        close();
+    }
+
+    return (   
 modal ? (
     <Modal>
-        <CloseButton onClick={close}>Lukk Modal</CloseButton>
+        <CloseButton onClick={() => {setNewCategory(""); close()}}>Lukk Modal</CloseButton>
         <Label>Skriv inn ny kategori</Label>
-        <Input></Input>
-        <CreateCategoryButton>Opprett</CreateCategoryButton>  
+        <Input onChange={handleNewCategory}></Input>
+        <div>
+        <CreateCategoryButton disabled={disableState} onClick={handleSubmit}>Opprett</CreateCategoryButton>
+        <ErrorMessage hidden={!disableState}>Feltet kan ikke være tomt</ErrorMessage>
+        </div>  
     </Modal>
 ) : (null));};
 
