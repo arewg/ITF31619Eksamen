@@ -110,6 +110,7 @@ import { list } from '../utils/articleService.js';
 const ArticleView = () => {
 
     const [articles, setArticles] = useState()
+    const [error, setError] = useState();
     const { updateState } = useContext(TitleContext);
     const history = useHistory();
 
@@ -131,7 +132,7 @@ const ArticleView = () => {
     }
 
     const handleArticleClick= (path) => {
-        history.push("/fagartikler2/"+path);
+        history.push("/fagartikler/"+path);
     }
     return(
         <ArticleWrapper>
@@ -141,7 +142,7 @@ const ArticleView = () => {
                 <Buttons>Søk</Buttons>
             </ButtonBar>
             {articles && articles.map((article) => (  
-            <ArticleBox key={article.id} onClick={() => {handleClick(article.id); updateState(article.title)}}>
+            <ArticleBox key={article._id} onClick={() => {handleArticleClick(article._id); updateState(article.title)}}>
                 <ArticleImage></ArticleImage>
                 
                     <TextBox>

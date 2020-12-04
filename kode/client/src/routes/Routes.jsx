@@ -35,12 +35,14 @@ const Routes = () => (
             <Route exact path="/fagartikler">
                 <ArticleView />
             </Route>
+            <Switch>
+            {/* <Route exact path="/fagartikler/:id">
+                <SingleArticle />
+            </Route> */}
             <Route exact path="/fagartikler/nyartikkel">
                 <NewArticle />
             </Route>
-            <Route exact path="/fagartikler2/*">
-                <SingleArticle />
-            </Route>
+            </Switch>
             <Route path="*">
                 <NoMatch />
             </Route>

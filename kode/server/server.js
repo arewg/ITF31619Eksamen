@@ -6,6 +6,7 @@ import 'dotenv/config.js';
 import errorMiddleware from './middleware/errors.js';
 import connectDatabase from './config/db.js';
 import article from './routes/article.js';
+import user from './routes/user.js';
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.use(cors({
   }))
 
   app.use(`${process.env.BASEURL}/fagartikler`, article);
-  //app.use(`${process.env.BASEURL}/XXXXX`, XXXXX);
+  app.use(`${process.env.BASEURL}/bruker`, user);
   //app.use(`${process.env.BASEURL}/XXXXX`, XXXXX);
   //app.use(`${process.env.BASEURL}/XXXXX`, XXXXX);
 

@@ -32,7 +32,12 @@ const ArticleSchema = new Schema(
         author: {
             type: String,
             required: true
-        }
+        },
+        user: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'User',
+            required: true,
+          },
     },
     { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true} }
 );

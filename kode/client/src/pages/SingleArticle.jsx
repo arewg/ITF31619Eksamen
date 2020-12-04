@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useContext } from 'react';
 import { TitleContext } from '../contexts/TitleProvider'
+import { get } from '../utils/articleService';
 
 const Title = styled.h1`
 font-weight: bold;
@@ -88,31 +89,37 @@ border-radius: 8px;
 `
 
 const SingleArticle = () => {
-    const [article, setArticle] = useState(article);
+    const [article, setArticle] = useState();
     const { state } = useContext(TitleContext);
+
+    useEffect(() => {
+        const fetchData = async () => {
+          const { data, error } = await get("5fc95ed317375f8398cbba52");
+          if (error) {
+            setError(error);
+          } else {
+            console.log(data);
+            setArticle(data);
+          }
+        };
+        fetchData();
+      }, []);
 
     return (
 
 <>
+    {article && 
     <ContentsArticle>
         <DivAuthorAndDate>
-            <Text>Av: Forfatternavn</Text>
-            <Text>Dato: </Text>
+    <Text>Av:{article.author}</Text>
+    <Text>Dato: {article.date}</Text>
         </DivAuthorAndDate>
-        <Text>Innhold kommer her</Text>
-        <Text>Kategorinavn</Text>
+        <Text>{article.content}</Text>
+        <Text>{article.category}</Text>
         <DeleteButton>Slett</DeleteButton>
         <EditButton>Rediger</EditButton>
     </ContentsArticle>
-    <Grid>
-        {article && article.map((article) => (
-            <GridCard>
-                <PictureBox></PictureBox>
-                <CardItem>Ansatt {article.navn}</CardItem>
-                <CardItem>{article.stilling}</CardItem> 
-            </GridCard>
-        ))}
-    </Grid>
+    }
 </>
 
     );
