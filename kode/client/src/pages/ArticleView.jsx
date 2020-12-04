@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import  { TitleContext } from '../contexts/TitleProvider.jsx';
 import ArticleData from './ArticleData.jsx'
+import { list } from '../utils/articleService.js';
 
     const ArticleWrapper = styled.div`
         width: 60%;
@@ -92,7 +93,7 @@ import ArticleData from './ArticleData.jsx'
         width: 100%-20px;
         margin: 15px 0px 0px 20px;
         font-weight: bold;
-        font-size:50px;
+        font-size:25px;
     `;
 
     const Category = styled.h2`
@@ -108,28 +109,45 @@ import ArticleData from './ArticleData.jsx'
 
 const ArticleView = () => {
 
-    const [articles, setArticles] = useState(ArticleData)
+    const [articles, setArticles] = useState()
+    const [error, setError] = useState();
     const { updateState } = useContext(TitleContext);
     const history = useHistory();
 
+    useEffect(() => {
+        const fetchData = async () => {
+          const { data, error } = await list();
+          if (error) {
+            setError(error);
+          } else {
+            console.log(data);
+            setArticles(data);
+          }
+        };
+        fetchData();
+      }, []);
     
-    const handleClick = (id) => {
-        history.push("/fagartikler2/"+id)
+    const handleNewArticleClick = (path) => {
+        history.replace("/fagartikler/"+path); 
+    }
+
+    const handleArticleClick= (path) => {
+        history.push("/fagartikler/"+path);
     }
     return(
         <ArticleWrapper>
             <ButtonBar>
-                <Buttons onClick={() => {handleClick("/fagartikler/nyartikkel"); updateState("Ny artikkel");}}>Ny artikkel</Buttons>
+                <Buttons onClick={() => {handleNewArticleClick("nyartikkel"); updateState("Ny artikkel");}}>Ny artikkel</Buttons>
                 <Buttons>Filtrer</Buttons>
                 <Buttons>Søk</Buttons>
             </ButtonBar>
-            {articles.map((article) => (  
-            <ArticleBox onClick={() => {handleClick(article.id); updateState(article.tittel)}}>
+            {articles && articles.map((article) => (  
+            <ArticleBox key={article._id} onClick={() => {handleArticleClick(article._id); updateState(article.title)}}>
                 <ArticleImage></ArticleImage>
                 
                     <TextBox>
-                        <Title>{article.tittel}</Title>
-                        <Category>{article.kategori}</Category>
+                        <Title>{article.title}</Title>
+                        <Category>{article.category}</Category>
                         <Ingress>{article.ingress}</Ingress>
                     </TextBox>
             </ArticleBox>

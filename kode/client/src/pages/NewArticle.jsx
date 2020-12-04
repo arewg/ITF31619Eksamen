@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import  { TitleContext } from '../contexts/TitleProvider.jsx';
 import AddCategoryModal from '../components/AddCategoryModal.jsx';
+import { create } from '../utils/articleService';
 
 
     const ArticleWrapper = styled.div`
@@ -181,18 +182,18 @@ const NewArticle = () => {
     const handleSubmit = () => {
         
         const newArticle = {
-            tittel: titleValue,
+            title: titleValue,
             ingress: ingressValue,
-            innhold: contentValue,
-            dato: dateValue,
-            kategori: categoryValue,
-            forfatter: authorValue,
+            content: contentValue,
+            date: dateValue,
+            category: categoryValue,
+            author: authorValue,
         };
 
         const createArticle = async () => {
-            //await create(newArticle);
+            await create(newArticle);
         }
-        //createArticle();
+        createArticle();
         alert("Fagartikkel opprettet")
 
     }
