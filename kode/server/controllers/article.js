@@ -8,6 +8,7 @@ import Article from '../models/article.js';
 */
 
 export const get = async (req, res, next) => {
+    console.log("Dette er req.params.id i get for article" + req.params.id)
     const article = await articleService.getArticleById(req.params.id);
     if(!article) {
         return res.status(404).json({error: 'Article not found'});

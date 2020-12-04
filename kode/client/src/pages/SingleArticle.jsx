@@ -1,62 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 import { useContext } from 'react';
 import { TitleContext } from '../contexts/TitleProvider'
 import { get } from '../utils/articleService';
 
-const Title = styled.h1`
-font-weight: bold;
-font-size: 35px;
+const DetailText = styled.p`
+    margin-bottom: 50px;
+    font-size: 15px;
+    font-weight: bold;
 `;
 
-const Text = styled.p`
-width: 60%;
+const ContentText = styled.p`
+width: 100%;
 min-width: 300px;
 margin-bottom: 50px;
-`;
-
-const Grid = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-  height: 700px;
-  margin-top: 40px;
-`;
-
-const GridCard = styled.div`
-flex-grow: 1;
-width: 14%;
-height: 30%;
-flex-wrap: wrap;
-`; 
-
-const CardItem = styled.ul`
-`;
-
-const PictureBox = styled.div`
-width: 160px;
-height: 160px;
-background-color:#c7c7c7;
-`;
-
-const PhoneBox = styled.div`
-width: 100%;
-background-color: #cecece;
-height: 220px;
-display: flex;
-align-items: center;
-    justify-content: center;
+font-size: 21px;
 `;
 
 const DivAuthorAndDate = styled.div `
 display:flex;
+justify-content: space-between;
 
-`
+`;
 
 const ContentsArticle = styled.div `
-
-`
+    width: 60%;
+    margin: 0 auto;
+`;
 
 const DeleteButton = styled.button `
 background-color: red;
@@ -89,12 +60,15 @@ border-radius: 8px;
 `
 
 const SingleArticle = () => {
-    const [article, setArticle] = useState();
+    const [article, setArticle] = useState({});
     const { state } = useContext(TitleContext);
+    const { id } = useParams();
+
 
     useEffect(() => {
         const fetchData = async () => {
-          const { data, error } = await get("5fc95ed317375f8398cbba52");
+          const { data, error } = await get(id);
+          console.log("Dette er id i useEffect single article " + id)
           if (error) {
             setError(error);
           } else {
@@ -111,11 +85,11 @@ const SingleArticle = () => {
     {article && 
     <ContentsArticle>
         <DivAuthorAndDate>
-    <Text>Av:{article.author}</Text>
-    <Text>Dato: {article.date}</Text>
+    <DetailText>Av: {article.author}</DetailText>
+    <DetailText>{article.date}</DetailText>
         </DivAuthorAndDate>
-        <Text>{article.content}</Text>
-        <Text>{article.category}</Text>
+        <ContentText>{article.content}</ContentText>
+        <DetailText>{article.category}</DetailText>
         <DeleteButton>Slett</DeleteButton>
         <EditButton>Rediger</EditButton>
     </ContentsArticle>
