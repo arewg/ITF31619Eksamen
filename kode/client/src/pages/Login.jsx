@@ -1,8 +1,13 @@
-import {useHistory} from 'react-router-dom';
-import styled from 'styled-components';
+// Leksjon 13
+
+// import {useHistory} from 'react-router-dom';
+// import styled from 'styled-components';
 import React, { useState } from 'react';
+import LoginForm from '../components/LoginForm';
 
+const Login = () => <LoginForm />;
 
+/*
 const LoginWrapper = styled.div`
     width: 60%;
     margin: 0 auto;
@@ -84,6 +89,6 @@ const Login = () =>  {
         </LoginWrapper>
         
     );
-};
+};*/
 
 export default Login;
