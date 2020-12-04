@@ -5,6 +5,7 @@ import MainLayout from '../layouts/MainLayout.jsx';
 import NoMatch from '../components/NoMatch.jsx';
 import Home from '../pages/Home.jsx';
 import TitleProvider from '../contexts/TitleProvider.jsx';
+import AuthProvider from '../contexts/AuthProvider.jsx';
 import ArticleView from '../pages/ArticleView.jsx';
 import Offices from '../pages/Offices.jsx';
 import SingleOffice from '../pages/SingleOffice.jsx'
@@ -18,6 +19,7 @@ import Login from '../pages/Login.jsx';
 
 const Routes = () => (
   <Router>
+      <AuthProvider>
       <TitleProvider>
         <MainLayout>
             <Switch>
@@ -51,6 +53,7 @@ const Routes = () => (
             </Switch>
         </MainLayout>
       </TitleProvider>
+      </AuthProvider>
   </Router>
   )
 export default Routes;

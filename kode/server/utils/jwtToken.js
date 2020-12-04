@@ -10,7 +10,8 @@ export const sendToken = (user, res) => {
       httpOnly: true,
       sameSite: true,
     };
-  
+   
+    //TODO: Vi kjører bare development, kanskje fjerne denne?
     if (process.env.NODE_ENV === 'production') {
       options.secure = true;
     }

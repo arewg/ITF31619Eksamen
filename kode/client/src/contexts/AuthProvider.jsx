@@ -10,6 +10,8 @@ const { Provider } = AuthContext;
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
+
+
     useEffect(() => {
       const fetchUserdata = async () => {
         console.log(user);
@@ -27,8 +29,10 @@ const AuthProvider = ({ children }) => {
       };
       fetchUserdata();
     }, [user]);
+
+
     return (
-      <Provider
+      <AuthContext.Provider
         value={{
           isLoading: loading,
           isAdmin: user?.role === 'admin',
@@ -38,7 +42,7 @@ const AuthProvider = ({ children }) => {
         }}
       >
         {children}
-      </Provider>
+      </AuthContext.Provider>
     );
   };
   

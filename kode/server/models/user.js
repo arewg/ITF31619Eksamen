@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 import argon2 from 'argon2';
+import jwt from 'jsonwebtoken';
 
 const {Schema} = mongoose;
 
@@ -21,7 +22,11 @@ const UserSchema = new Schema(
         },
         role: {
             type: String,
-            default : "admin"
+            enum : {
+                values: ['user', 'admin'],
+                message: 'Rolle ikke fylt ut',
+            },
+            default:'user',
         }
     },
     { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true} }
@@ -31,6 +36,18 @@ const UserSchema = new Schema(
         this.password = await argon2.hash(this.password);
         next();
     });
+
+    //Leksjon 12 Implementasjon video 2.
+    UserSchema.methods.getJwtToken = function () {
+        return jwt.sign({id: this._id}, process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_EXPIRES_TIME
+        })
+    }
+
+    UserSchema.methods.comparePassword = async function (password) {
+        const result = argon2.verify(this.password, password);
+        return result; 
+    }
     
     UserSchema.virtual('articles', {
         ref: 'Article',

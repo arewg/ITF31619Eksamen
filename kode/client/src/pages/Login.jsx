@@ -1,14 +1,14 @@
 // Leksjon 13
 
-// import {useHistory} from 'react-router-dom';
-// import styled from 'styled-components';
+import {useHistory} from 'react-router-dom';
+import styled from 'styled-components';
 import React, { useState } from 'react';
 import LoginForm from '../components/LoginForm';
 
 const Login = () => <LoginForm />;
 
-/*
-const LoginWrapper = styled.div`
+
+/*const LoginWrapper = styled.div`
     width: 60%;
     margin: 0 auto;
 `;
@@ -55,7 +55,7 @@ const LoginButton = styled.button`
 const Login = () =>  {
     const [emailValue, setEmailValue] = useState('');
     const [nameValue, setNameValue] = useState('');
-    const [passwordValue, setPassworValue] = useState('');
+    const [passwordValue, setPasswordValue] = useState('');
 
     const handleEmailChange = (e) => {
         setEmailValue(e.target.value);
@@ -82,9 +82,9 @@ const Login = () =>  {
             <Label>Navn</Label>
             <Input autoFocus={true} onChange={handleNameChange}></Input>
             <Label>E-post</Label>
-            <Input autoFocus={true} onChange={handleEmailChange}></Input>
+            <Input  onChange={handleEmailChange}></Input>
             <Label>Passord</Label>
-            <Input autoFocus={true} onChange={handlePasswordChange}></Input>
+            <Input  onChange={handlePasswordChange}></Input>
             <LoginButton onClick={() => { handleSubmit();}}>Logg inn</LoginButton>
         </LoginWrapper>
         

@@ -1,4 +1,4 @@
-// leksjon 13
+// leksjon 11 og 13
 
 import catchAsyncErrors from '../middleware/catchAsync.js';
 import { userService } from '../services/index.js';
@@ -13,19 +13,19 @@ export const register = catchAsyncErrors(async (req, res, next) => {
   export const login = catchAsyncErrors(async (req, res, next) => {
     const { email, password } = req.body;
     if (!email || !password) {
-      return next(new ErrorHandler('Fyll ut epost og passord', 400));
+      return next(new ErrorHandler('Epost og passord mangler', 400));
     }
   
     const user = await userService.getUserByEmail({ email }, true);
   
     if (!user) {
-      return next(new ErrorHandler('Fyll ut epost og passord', 400));
+      return next(new ErrorHandler('Epost eller passord mangler', 400));
     }
   
     const isPasswordMatched = await user.comparePassword(password);
   
     if (!isPasswordMatched) {
-      return next(new ErrorHandler('Fyll ut epost og passord', 400));
+      return next(new ErrorHandler('Epost eller passord mangler', 400));
     }
   
     sendToken(user, res);

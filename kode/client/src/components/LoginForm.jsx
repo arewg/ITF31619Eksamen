@@ -1,6 +1,6 @@
 //Leksjon 13
 
-import Recat, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Alert,
     AlertIcon,
@@ -15,12 +15,13 @@ import {
 } from '@chakra-ui/core';
 import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
-import { login } from '../utils/authService';
-import { useAuthContext } from '../contexts/AuthProvider'
+import { login } from '../utils/authService.js';
+import { useAuthContext } from '../contexts/AuthProvider.jsx'
+
 
 const LoginForm = () => {
     const [closeBtnState, setCloseBtnState] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState();
     const [success, setSuccess] = useState(false);
     const { setUser, isLoggedIn } = useAuthContext();
     const history = useHistory();
@@ -44,7 +45,7 @@ const LoginForm = () => {
       } else {
         const user = data?.user;
         const expire = JSON.parse(window.atob(data.token.split('.')[1])).exp;
-        setUser({ ...user, expire });
+        setUser({ ... user, expire });
         setSuccess(true);
         history.push('/');
       }
