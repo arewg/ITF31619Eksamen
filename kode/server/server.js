@@ -5,10 +5,11 @@ import {PORT} from './constants/index.js';
 import 'dotenv/config.js';
 import errorMiddleware from './middleware/errors.js';
 import connectDatabase from './config/db.js';
+import article from './routes/article.js';
+import user from './routes/user.js';
 
 const app = express();
 
-//Legge til production?
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
@@ -20,14 +21,14 @@ app.use(cors({
     allowedHeaders: ['Content-Type']
   }))
 
-  //app.use(`${process.env.BASEURL}/XXXXX`, XXXXX);
-  //app.use(`${process.env.BASEURL}/XXXXX`, XXXXX);
+  app.use(`${process.env.BASEURL}/fagartikler`, article);
+  app.use(`${process.env.BASEURL}/bruker`, user);
   //app.use(`${process.env.BASEURL}/XXXXX`, XXXXX);
   //app.use(`${process.env.BASEURL}/XXXXX`, XXXXX);
 
   app.use(errorMiddleware);
 
-  connectDatabase;
+  connectDatabase();
 
   const server = app.listen(
       PORT,
