@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useContext } from 'react';
 import { TitleContext } from '../contexts/TitleProvider'
 import { get } from '../utils/articleService';
+
 
 const DetailText = styled.p`
     margin-bottom: 50px;
@@ -16,6 +17,10 @@ width: 100%;
 min-width: 300px;
 margin-bottom: 50px;
 font-size: 21px;
+&::first-letter{
+    font-weight: bold;
+    font-size: 24px;
+}
 `;
 
 const DivAuthorAndDate = styled.div `
@@ -60,9 +65,14 @@ border-radius: 8px;
 `
 
 const SingleArticle = () => {
-    const [article, setArticle] = useState({});
+    const [article, setArticle] = useState();
     const { state } = useContext(TitleContext);
     const { id } = useParams();
+    const history = useHistory()
+
+    const updateArticle = () => {
+
+    }
 
 
     useEffect(() => {
@@ -79,6 +89,10 @@ const SingleArticle = () => {
         fetchData();
       }, []);
 
+      const handleEdit = (artikkel) => {
+        history.push('oppdater/'+artikkel);
+      }
+
     return (
 
 <>
@@ -91,7 +105,7 @@ const SingleArticle = () => {
         <ContentText>{article.content}</ContentText>
         <DetailText>{article.category}</DetailText>
         <DeleteButton>Slett</DeleteButton>
-        <EditButton>Rediger</EditButton>
+        <EditButton onClick={() => handleEdit(article.id)}>Rediger</EditButton>
     </ContentsArticle>
     }
 </>

@@ -10,3 +10,10 @@ export const removeArticle = async (id) => {
     const article = await Article.findById(id);
     article.remove();
 }
+
+export const updateArticle = async (id, data) =>
+  Article.findOneAndUpdate(id, data, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });

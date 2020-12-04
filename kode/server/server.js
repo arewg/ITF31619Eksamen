@@ -7,6 +7,7 @@ import errorMiddleware from './middleware/errors.js';
 import connectDatabase from './config/db.js';
 import article from './routes/article.js';
 import user from './routes/user.js';
+import category from './routes/category.js';
 
 const app = express();
 
@@ -21,9 +22,10 @@ app.use(cors({
     allowedHeaders: ['Content-Type']
   }))
 
+  app.use(`${process.env.BASEURL}/fagartikler/category`, category);
   app.use(`${process.env.BASEURL}/fagartikler`, article);
   app.use(`${process.env.BASEURL}/bruker`, user);
-  //app.use(`${process.env.BASEURL}/XXXXX`, XXXXX);
+  
   //app.use(`${process.env.BASEURL}/XXXXX`, XXXXX);
 
   app.use(errorMiddleware);

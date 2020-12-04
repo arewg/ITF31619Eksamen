@@ -11,6 +11,7 @@ import SingleOffice from '../pages/SingleOffice.jsx'
 import Contact from '../pages/Contact.jsx';
 import NewArticle from '../pages/NewArticle.jsx';
 import SingleArticle from '../pages/SingleArticle.jsx';
+import UpdateArticle from'../pages/UpdateArticle.jsx';
 
 
 
@@ -34,6 +35,9 @@ const Routes = () => (
             </Route>
             <Route exact path="/fagartikler">
                 <ArticleView />
+            </Route>
+            <Route exact path="/fagartikler/oppdater/:id">
+                <UpdateArticle />
             </Route>
             <Route exact path="/fagartikler/nyartikkel">
                 <NewArticle />
