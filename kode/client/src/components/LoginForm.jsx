@@ -16,7 +16,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
 import { login } from '../utils/authService';
-import { useAuthContext } from '../context/AuthProvider';
+import { useAuthContext } from '../contexts/AuthProvider'
 
 const LoginForm = () => {
     const [closeBtnState, setCloseBtnState] = useState(false);
