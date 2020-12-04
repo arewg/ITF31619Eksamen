@@ -48,7 +48,7 @@ const Routes = () => (
             <Route exact path="/fagartikler/:id">
                 <SingleArticle />
             </Route>
-            <Route exact path ="/loggInn">
+            <Route exact path ="/login">
                 <Login />
             </Route>
             <Route path="*">
