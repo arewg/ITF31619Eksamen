@@ -142,7 +142,7 @@ const ArticleView = () => {
                 <Buttons>Søk</Buttons>
             </ButtonBar>
             {articles && articles.map((article) => (  
-            <ArticleBox key={article._id} onClick={() => {handleArticleClick(article._id); updateState(article.title)}}>
+            <ArticleBox key={article.id} onClick={() => {handleArticleClick(article.id); updateState(article.title)}}>
                 <ArticleImage></ArticleImage>
                 
                     <TextBox>

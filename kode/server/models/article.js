@@ -23,7 +23,7 @@ const ArticleSchema = new Schema(
             max: ['10000', 'Innholdet kan ikke bestå av mer enn 10000 tegn'],
         },
         date: {
-            default: ''
+            type: String
         },
         category: {
             type: String,

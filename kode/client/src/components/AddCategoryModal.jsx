@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import categoryService from '../utils/categoryService.js';
 
 const Modal = styled.div`
 position: absolute;
@@ -90,6 +92,7 @@ const AddCategoryModal = ({ modal, close }) => {
 
     const [disableState, setDisableState] = useState(true);
     const [ newCategory, setNewCategory ] = useState("");
+    const history = useHistory();
 
     const handleNewCategory = (e) => {
         setNewCategory(e.target.value);
@@ -106,12 +109,19 @@ const AddCategoryModal = ({ modal, close }) => {
 
     const handleSubmit= () => {
         const data = {
-            kategori: newCategory
+            category: newCategory
+        };
+
+        const createCategory = async () => {
+            await categoryService.create(data);
         }
+        createCategory(data);
 
         setNewCategory("");
         setDisableState(true);
+        alert("Ny kategori opprettet");
         close();
+        
     }
 
     return (   

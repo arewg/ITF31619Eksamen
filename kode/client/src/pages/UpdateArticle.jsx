@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import  { TitleContext } from '../contexts/TitleProvider.jsx';
 import AddCategoryModal from '../components/AddCategoryModal.jsx';
-import { create } from '../utils/articleService';
-import { get } from '../utils/categoryService';
+import articleService from '../utils/articleService';
+import categoryService from '../utils/categoryService';
 
 
     const ArticleWrapper = styled.div`
@@ -97,12 +97,6 @@ import { get } from '../utils/categoryService';
             transform: scale(1.04);
             background-color: #a4adfa
         }
-        &:disabled{
-            background-color: #8f8f8f;
-            transform: scale(1);
-            cursor: none;
-            
-        }
     
     `;
 
@@ -120,31 +114,42 @@ import { get } from '../utils/categoryService';
     
     `;
 
-const NewArticle = () => {
+const UpdateArticle = () => {
 
     const [disableState, setDisableState] = useState(true);
     const { updateState } = useContext(TitleContext);
-    const [ categories, setCategories ] = useState()
+    const [ article, setArticle ] = useState();
+    const [ categories, setCategories ] = useState();
     const history = useHistory();
     const [ modal, setModal] = useState(false);
-    const [ titleValue, setTitleValue] = useState("");
-    const [ ingressValue, setIngressValue] = useState("");
-    const [ contentValue, setContentValue] = useState("");
-    const [ dateValue, setDateValue] = useState("");
-    const [ categoryValue, setCategoryValue] = useState("Generelt");
-    const [ authorValue, setAuthorValue] = useState("Lars Larsen");
+    const [ titleValue, setTitleValue] = useState();
+    const [ ingressValue, setIngressValue] = useState();
+    const [ contentValue, setContentValue] = useState();
+    const [ dateValue, setDateValue] = useState();
+    const [ categoryValue, setCategoryValue] = useState();
+    const [ authorValue, setAuthorValue] = useState();
+    const { id } = useParams();
 
     useEffect(() => {
         const fetchData = async () => {
-          const { data, error } = await get();
+          const { data, error } = await articleService.get(id);
           if (error) {
             setError(error);
           } else {
             console.log(data);
-            setCategories(data);
+            setArticle(data);
           }
         };
+        const fetchCategories = async () => {
+            const { data, error } = await categoryService.get();
+            if (error) {
+              setError(error);
+            } else {
+              setCategories(data);
+            }
+        };
         fetchData();
+        fetchCategories();
       }, []);
 
 
@@ -154,48 +159,28 @@ const NewArticle = () => {
 
     const handleTitleChange = (e) => {
         setTitleValue(e.target.value);
-        disableButton();
     }
     const handleIngressChange = (e) => {
         setIngressValue(e.target.value);
-        disableButton();
     }
     const handleContentChange = (e) => {
         setContentValue(e.target.value);
-        disableButton();
     }
     const handleDateChange = (e) => {
         setDateValue(e.target.value);
-        disableButton();
     }
     const handleCategoryChange = (e) => {
         setCategoryValue(e.target.value);
-        disableButton();
     }
     const handleAuthorChange = (e) => {
         setAuthorValue(e.target.value);
-        disableButton();
+
     }
 
-    const disableButton = () => {
-        if(
-            titleValue === "" ||
-            ingressValue === "" ||
-            contentValue === "" ||
-            dateValue === "" ||
-            categoryValue === "" ||
-            authorValue === ""
-        ){
-            setDisableState(true);
-        }
-        else {
-            setDisableState(false);
-        }
-    }
 
     const handleSubmit = () => {
         
-        const newArticle = {
+        const updatedArticle = {
             title: titleValue,
             ingress: ingressValue,
             content: contentValue,
@@ -204,11 +189,11 @@ const NewArticle = () => {
             author: authorValue,
         };
 
-        const createArticle = async () => {
-            await create(newArticle);
+        const updateArticle = async () => {
+            await articleService.update(id, updatedArticle);
         }
-        createArticle();
-        alert("Fagartikkel opprettet")
+        updateArticle();
+        alert("Fagartikkel oppdatert")
 
     }
 
@@ -220,20 +205,22 @@ const NewArticle = () => {
 
 
     return(
+      <>
+      {article &&  
         <ArticleWrapper>
             <ArticleForm>
                 <Label>Title</Label>
-                <Input autoFocus={true} onChange={handleTitleChange}></Input>
+                <Input autoFocus={true} onChange={handleTitleChange} defaultValue={article.title}></Input>
                 <Label>Ingress</Label>
-                <Input onChange={handleIngressChange}></Input>
+      <Input onChange={handleIngressChange} defaultValue={article.ingress}></Input>
                 <Label>Innhold</Label>
-                <TextArea onChange={handleContentChange}></TextArea>
+      <TextArea onChange={handleContentChange} defaultValue={article.content}></TextArea>
                 <Label>Dato</Label>
-                <Input onChange={handleDateChange}></Input>
+      <Input onChange={handleDateChange} defaultValue={article.date}></Input>
                 <Label>Kategori</Label>
                 <CategoryBox>
                     <Dropdown onChange={handleCategoryChange} value={categoryValue}>
-                    <option value="Generelt">Generelt</option>
+                    <option value={article.category}>{article.category}</option>
                     {categories && categories.map((category) => (
                         <option key={category.id} value={category.category}>{category.category}</option>
                     ))}
@@ -241,20 +228,21 @@ const NewArticle = () => {
                     <NewCategoryButton onClick={showModal}>NY</NewCategoryButton>
                 </CategoryBox>
                 <Label>Forfatter</Label>
-                <Dropdown onChange={handleAuthorChange} value={authorValue} >
+                <Dropdown onChange={handleAuthorChange} value={authorValue}>
+                    <option value={article.author}>Behold forfatter {article.author}</option>
                     <option value="Lars Larsen">Lars Larsen</option>
                     <option value="Gunn Gundersen">Gunn Gundersen</option>
                     <option value="Simen Simensen">Simen Simensen</option>
                 </Dropdown>
             </ArticleForm>
             <DisableBar>
-                <CreateArticleButton onClick={() => { handleSubmit(); handleRoute("/fagartikler"); updateState("Fagartikler")}} disabled={disableState}>CREATE</CreateArticleButton>
-                <ErrorMessage hidden={!disableState}>Vennligst fyll ut alle feltene</ErrorMessage>
+                <CreateArticleButton onClick={() => { handleSubmit(); handleRoute("/fagartikler"); updateState("Fagartikler")}}>UPDATE</CreateArticleButton>
             </DisableBar>
             <AddCategoryModal modal={modal} close={closeModal} /> 
         </ArticleWrapper>
-        
+}
+    </>
     );
 };
 
-export default NewArticle;
+export default UpdateArticle;
