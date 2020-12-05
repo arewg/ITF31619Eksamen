@@ -6,7 +6,11 @@ import jwt from 'jsonwebtoken';
 const {Schema} = mongoose;
 
 const UserSchema = new Schema(
-    {
+    {   
+        name : {
+        type: String,
+        required: [true, "Vennligst skriv inn navn"]
+    },
         email: {
             type: String,
             required: [true, "Vennligst skriv inn epost"],

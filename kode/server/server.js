@@ -29,10 +29,11 @@ app.use(cors({
 
   
  
-  app.use(`${process.env.BASEURL}/`, auth);
+
   app.use(`${process.env.BASEURL}/fagartikler/category`, category);
   app.use(`${process.env.BASEURL}/fagartikler`, article);
   app.use(`${process.env.BASEURL}/bruker`, user);
+  app.use(`${process.env.BASEURL}/`, auth);
   
   //app.use(`${process.env.BASEURL}/XXXXX`, XXXXX);
 
