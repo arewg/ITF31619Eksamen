@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import  { TitleContext } from '../contexts/TitleProvider.jsx';
-import ArticleData from './ArticleData.jsx'
+import { useAuthContext } from '../contexts/AuthProvider.jsx'
 import { list } from '../utils/articleService.js';
 
     const ArticleWrapper = styled.div`
@@ -113,6 +113,7 @@ const ArticleView = () => {
     const [error, setError] = useState();
     const { updateState } = useContext(TitleContext);
     const history = useHistory();
+    const { isLoggedIn } = useAuthContext();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -137,7 +138,7 @@ const ArticleView = () => {
     return(
         <ArticleWrapper>
             <ButtonBar>
-                <Buttons onClick={() => {handleNewArticleClick("nyartikkel"); updateState("Ny artikkel");}}>Ny artikkel</Buttons>
+                <Buttons hidden={!isLoggedIn} onClick={() => {handleNewArticleClick("nyartikkel"); updateState("Ny artikkel");}}>Ny artikkel</Buttons>
                 <Buttons>Filtrer</Buttons>
                 <Buttons>Søk</Buttons>
             </ButtonBar>
