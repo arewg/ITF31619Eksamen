@@ -4,6 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useContext } from 'react';
 import { TitleContext } from '../contexts/TitleProvider'
 import { get } from '../utils/articleService';
+import { useAuthContext } from '../contexts/AuthProvider';
 
 
 const DetailText = styled.p`
@@ -33,6 +34,11 @@ const ContentsArticle = styled.div `
     width: 60%;
     margin: 0 auto;
 `;
+
+const DivButton = styled.div `
+display: flex; 
+
+`
 
 const DeleteButton = styled.button `
 background-color: red;
@@ -93,6 +99,8 @@ const SingleArticle = () => {
         history.push('oppdater/'+artikkel);
       }
 
+      const {isLoggedIn, isAdmin} = useAuthContext();
+
     return (
 
 <>
@@ -104,8 +112,12 @@ const SingleArticle = () => {
         </DivAuthorAndDate>
         <ContentText>{article.content}</ContentText>
         <DetailText>{article.category}</DetailText>
-        <DeleteButton>Slett</DeleteButton>
-        <EditButton onClick={() => handleEdit(article.id)}>Rediger</EditButton>
+        {isLoggedIn && isAdmin && (
+        <DivButton>
+            <DeleteButton>Slett</DeleteButton>
+            <EditButton onClick={() => handleEdit(article.id)}>Rediger</EditButton>
+        </DivButton>
+        )}
     </ContentsArticle>
     }
 </>
