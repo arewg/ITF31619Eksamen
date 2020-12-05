@@ -7,6 +7,7 @@ import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
 
 
+
 const StyledHeader = styled.header`
 width: 100%;
 float: center;

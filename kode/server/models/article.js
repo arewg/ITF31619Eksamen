@@ -23,7 +23,7 @@ const ArticleSchema = new Schema(
             max: ['10000', 'Innholdet kan ikke bestå av mer enn 10000 tegn'],
         },
         date: {
-            default: ''
+            type: String
         },
         category: {
             type: String,
@@ -33,6 +33,11 @@ const ArticleSchema = new Schema(
             type: String,
             required: true
         },
+        // user: {
+        //     type: mongoose.Schema.ObjectId,
+        //     ref: 'User',
+        //     required: true,
+        //   },
     },
     { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true} }
 );

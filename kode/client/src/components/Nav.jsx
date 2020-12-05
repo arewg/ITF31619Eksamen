@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { TitleContext } from '../contexts/TitleProvider.jsx'
-
+import { useAuthContext } from '../contexts/AuthProvider.jsx'
+import { logout } from '../utils/authService'
 
 const StyledNav = styled.nav`
   width: 100%;
@@ -59,40 +60,56 @@ const NavMenuItem = styled.li`
 
 const Nav = () => {
 
+    const { isLoggedIn } = useAuthContext();
     const { updateState } = useContext(TitleContext);
 
     const updateTitle = (title) => {
         updateState(title);
-    } 
+    };
+
+    const handleLogout = () => {
+      logout();
+    }
 
     return(
     <StyledNav>
         <NavMenu>
-            <NavMenuItem onClick={() => updateTitle("Velkommen til FG Rørleggerservice AS")}>
-                <NavLink exact to="/" activeClassName="active" >
+            <NavMenuItem >
+                <NavLink exact to="/" activeClassName="active" onClick={() => updateTitle("Velkommen til FG Rørleggerservice AS")}>
                     Hjem
                 </NavLink>
             </NavMenuItem>
-            <NavMenuItem onClick={() => updateTitle("Våre kontorer")}>
-                <NavLink exact to="/kontorer" activeClassName="active" >
+            <NavMenuItem >
+                <NavLink exact to="/kontorer" activeClassName="active" onClick={() => updateTitle("Våre kontorer")}>
                     Kontorer
                 </NavLink>
             </NavMenuItem>
-            <NavMenuItem onClick={() => updateTitle("Fagartikler")}>
-                <NavLink exact to="/fagartikler" activeClassName="active">
+            <NavMenuItem >
+                <NavLink exact to="/fagartikler" activeClassName="active" onClick={() => updateTitle("Fagartikler")}>
                     Fagartikler
                 </NavLink>
             </NavMenuItem>
-            <NavMenuItem onClick={() => updateTitle("Kontakt oss")}>
-                <NavLink exact to="/kontakt" activeClassName="active">
+            <NavMenuItem >
+                <NavLink exact to="/kontakt" activeClassName="active" onClick={() => updateTitle("Kontakt oss")}>
                     Kontakt
                 </NavLink>
             </NavMenuItem>
+          {!isLoggedIn &&
             <NavMenuItem>
-                <NavLogInButton exact to="/login" activeClassName="active">
+              <NavLink exact to="/login" activeClassName="active" onClick={() => updateTitle("Logg inn")}>
+                <NavLogInButton>
                     Logg Inn
                 </NavLogInButton>
+                </NavLink>
             </NavMenuItem>
+          || isLoggedIn &&
+          <NavMenuItem >
+              <NavLink exact to="/" activeClassName="active" onClick={() => updateTitle("Velkommen til FG Rørleggerservice AS")}>
+                <NavLogInButton onClick={handleLogout}>
+                    Logg Ut
+                </NavLogInButton>
+                </NavLink>
+            </NavMenuItem>}
         </NavMenu>
   </StyledNav>
     )

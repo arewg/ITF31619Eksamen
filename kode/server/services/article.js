@@ -4,9 +4,18 @@ export const getArticleById = async (id) => Article.findById(id);
 
 export const listArticles = async () => Article.find();
 
-export const createArticle = async (data) => (await Article.create(data)).populate('user', 'email');
+//Tror kanskje denne må ha populate med email og user? Kanskje ikke
+//typ: .populate('user, 'email');
+export const createArticle = async (data) => Article.create(data);
 
 export const removeArticle = async (id) => {
     const article = await Article.findById(id);
     article.remove();
 }
+
+export const updateArticle = async (id, data) =>
+  Article.findOneAndUpdate(id, data, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });

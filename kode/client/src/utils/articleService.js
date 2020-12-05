@@ -29,9 +29,20 @@ export const create = async (data) => {
   }
 };
 
+export const update = async (id, data) => {
+  console.log("ARTIKKEL SOM SKAL OPPDATERES "+ data)
+  console.log("ID FOR ARTIKKEL" + id)
+  try{
+    return await http.put(`${API_URL}/oppdater/${id}`, data);
+  } catch (err) {
+    return err.response.data;
+  }
+}
+
 
 export default {
   create,
   list,
+  update,
   get,
 };

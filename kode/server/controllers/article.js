@@ -24,12 +24,23 @@ export const list = async (req, res, next) => {
 
 export const create = async (req, res, next) => {
     try{
+        //req.body.user = req.user.id;
         const article = await articleService.createArticle(req.body);
         res.status(201).json(article);
     } catch (error) {
         res.status(400).json({error: 'Error creating article'});
     }
 };
+
+export const update = catchAsyncErrors(async (req, res, next) => {
+
+    let articleUpdate = req.body;
+    console.log("DETTE ER ARTICLEUPDATE I UPDATE CONTROLLER ARTICLE "+ JSON.stringify(articleUpdate))
+    let article = Article.findById(req.params.id)
+
+    article = await articleService.updateArticle(req.params.id, req.body);
+    res.status(200).json(article);
+});
 
 export const remove = catchAsyncErrors(async (req, res, next) => {
     let article = await articleService.getArticleById(req.params.id);
