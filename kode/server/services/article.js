@@ -1,11 +1,11 @@
 import Article from '../models/article.js';
 
-export const getArticleById = async (id) => Article.findById(id);
+export const getArticleById = async (id) => Article.findById(id).populate('category', 'category');
 
-export const listArticles = async () => Article.find();
+export const listArticles = async () => Article.find().populate('category', 'category');
 
 //Tror kanskje denne må ha populate med email og user? Kanskje ikke
-//typ: .populate('user, 'email');
+//typ: .populate('user', 'email');
 export const createArticle = async (data) => Article.create(data);
 
 export const removeArticle = async (id) => {

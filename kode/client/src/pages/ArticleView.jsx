@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import  { TitleContext } from '../contexts/TitleProvider.jsx';
 import { useAuthContext } from '../contexts/AuthProvider.jsx'
 import { list } from '../utils/articleService.js';
+import { get } from '../utils/categoryService';
 
     const ArticleWrapper = styled.div`
         width: 60%;
@@ -44,7 +45,16 @@ import { list } from '../utils/articleService.js';
             transform: scale(1.02); 
         }
     }
-
+    `;
+    const DropdownFilter = styled.select`
+        background-color: #cfcfcf;
+        border-radius:8px;
+        display: inline-block;
+        color: white;
+        text-align: center;
+        padding: 10px 12px;
+        text-decoration: none;
+        cursor: pointer;
 
     `;
 
@@ -113,6 +123,7 @@ const ArticleView = () => {
     const [error, setError] = useState();
     const { updateState } = useContext(TitleContext);
     const history = useHistory();
+    const [ categories, setCategories ] = useState();
     const { isLoggedIn } = useAuthContext();
 
     useEffect(() => {
@@ -125,21 +136,40 @@ const ArticleView = () => {
             setArticles(data);
           }
         };
+        const fetchCategories = async () => {
+            const { data, error } = await categoryService.get();
+            if (error) {
+              setError(error);
+            } else {
+              setCategories(data);
+            }
+        };
         fetchData();
+        fetchCategories();
       }, []);
     
     const handleNewArticleClick = (path) => {
         history.replace("/fagartikler/"+path); 
-    }
+    };
 
-    const handleArticleClick= (path) => {
+    const handleArticleClick = (path) => {
         history.push("/fagartikler/"+path);
-    }
+    };
+
+    const handleFilter = () => {
+
+    };
+
     return(
         <ArticleWrapper>
             <ButtonBar>
                 <Buttons hidden={!isLoggedIn} onClick={() => {handleNewArticleClick("nyartikkel"); updateState("Ny artikkel");}}>Ny artikkel</Buttons>
-                <Buttons>Filtrer</Buttons>
+                <DropdownFilter onChange={handleFilter}>
+                    <option value="alle">Alle artikler</option>
+                    {categories && categories.map((category) => (
+                        <option key={category.id} value={category.id}>{category.category}</option>
+                    ))}
+                </DropdownFilter>
                 <Buttons>Søk</Buttons>
             </ButtonBar>
             {articles && articles.map((article) => (  
@@ -148,7 +178,7 @@ const ArticleView = () => {
                 
                     <TextBox>
                         <Title>{article.title}</Title>
-                        <Category>{article.category}</Category>
+                        <Category>{article.category.category}</Category>
                         <Ingress>{article.ingress}</Ingress>
                     </TextBox>
             </ArticleBox>

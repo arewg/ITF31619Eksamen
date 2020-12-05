@@ -86,20 +86,6 @@ const LoginForm = () => {
                 />
               </Alert>
             )}
-            <FormControl isInvalid={errors.name}>
-                <FormLabel htmlFor="name">Navn</FormLabel>
-                <Input
-                    id="name"
-                    placeholder="Navn"
-                    type="String"
-                    ref={register({
-                        required: true,
-                    })}
-                />
-                <FormErrorMessage valid={!errors.name}>
-                    Fyll ut navn
-                </FormErrorMessage>
-            </FormControl>
             <FormControl isInvalid={errors.email}>
               <FormLabel htmlFor="email">Epost</FormLabel>
               <Input

@@ -111,7 +111,7 @@ const SingleArticle = () => {
     <DetailText>{article.date}</DetailText>
         </DivAuthorAndDate>
         <ContentText>{article.content}</ContentText>
-        <DetailText>{article.category}</DetailText>
+        <DetailText>{article.category.category}</DetailText>
         {isLoggedIn && isAdmin && (
         <DivButton>
             <DeleteButton>Slett</DeleteButton>

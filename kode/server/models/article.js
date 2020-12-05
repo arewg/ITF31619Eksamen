@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import CategorySchema from './category.js';
 
 const {Schema} = mongoose;
 
@@ -26,18 +27,26 @@ const ArticleSchema = new Schema(
             type: String
         },
         category: {
-            type: String,
+            type: mongoose.Schema.ObjectId,
+            ref: 'Category',
             required: true,
         },
         author: {
             type: String,
             required: true
         },
-        // user: {
-        //     type: mongoose.Schema.ObjectId,
-        //     ref: 'User',
-        //     required: true,
-        //   },
+        user: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'User',
+            required: true,
+        },
+        secret: {
+            type: String,
+            enum: {
+                values: ['åpen', 'hemmelig']
+            },
+            default: 'åpen',
+        }
     },
     { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true} }
 );

@@ -13,6 +13,13 @@ const CategorySchema = new Schema(
     },
     { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true} }
     );
+
+    CategorySchema.virtual('articles', {
+        ref: 'Article',
+        localField: '_id',
+        foreignField: 'category',
+        justOne: false,
+    });
    
 
 const Category = mongoose.model('Category', CategorySchema);
