@@ -6,6 +6,8 @@ import  { TitleContext } from '../contexts/TitleProvider.jsx';
 import { useAuthContext } from '../contexts/AuthProvider.jsx'
 import { list, listBySearchWord, listByCategory } from '../utils/articleService.js';
 import { get } from '../utils/categoryService';
+import AllArticles from '../components/AllArticles.jsx';
+import OpenArticles from '../components/OpenArticles.jsx';
 
     const ArticleWrapper = styled.div`
         width: 60%;
@@ -236,16 +238,18 @@ const ArticleView = () => {
                 </DropdownFilter>
                 <Input placeholder=" Søk..." onChange={handleSeachByTitle}></Input>
             </ButtonBar>
-            {articles && articles.map((article) => (  
-            <ArticleBox key={article.id} onClick={() => {handleArticleClick(article.id); updateState(article.title)}}>
-                <ArticleImage></ArticleImage>
-                    <TextBox>
-                        <Title>{article.title}</Title>
-                        <Category>{article.category.category}</Category>
-                        <Ingress>{article.ingress}</Ingress>
-                    </TextBox>
-            </ArticleBox>
-                ))}
+            {(() => {
+                   switch (isLoggedIn) {
+                    case true:
+                        return <AllArticles articles={articles} />;
+                    case false:
+                        return <OpenArticles articles={articles} />;
+                    default:
+                        return<OfficeGrid list={filter} />;
+                } 
+                })()}
+            
+           
         </ArticleWrapper>
     );
 };
