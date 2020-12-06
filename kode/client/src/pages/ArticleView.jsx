@@ -139,7 +139,7 @@ const ArticleView = () => {
     const { updateState } = useContext(TitleContext);
     const history = useHistory();
     const [ categories, setCategories ] = useState();
-    const { isLoggedIn } = useAuthContext();
+    const { isLoggedIn, isAdmin } = useAuthContext();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -227,7 +227,7 @@ const ArticleView = () => {
     return(
         <ArticleWrapper>
             <ButtonBar>
-                <Buttons hidden={!isLoggedIn} onClick={() => {handleNewArticleClick("nyartikkel"); updateState("Ny artikkel");}}>Ny artikkel</Buttons>
+                {isLoggedIn && isAdmin && (<Buttons onClick={() => {handleNewArticleClick("nyartikkel"); updateState("Ny artikkel");}}>Ny artikkel</Buttons>)} 
                 <DropdownFilter onChange={handleFilterByCategory}>
                     <option value="alle">Alle artikler</option>
                     {categories && categories.map((category) => (
