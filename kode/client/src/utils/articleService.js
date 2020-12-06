@@ -13,6 +13,25 @@ export const list = async () => {
     }
   };
 
+  export const listByCategory = async (id) => {
+    console.log("ID I LISTSPECIFIC: " + id)
+    try {
+      return await http.get(`${API_URL}/category/${id}`);
+    } catch (err) {
+      return err.response.data;
+    }
+  };
+
+  export const listBySearchWord = async (searchWord) => {
+    console.log("Searchword I LISTBysearchword: " + searchWord)
+    try {
+      return await http.get(`${API_URL}/search/${searchWord}`);
+    } catch (err) {
+      return err.response.data;
+    }
+  };
+
+
 export const get = async (id) => {
   try {
     return await http.get(`${API_URL}/${id}`);
@@ -43,6 +62,8 @@ export const update = async (id, data) => {
 export default {
   create,
   list,
+  listByCategory,
+  listBySearchWord,
   update,
   get,
 };
