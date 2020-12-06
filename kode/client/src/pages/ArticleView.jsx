@@ -166,9 +166,9 @@ const ArticleView = () => {
                 <Buttons hidden={!isLoggedIn} onClick={() => {handleNewArticleClick("nyartikkel"); updateState("Ny artikkel");}}>Ny artikkel</Buttons>
                 <DropdownFilter onChange={handleFilter}>
                     <option value="alle">Alle artikler</option>
-                    {categories && categories.map((category) => (
+                    {/* {categories && categories.map((category) => (
                         <option key={category.id} value={category.id}>{category.category}</option>
-                    ))}
+                    ))} */}
                 </DropdownFilter>
                 <Buttons>Søk</Buttons>
             </ButtonBar>
