@@ -40,7 +40,7 @@ const ArticleSchema = new Schema(
             ref: 'User',
             required: true,
         },
-        secret: {
+        classified: {
             type: String,
             enum: {
                 values: ['åpen', 'hemmelig']

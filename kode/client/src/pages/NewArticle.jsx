@@ -134,7 +134,7 @@ const NewArticle = () => {
     const [ dateValue, setDateValue] = useState("");
     const [ categoryValue, setCategoryValue] = useState("Generelt");
     const [ authorValue, setAuthorValue] = useState("Lars Larsen");
-    const [ secretArticle, setSecretArticle] = useState("åpen");
+    const [ classifiedArticle, setClassifiedArticle] = useState("åpen");
     const { user } = useAuthContext();
     
     useEffect(() => {
@@ -179,8 +179,8 @@ const NewArticle = () => {
         setAuthorValue(e.target.value);
         disableButton();
     }
-    const handleSecretArticleChange = (e) => {
-        setSecretArticle(e.target.value);
+    const handleClassifiedArticleChange = (e) => {
+        setClassifiedArticle(e.target.value);
     }
 
     const disableButton = () => {
@@ -209,7 +209,7 @@ const NewArticle = () => {
             category: categoryValue,
             author: authorValue,
             user: user,
-            secret: secretArticle
+            classified: classifiedArticle
         };
 
         console.log(JSON.stringify(newArticle))
@@ -259,7 +259,7 @@ const NewArticle = () => {
                     <option value="Ove Oversvømmelse">Ove Oversvømmelse</option>
                 </Dropdown>
                 <Label>Tilgangsnivå</Label>
-                <Dropdown onChange={handleSecretArticleChange} value={secretArticle}>
+                <Dropdown onChange={handleClassifiedArticleChange} value={classifiedArticle}>
                     <option value="åpen">Åpen</option>
                     <option value="hemmelig">Hemmelig</option>
                 </Dropdown>
