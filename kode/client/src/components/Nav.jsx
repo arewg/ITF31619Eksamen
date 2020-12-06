@@ -79,6 +79,7 @@ const Nav = () => {
 
     const handleLogout = () => {
       logout();
+      window.location.reload(false);
     }
 
     return(
@@ -120,8 +121,8 @@ const Nav = () => {
             </NavMenuItem>
           || isLoggedIn &&
           <NavMenuItem >
-              <NavLink exact to="/" activeClassName="active" onClick={() => updateTitle("Velkommen til FG Rørleggerservice AS")}>
-                <NavLogInButton onClick={handleLogout}>
+              <NavLink exact to="/" activeClassName="active">
+                <NavLogInButton onClick={() => {updateTitle("Velkommen til FG Rørleggerservice AS"); handleLogout()}}>
                     Logg Ut
                 </NavLogInButton>
                 </NavLink>

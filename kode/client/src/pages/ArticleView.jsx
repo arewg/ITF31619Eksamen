@@ -4,7 +4,8 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import  { TitleContext } from '../contexts/TitleProvider.jsx';
 import { useAuthContext } from '../contexts/AuthProvider.jsx'
-import { list } from '../utils/articleService.js';
+import { list, listBySearchWord, listByCategory } from '../utils/articleService.js';
+import { get } from '../utils/categoryService';
 
     const ArticleWrapper = styled.div`
         width: 60%;
@@ -37,15 +38,39 @@ import { list } from '../utils/articleService.js';
         background-color: #127275;
         color: white;
         margin-left: 0px;
-        margin-right: 65%; 
+        margin-right: 45%; 
 
         &:hover{
             background-color: #179397;
             transform: scale(1.02); 
         }
     }
+    `;
+    const DropdownFilter = styled.select`
+        background-color: #cfcfcf;
+        border-radius:8px;
+        display: inline-block;
+        text-align: center;
+        padding: 10px 12px;
+        text-decoration: none;
+        cursor: pointer;
 
+    `;
 
+    const Input = styled.input`
+        width: 150px;
+        background-color: #cfcfcf;
+        border-radius: 10px;
+        margin-left: 5px;
+        cursor: text; 
+        &:focus{
+            transform: scale(1.01);
+            background-color: #eaeaea;
+            border: 0px;
+        }
+        &::placeholder{
+            color: black;
+        }
     `;
 
     const ArticleBox = styled.div`
@@ -113,6 +138,7 @@ const ArticleView = () => {
     const [error, setError] = useState();
     const { updateState } = useContext(TitleContext);
     const history = useHistory();
+    const [ categories, setCategories ] = useState();
     const { isLoggedIn } = useAuthContext();
 
     useEffect(() => {
@@ -125,30 +151,97 @@ const ArticleView = () => {
             setArticles(data);
           }
         };
+        const fetchCategories = async () => {
+            const { data, error } = await get();
+            if (error) {
+              setError(error);
+            } else {
+              setCategories(data);
+            }
+        };
         fetchData();
+        fetchCategories();
       }, []);
     
     const handleNewArticleClick = (path) => {
         history.replace("/fagartikler/"+path); 
+    };
+
+    const handleArticleClick = (path) => {
+        history.push("/fagartikler/"+path);
+    };
+
+    const fetchArticlesByCategory = async (id) => {
+        console.log("ID I FETCHARTICLESBYCATEGORY: " + id)
+        const { data, error } = await listByCategory(id);
+        if (error) {
+          setError(error);
+        } else {
+          setArticles(data);
+        }
+    };
+
+    const fetchArticlesBySearch = async (searchWord) => {
+        console.log("sewarchword I FETCHARTICLESBYCATEGORY: " + searchWord)
+        const { data, error } = await listBySearchWord(searchWord);
+        if (error) {
+          setError(error);
+        } else {
+          setArticles(data);
+        }
+    };
+
+    const fetchData = async () => {
+        const { data, error } = await list();
+        if (error) {
+          setError(error);
+        } else {
+          setArticles(data);
+        }
+      };
+
+    const handleFilterByCategory = (e) => {
+
+        const categoryId = e.target.value; 
+        console.log(categoryId)
+
+        if(e.target.value === "alle"){
+            fetchData();
+        } else {
+            fetchArticlesByCategory(categoryId);
+         };
+    };
+
+
+    const handleSeachByTitle = (e) => {
+        
+        const searchWord = e.target.value;
+
+        if(searchWord === ""){
+            fetchData();
+        } else {
+            fetchArticlesBySearch(searchWord);
+        }
     }
 
-    const handleArticleClick= (path) => {
-        history.push("/fagartikler/"+path);
-    }
     return(
         <ArticleWrapper>
             <ButtonBar>
                 <Buttons hidden={!isLoggedIn} onClick={() => {handleNewArticleClick("nyartikkel"); updateState("Ny artikkel");}}>Ny artikkel</Buttons>
-                <Buttons>Filtrer</Buttons>
-                <Buttons>Søk</Buttons>
+                <DropdownFilter onChange={handleFilterByCategory}>
+                    <option value="alle">Alle artikler</option>
+                    {categories && categories.map((category) => (
+                        <option key={category.id} value={category.id}>{category.category}</option>
+                    ))}
+                </DropdownFilter>
+                <Input placeholder=" Søk..." onChange={handleSeachByTitle}></Input>
             </ButtonBar>
             {articles && articles.map((article) => (  
             <ArticleBox key={article.id} onClick={() => {handleArticleClick(article.id); updateState(article.title)}}>
                 <ArticleImage></ArticleImage>
-                
                     <TextBox>
                         <Title>{article.title}</Title>
-                        <Category>{article.category}</Category>
+                        <Category>{article.category.category}</Category>
                         <Ingress>{article.ingress}</Ingress>
                     </TextBox>
             </ArticleBox>

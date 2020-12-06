@@ -22,6 +22,18 @@ export const list = async (req, res, next) => {
         res.status(200).json(result)
     }
 
+export const listByCategory = async (req, res, next) => {
+    console.log("ID I LISTBYCATEGORY: " + req.params.id)
+    const result = await articleService.listByCategory(req.params.id);
+    res.status(200).json(result);
+}
+
+export const listBySearch = async (req, res, next) => {
+    console.log("ID I LISTBYCATEGORY: " + JSON.stringify(req.params.title))
+    const result = await articleService.listBySearch(req.params.title);
+    res.status(200).json(result);
+}
+
 export const create = async (req, res, next) => {
     try{
         //req.body.user = req.user.id;

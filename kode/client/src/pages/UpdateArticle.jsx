@@ -230,9 +230,11 @@ const UpdateArticle = () => {
                 <Label>Forfatter</Label>
                 <Dropdown onChange={handleAuthorChange} value={authorValue}>
                     <option value={article.author}>Behold forfatter {article.author}</option>
-                    <option value="Lars Larsen">Lars Larsen</option>
-                    <option value="Gunn Gundersen">Gunn Gundersen</option>
-                    <option value="Simen Simensen">Simen Simensen</option>
+                    <option value="Marius Wallin">Marius Wallin</option>
+                    <option value="Vanja Vannlekkasje">Vanja Vannlekkasje</option>
+                    <option value="Fredrik Flom">Fredrik Flom</option>
+                    <option value="Preben Plumber">Preben Plumber</option>
+                    <option value="Ove Oversvømmelse">Ove Oversvømmelse</option>
                 </Dropdown>
             </ArticleForm>
             <DisableBar>

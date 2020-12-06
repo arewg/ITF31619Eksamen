@@ -6,6 +6,7 @@ import  { TitleContext } from '../contexts/TitleProvider.jsx';
 import AddCategoryModal from '../components/AddCategoryModal.jsx';
 import { create } from '../utils/articleService';
 import { get } from '../utils/categoryService';
+import { useAuthContext } from '../contexts/AuthProvider.jsx';
 
 
     const ArticleWrapper = styled.div`
@@ -124,7 +125,7 @@ const NewArticle = () => {
 
     const [disableState, setDisableState] = useState(true);
     const { updateState } = useContext(TitleContext);
-    const [ categories, setCategories ] = useState()
+    const [ categories, setCategories ] = useState();
     const history = useHistory();
     const [ modal, setModal] = useState(false);
     const [ titleValue, setTitleValue] = useState("");
@@ -133,7 +134,9 @@ const NewArticle = () => {
     const [ dateValue, setDateValue] = useState("");
     const [ categoryValue, setCategoryValue] = useState("Generelt");
     const [ authorValue, setAuthorValue] = useState("Lars Larsen");
-
+    const [ secretArticle, setSecretArticle] = useState("åpen");
+    const { user } = useAuthContext();
+    
     useEffect(() => {
         const fetchData = async () => {
           const { data, error } = await get();
@@ -176,6 +179,9 @@ const NewArticle = () => {
         setAuthorValue(e.target.value);
         disableButton();
     }
+    const handleSecretArticleChange = (e) => {
+        setSecretArticle(e.target.value);
+    }
 
     const disableButton = () => {
         if(
@@ -202,7 +208,11 @@ const NewArticle = () => {
             date: dateValue,
             category: categoryValue,
             author: authorValue,
+            user: user,
+            secret: secretArticle
         };
+
+        console.log(JSON.stringify(newArticle))
 
         const createArticle = async () => {
             await create(newArticle);
@@ -235,16 +245,23 @@ const NewArticle = () => {
                     <Dropdown onChange={handleCategoryChange} value={categoryValue}>
                     <option value="Generelt">Generelt</option>
                     {categories && categories.map((category) => (
-                        <option key={category.id} value={category.category}>{category.category}</option>
+                        <option key={category.id} value={category.id}>{category.category}</option>
                     ))}
                     </Dropdown>
                     <NewCategoryButton onClick={showModal}>NY</NewCategoryButton>
                 </CategoryBox>
                 <Label>Forfatter</Label>
                 <Dropdown onChange={handleAuthorChange} value={authorValue} >
-                    <option value="Lars Larsen">Lars Larsen</option>
-                    <option value="Gunn Gundersen">Gunn Gundersen</option>
-                    <option value="Simen Simensen">Simen Simensen</option>
+                    <option value="Marius Wallin">Marius Wallin</option>
+                    <option value="Vanja Vannlekkasje">Vanja Vannlekkasje</option>
+                    <option value="Fredrik Flom">Fredrik Flom</option>
+                    <option value="Preben Plumber">Preben Plumber</option>
+                    <option value="Ove Oversvømmelse">Ove Oversvømmelse</option>
+                </Dropdown>
+                <Label>Tilgangsnivå</Label>
+                <Dropdown onChange={handleSecretArticleChange} value={secretArticle}>
+                    <option value="åpen">Åpen</option>
+                    <option value="hemmelig">Hemmelig</option>
                 </Dropdown>
             </ArticleForm>
             <DisableBar>
