@@ -23,7 +23,7 @@ export const get = async (id) => {
 
 export const create = async (data) => {
   try {
-    return await http.post(`${API_URL}`, data);
+    return await http.post(`/register`, data);
   } catch (err) {
     return err.response.data;
   }

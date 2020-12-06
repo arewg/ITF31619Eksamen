@@ -57,6 +57,16 @@ const NavMenuItem = styled.li`
     text-decoration: none;
   `;
 
+  const CreateUserButton = styled.button `
+  color: #fff;
+  display: block;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 3.456;
+    padding: 5px 0;
+    text-decoration: none;
+  `
+
 
 const Nav = () => {
 
@@ -94,6 +104,12 @@ const Nav = () => {
                     Kontakt
                 </NavLink>
             </NavMenuItem>
+            {!isLoggedIn &&
+            <NavMenuItem>
+            <NavLink exact to="register" activeClassName="active" onClick={() => updateTitle("Opprett bruker")}>
+                  Opprett bruker
+                </NavLink>
+            </NavMenuItem>}
           {!isLoggedIn &&
             <NavMenuItem>
               <NavLink exact to="/login" activeClassName="active" onClick={() => updateTitle("Logg inn")}>
