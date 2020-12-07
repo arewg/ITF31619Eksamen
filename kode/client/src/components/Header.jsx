@@ -20,7 +20,7 @@ const Header = () => {
   return (
     <Title
       style={{
-        backgroundImage: `${headerTitle.image}`
+        backgroundImage: `url(${headerTitle.image})`
       }}
     >
       {headerTitle.state
