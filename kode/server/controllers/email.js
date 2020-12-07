@@ -6,7 +6,9 @@ import { userService, emailService } from '../services/index.js';
 
 export const send = catchAsyncErrors(async(req,res,next) => {
     console.log("Email Controller"+ JSON.stringify(req.body));
-    const user = await userService.getUserByEmail(req.body.email);
+    const {email} = req.body;
+    console.log("DETTE ER EMAIL I SENDFUNKSJONEN  "+email)
+    const user = await userService.getUserByEmail({ email });
     console.log("User i emailController" + JSON.stringify(user));
     try {
         await sendMail({
