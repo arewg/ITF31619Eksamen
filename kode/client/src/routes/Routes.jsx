@@ -15,6 +15,7 @@ import SingleArticle from '../pages/SingleArticle.jsx';
 import Login from '../pages/Login.jsx';
 import UpdateArticle from'../pages/UpdateArticle.jsx';
 import Register from '../pages/register.jsx';
+import Report from '../pages/Report.jsx';
 
 
 
@@ -54,6 +55,9 @@ const Routes = () => (
             </Route>
             <Route exact path="/register">
                 <Register />
+            </Route>
+            <Route exact path="/report">
+                <Report />
             </Route>
             <Route path="*">
                 <NoMatch />

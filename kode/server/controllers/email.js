@@ -32,3 +32,8 @@ export const create = async (req, res, next) => {
         res.status(400).json({error: 'Error creating email'})
     }
 };
+
+export const list = async (req,res,next) => {
+    const result = await emailService.list();
+    res.status(200).json(result)
+}

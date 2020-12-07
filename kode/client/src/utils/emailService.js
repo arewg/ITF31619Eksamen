@@ -22,4 +22,13 @@ export const create = async (data) => {
     }
 };
 
-export default { send, create };
+export const list = async () => {
+    try {
+        return await http.get(`${API_URL}`);
+    } catch (error) {
+        return error.response.data;
+        
+    }
+};
+
+export default { send, create, list };
