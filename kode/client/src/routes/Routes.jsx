@@ -8,60 +8,57 @@ import TitleProvider from '../contexts/TitleProvider.jsx';
 import AuthProvider from '../contexts/AuthProvider.jsx';
 import ArticleView from '../pages/ArticleView.jsx';
 import Offices from '../pages/Offices.jsx';
-import SingleOffice from '../pages/SingleOffice.jsx'
+import SingleOffice from '../pages/SingleOffice.jsx';
 import Contact from '../pages/Contact.jsx';
 import NewArticle from '../pages/NewArticle.jsx';
 import SingleArticle from '../pages/SingleArticle.jsx';
 import Login from '../pages/Login.jsx';
-import UpdateArticle from'../pages/UpdateArticle.jsx';
+import UpdateArticle from '../pages/UpdateArticle.jsx';
 import Register from '../pages/register.jsx';
-
-
-
 
 const Routes = () => (
   <Router>
-      <AuthProvider>
+    <AuthProvider>
       <TitleProvider>
         <MainLayout>
-            <Switch>
+          <Switch>
             <Route exact path="/">
-                <Home />
+              <Home />
             </Route>
             <Route exact path="/kontorer">
-                <Offices />
+              <Offices />
             </Route>
             <Route exact path="/kontorer/*">
-                <SingleOffice />
+              <SingleOffice />
             </Route>
             <Route exact path="/kontakt">
-                <Contact />
+              <Contact />
             </Route>
             <Route exact path="/fagartikler">
-                <ArticleView />
+              <ArticleView />
             </Route>
             <Route exact path="/fagartikler/oppdater/:id">
-                <UpdateArticle />
+              <UpdateArticle />
             </Route>
             <Route exact path="/fagartikler/nyartikkel">
-                <NewArticle />
+              <NewArticle />
             </Route>
             <Route exact path="/fagartikler/:id">
-                <SingleArticle />
+              <SingleArticle />
             </Route>
-            <Route exact path ="/login">
-                <Login />
+            <Route exact path="/login">
+              <Login />
             </Route>
             <Route exact path="/register">
-                <Register />
+              <Register />
             </Route>
             <Route path="*">
-                <NoMatch />
+              <NoMatch />
             </Route>
-            </Switch>
+          </Switch>
         </MainLayout>
       </TitleProvider>
-      </AuthProvider>
+    </AuthProvider>
   </Router>
-  )
+);
 export default Routes;

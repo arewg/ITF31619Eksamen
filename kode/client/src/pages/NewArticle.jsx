@@ -1,276 +1,290 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import  { TitleContext } from '../contexts/TitleProvider.jsx';
+import { TitleContext } from '../contexts/TitleProvider.jsx';
 import AddCategoryModal from '../components/AddCategoryModal.jsx';
 import { create } from '../utils/articleService';
 import { get } from '../utils/categoryService';
 import { useAuthContext } from '../contexts/AuthProvider.jsx';
+import ImageUpload from '../components/ImageUpload.jsx';
 
+const ArticleWrapper = styled.div`
+  width: 60%;
+  margin: 0 auto;
+`;
 
-    const ArticleWrapper = styled.div`
-        width: 60%;
-        margin: 0 auto;
-    `;
+const ArticleForm = styled.form`
+  width: 100%;
+`;
 
-    const ArticleForm = styled.form`
-        width: 100%;
-    `;
+const Input = styled.input`
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 10px;
+  height: 60px;
+  margin-top: 10px;
+  cursor: pointer;
+  &:focus {
+    transform: scale(1.01);
+  }
+`;
 
-    const Input = styled.input`
-        width: 100%;
-        border: 2px solid black;
-        border-radius: 10px;
-        height: 60px;
-        margin-top: 10px;
-        cursor: pointer; 
-        &:focus{
-            transform: scale(1.01);
-        }
-    `;
+const TextArea = styled.textarea`
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 10px;
+  height: 60px;
+  margin-top: 10px;
+  cursor: pointer;
+  &:focus {
+    transform: scale(1.01);
+  }
+`;
 
-    const TextArea = styled.textarea`
-        width: 100%;
-        border: 2px solid black;
-        border-radius: 10px;
-        height: 60px;
-        margin-top: 10px;
-        cursor: pointer; 
-        &:focus{
-            transform: scale(1.01);
-        }
+const Dropdown = styled.select`
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 10px;
+  height: 60px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  font-size: 20px;
+  cursor: pointer;
+  &:focus {
+    transform: scale(1.01);
+  }
+`;
 
-    `;
+const Label = styled.h2`
+  width: 100%-20px;
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 30px;
+`;
 
-    const Dropdown = styled.select`
-        width: 100%;
-        border: 2px solid black;
-        border-radius: 10px;
-        height: 60px;
-        margin-top: 10px;
-        padding: 10px 12px;
-        font-size: 20px;
-        cursor: pointer; 
-        &:focus{
-            transform: scale(1.01);
-        }
-    `;
+const CategoryBox = styled.div`
+  display: grid;
+  grid-template-columns: 7fr 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+`;
 
-    const Label = styled.h2`
-        width: 100%-20px;
-        margin-top: 20px;
-        font-weight: bold;
-        font-size:30px;
-    `;
+const NewCategoryButton = styled.button`
+  margin-top: 10px;
+  margin-left: 5px;
+  background-color: #127275;
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+  &:hover {
+    transform: scale(1.04);
+    background-color: #a7faa4;
+  }
+`;
 
-    const CategoryBox = styled.div`
-        display: grid;
-        grid-template-columns: 7fr 1fr;
-        grid-template-rows: 1fr;
-        grid-column-gap: 0px;
-        grid-row-gap: 0px;
-    `;
+const CreateArticleButton = styled.button`
+  width: 135px;
+  height: 70px;
+  margin-top: 10px;
+  margin-left: 5px;
+  background-color: #84e6ff;
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+  &:hover {
+    transform: scale(1.04);
+    background-color: #a4adfa;
+  }
+  &:disabled {
+    background-color: #8f8f8f;
+    transform: scale(1);
+    cursor: none;
+  }
+`;
 
-    const NewCategoryButton = styled.button`
-        margin-top: 10px;
-        margin-left: 5px;
-        background-color: #127275;
-        font-size: 22px;
-        font-weight: bold;
-        color: white;
-        &:hover{
-            transform: scale(1.04);
-            background-color: #a7faa4
-        }
-    `;
+const DisableBar = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
-    const CreateArticleButton = styled.button`
-        width: 135px;
-        height: 70px;
-        margin-top: 10px;
-        margin-left: 5px;
-        background-color: #84e6ff;
-        font-size: 22px;
-        font-weight: bold;
-        color: white;
-        &:hover{
-            transform: scale(1.04);
-            background-color: #a4adfa
-        }
-        &:disabled{
-            background-color: #8f8f8f;
-            transform: scale(1);
-            cursor: none;
-            
-        }
-    
-    `;
-
-    const DisableBar = styled.div`
-    display:flex;
-    align-items: center;
-    `;
-
-    const ErrorMessage = styled.h2`
-
-        color: red;
-        font-size: 22px;
-        font-weight: bold;
-        margin-left:10px;
-    
-    `;
+const ErrorMessage = styled.h2`
+  color: red;
+  font-size: 22px;
+  font-weight: bold;
+  margin-left: 10px;
+`;
 
 const NewArticle = () => {
+  const [disableState, setDisableState] = useState(true);
+  const { updateState } = useContext(TitleContext);
+  const [categories, setCategories] = useState();
+  const history = useHistory();
+  const [modal, setModal] = useState(false);
+  const [titleValue, setTitleValue] = useState('');
+  const [ingressValue, setIngressValue] = useState('');
+  const [contentValue, setContentValue] = useState('');
+  const [dateValue, setDateValue] = useState('');
+  const [categoryValue, setCategoryValue] = useState('Generelt');
+  const [authorValue, setAuthorValue] = useState('Lars Larsen');
+  const [classifiedArticle, setClassifiedArticle] = useState('åpen');
+  const [imageId, setImageId] = useState('')
+  const { user } = useAuthContext();
 
-    const [disableState, setDisableState] = useState(true);
-    const { updateState } = useContext(TitleContext);
-    const [ categories, setCategories ] = useState();
-    const history = useHistory();
-    const [ modal, setModal] = useState(false);
-    const [ titleValue, setTitleValue] = useState("");
-    const [ ingressValue, setIngressValue] = useState("");
-    const [ contentValue, setContentValue] = useState("");
-    const [ dateValue, setDateValue] = useState("");
-    const [ categoryValue, setCategoryValue] = useState("Generelt");
-    const [ authorValue, setAuthorValue] = useState("Lars Larsen");
-    const [ classifiedArticle, setClassifiedArticle] = useState("åpen");
-    const { user } = useAuthContext();
-    
-    useEffect(() => {
-        const fetchData = async () => {
-          const { data, error } = await get();
-          if (error) {
-            setError(error);
-          } else {
-            console.log(data);
-            setCategories(data);
-          }
-        };
-        fetchData();
-      }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data, error } = await get();
+      if (error) {
+        setError(error);
+      } else {
+        console.log(data);
+        setCategories(data);
+      }
+    };
+    fetchData();
+  }, []);
 
+  const handleRoute = (path) => {
+    history.push(path);
+  };
 
-    const handleRoute = (path) => {
-        history.push(path)
+  const handleTitleChange = (e) => {
+    setTitleValue(e.target.value);
+    disableButton();
+  };
+  const handleIngressChange = (e) => {
+    setIngressValue(e.target.value);
+    disableButton();
+  };
+  const handleContentChange = (e) => {
+    setContentValue(e.target.value);
+    disableButton();
+  };
+  const handleDateChange = (e) => {
+    setDateValue(e.target.value);
+    disableButton();
+  };
+  const handleCategoryChange = (e) => {
+    setCategoryValue(e.target.value);
+    disableButton();
+  };
+  const handleAuthorChange = (e) => {
+    setAuthorValue(e.target.value);
+    disableButton();
+  };
+  const handleClassifiedArticleChange = (e) => {
+    setClassifiedArticle(e.target.value);
+  };
+
+  const disableButton = () => {
+    if (
+      titleValue === '' ||
+      ingressValue === '' ||
+      contentValue === '' ||
+      dateValue === '' ||
+      categoryValue === '' ||
+      authorValue === '' ||
+      imageId === ''
+    ) {
+      setDisableState(true);
+    } else {
+      setDisableState(false);
     }
+  };
 
-    const handleTitleChange = (e) => {
-        setTitleValue(e.target.value);
-        disableButton();
-    }
-    const handleIngressChange = (e) => {
-        setIngressValue(e.target.value);
-        disableButton();
-    }
-    const handleContentChange = (e) => {
-        setContentValue(e.target.value);
-        disableButton();
-    }
-    const handleDateChange = (e) => {
-        setDateValue(e.target.value);
-        disableButton();
-    }
-    const handleCategoryChange = (e) => {
-        setCategoryValue(e.target.value);
-        disableButton();
-    }
-    const handleAuthorChange = (e) => {
-        setAuthorValue(e.target.value);
-        disableButton();
-    }
-    const handleClassifiedArticleChange = (e) => {
-        setClassifiedArticle(e.target.value);
-    }
+  const handleSubmit = () => {
 
-    const disableButton = () => {
-        if(
-            titleValue === "" ||
-            ingressValue === "" ||
-            contentValue === "" ||
-            dateValue === "" ||
-            categoryValue === "" ||
-            authorValue === ""
-        ){
-            setDisableState(true);
-        }
-        else {
-            setDisableState(false);
-        }
-    }
+    console.log("DETTE ER IMAGEID"+imageId)
+    const newArticle = {
+      title: titleValue,
+      ingress: ingressValue,
+      content: contentValue,
+      date: dateValue,
+      category: categoryValue,
+      author: authorValue,
+      user: user,
+      image: imageId,
+      classified: classifiedArticle,
+    };
 
-    const handleSubmit = () => {
-        
-        const newArticle = {
-            title: titleValue,
-            ingress: ingressValue,
-            content: contentValue,
-            date: dateValue,
-            category: categoryValue,
-            author: authorValue,
-            user: user,
-            classified: classifiedArticle
-        };
+    console.log(JSON.stringify(newArticle));
 
-        console.log(JSON.stringify(newArticle))
+    const createArticle = async () => {
+      await create(newArticle);
+    };
+    createArticle();
+    alert('Fagartikkel opprettet');
+  };
 
-        const createArticle = async () => {
-            await create(newArticle);
-        }
-        createArticle();
-        alert("Fagartikkel opprettet")
+  const showModal = (e) => {
+    setModal(true);
+    e.preventDefault();
+  };
 
-    }
+  const closeModal = () => {
+    setModal(false);
+  };
 
-    const showModal = (e) => {setModal(true); e.preventDefault();}
-
-    const closeModal = () => {
-        setModal(false);
-    }
-
-
-    return(
-        <ArticleWrapper>
-            <ArticleForm>
-                <Label>Title</Label>
-                <Input autoFocus={true} onChange={handleTitleChange}></Input>
-                <Label>Ingress</Label>
-                <Input onChange={handleIngressChange}></Input>
-                <Label>Innhold</Label>
-                <TextArea onChange={handleContentChange}></TextArea>
-                <Label>Dato</Label>
-                <Input onChange={handleDateChange}></Input>
-                <Label>Kategori</Label>
-                <CategoryBox>
-                    <Dropdown onChange={handleCategoryChange} value={categoryValue}>
-                    <option value="Generelt">Generelt</option>
-                    {categories && categories.map((category) => (
-                        <option key={category.id} value={category.id}>{category.category}</option>
-                    ))}
-                    </Dropdown>
-                    <NewCategoryButton onClick={showModal}>NY</NewCategoryButton>
-                </CategoryBox>
-                <Label>Forfatter</Label>
-                <Dropdown onChange={handleAuthorChange} value={authorValue} >
-                    <option value="Marius Wallin">Marius Wallin</option>
-                    <option value="Vanja Vannlekkasje">Vanja Vannlekkasje</option>
-                    <option value="Fredrik Flom">Fredrik Flom</option>
-                    <option value="Preben Plumber">Preben Plumber</option>
-                    <option value="Ove Oversvømmelse">Ove Oversvømmelse</option>
-                </Dropdown>
-                <Label>Tilgangsnivå</Label>
-                <Dropdown onChange={handleClassifiedArticleChange} value={classifiedArticle}>
-                    <option value="åpen">Åpen</option>
-                    <option value="hemmelig">Hemmelig</option>
-                </Dropdown>
-            </ArticleForm>
-            <DisableBar>
-                <CreateArticleButton onClick={() => { handleSubmit(); handleRoute("/fagartikler"); updateState("Fagartikler")}} disabled={disableState}>CREATE</CreateArticleButton>
-                <ErrorMessage hidden={!disableState}>Vennligst fyll ut alle feltene</ErrorMessage>
-            </DisableBar>
-            <AddCategoryModal modal={modal} close={closeModal} /> 
-        </ArticleWrapper>
-        
-    );
+  return (
+    <ArticleWrapper>
+      <ArticleForm>
+        <Label>Title</Label>
+        <Input autoFocus={true} onChange={handleTitleChange} />
+        <Label>Ingress</Label>
+        <Input onChange={handleIngressChange} />
+        <Label>Innhold</Label>
+        <TextArea onChange={handleContentChange} />
+        <Label>Dato</Label>
+        <Input onChange={handleDateChange} />
+        <Label>Kategori</Label>
+        <CategoryBox>
+          <Dropdown onChange={handleCategoryChange} value={categoryValue}>
+            <option value="Generelt">Generelt</option>
+            {categories &&
+              categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.category}
+                </option>
+              ))}
+          </Dropdown>
+          <NewCategoryButton onClick={showModal}>NY</NewCategoryButton>
+        </CategoryBox>
+        <Label>Forfatter</Label>
+        <Dropdown onChange={handleAuthorChange} value={authorValue}>
+          <option value="Marius Wallin">Marius Wallin</option>
+          <option value="Vanja Vannlekkasje">Vanja Vannlekkasje</option>
+          <option value="Fredrik Flom">Fredrik Flom</option>
+          <option value="Preben Plumber">Preben Plumber</option>
+          <option value="Ove Oversvømmelse">Ove Oversvømmelse</option>
+        </Dropdown>
+        <Label>Tilgangsnivå</Label>
+        <Dropdown
+          onChange={handleClassifiedArticleChange}
+          value={classifiedArticle}
+        >
+          <option value="åpen">Åpen</option>
+          <option value="hemmelig">Hemmelig</option>
+        </Dropdown>
+      </ArticleForm>
+      <ImageUpload setImageId={setImageId} id={imageId}/>
+      <DisableBar>
+        <CreateArticleButton
+          onClick={() => {
+            handleSubmit();
+            handleRoute('/fagartikler');
+            updateState('Fagartikler');
+          }}
+          disabled={disableState}
+        >
+          CREATE
+        </CreateArticleButton>
+        <ErrorMessage hidden={!disableState}>
+          Vennligst fyll ut alle feltene.
+        </ErrorMessage>
+      </DisableBar>
+      <AddCategoryModal modal={modal} close={closeModal} />
+    </ArticleWrapper>
+  );
 };
 
 export default NewArticle;

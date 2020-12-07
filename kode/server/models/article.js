@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import CategorySchema from './category.js';
 
 const {Schema} = mongoose;
 
@@ -39,6 +38,10 @@ const ArticleSchema = new Schema(
             type: mongoose.Schema.ObjectId,
             ref: 'User',
             required: true,
+        },
+        image: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'Image',
         },
         classified: {
             type: String,

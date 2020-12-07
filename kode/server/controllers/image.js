@@ -22,7 +22,7 @@ export const get = catchAsyncError(async(req, res, next) =>{
         return next(new ErrorHandler('Noe gikk galt i henting av bilde', 404))
     }
 
-    const imagePath = image.file_path.replace('public/','');
+    const imagePath = image.file_path.replace('public\\','');
     
     res.status(200).json({
         success: true,
