@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import  { TitleContext } from '../contexts/TitleProvider.jsx';
-
+import { send } from '../utils/emailService';
 
     const ContactForm = styled.section`
      width: 100%;
@@ -107,9 +107,10 @@ const Contact = () => {
         };
 
         console.log(NewInquiry);
-        /*const send = async () => {
+        const sendEmail = async () => {
             await send(NewInquiry);
-        }*/
+        }
+        sendEmail();
     }
 
     return(

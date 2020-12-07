@@ -12,4 +12,4 @@ export const send = catchAsyncErrors(async(req,res,next) => {
     } catch(error) {
         console.log(error);
     }
-})
+});
