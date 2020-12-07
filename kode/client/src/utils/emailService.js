@@ -5,6 +5,7 @@ const API_URL = '/email';
 
 export const send = async (data) => {
     try {
+        console.log("I emailServer utils client" + JSON.stringify(data));
         return await http.post(`${API_URL}/send`, data);
         
     } catch (err) {

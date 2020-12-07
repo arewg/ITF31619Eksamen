@@ -115,7 +115,7 @@ const Contact = () => {
         const NewInquiry = {
             name: nameValue,
             email: emailValue, 
-            description: descriptionValue
+            message: descriptionValue
         };
 
         console.log(NewInquiry);

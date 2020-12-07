@@ -5,14 +5,15 @@ import { userService, emailService } from '../services/index.js';
 
 
 export const send = catchAsyncErrors(async(req,res,next) => {
-    console.log(req.body);
+    console.log("Email Controller"+ JSON.stringify(req.body));
     const user = await userService.getUserByEmail(req.body.email);
-    console.log(user);
+    console.log("User i emailController" + JSON.stringify(user));
     try {
         await sendMail({
             email: user.email,
+            name: user.name,
             subject: 'Din hendvendelse',
-            message: `Din hendvendelse er mottatt, og vi kontakter deg innen kort tid\n${req.body.description}`,
+            message: `Din hendvendelse er mottatt, og vi kontakter deg innen kort tid\n${req.body.message}`,
         });
         res.status(200).json("E-post sendt");
     } catch(error) {
