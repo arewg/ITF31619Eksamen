@@ -1,7 +1,9 @@
+import { emailController } from '../controllers/index.js';
 import User from '../models/user.js';
 
 
 export const getUserByEmail = async (email, usePassword) => {
+    console.log("Er i Service user på server" + email);
     if(usePassword){
         return User.findOne(email).select('+password'); 
     }

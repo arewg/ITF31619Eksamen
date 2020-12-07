@@ -12,6 +12,9 @@ import user from './routes/user.js';
 import auth from './routes/auth.js';
 import category from './routes/category.js';
 import image from './routes/image.js';
+import email from './routes/email.js';
+
+
 
 const app = express();
 
@@ -38,6 +41,8 @@ app.use(cors({
   app.use(`${process.env.BASEURL}/users`, user);
   app.use(`${process.env.BASEURL}/`, image);
   app.use(`${process.env.BASEURL}/`, auth);
+  app.use(`${process.env.BASEURL}/email`, email);
+  
   
   //app.use(`${process.env.BASEURL}/XXXXX`, XXXXX);
 

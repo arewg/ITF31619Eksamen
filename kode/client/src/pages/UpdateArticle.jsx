@@ -212,17 +212,17 @@ const UpdateArticle = () => {
                 <Label>Title</Label>
                 <Input autoFocus={true} onChange={handleTitleChange} defaultValue={article.title}></Input>
                 <Label>Ingress</Label>
-      <Input onChange={handleIngressChange} defaultValue={article.ingress}></Input>
+                <Input onChange={handleIngressChange} defaultValue={article.ingress}></Input>
                 <Label>Innhold</Label>
-      <TextArea onChange={handleContentChange} defaultValue={article.content}></TextArea>
+                <TextArea onChange={handleContentChange} defaultValue={article.content}></TextArea>
                 <Label>Dato</Label>
-      <Input onChange={handleDateChange} defaultValue={article.date}></Input>
+                <Input onChange={handleDateChange} defaultValue={article.date}></Input>
                 <Label>Kategori</Label>
                 <CategoryBox>
                     <Dropdown onChange={handleCategoryChange} value={categoryValue}>
-                    <option value={article.category}>{article.category}</option>
+                    <option value={article.category.id}>Behold kategori {article.category.category}</option>
                     {categories && categories.map((category) => (
-                        <option key={category.id} value={category.category}>{category.category}</option>
+                        <option key={category.id} value={category.id}>{category.category}</option>
                     ))}
                     </Dropdown>
                     <NewCategoryButton onClick={showModal}>NY</NewCategoryButton>
