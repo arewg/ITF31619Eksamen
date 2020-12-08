@@ -14,22 +14,16 @@ const Title = styled.div`
   font-size: 45px;
 `;
 
-
-
-
-
-const Header = ({title, image}) => {
-
-
-  return (
-    <Title
-      style={{
-        backgroundImage: `url(${image})`
-      }}
-    >
-      {title}
-    </Title>
-  );
-};
+const Header = ({ title, image }) => (
+  <Title
+    style={{
+      backgroundImage: `url(${image})`,
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+    }}
+  >
+    {title}
+  </Title>
+);
 
 export default Header;

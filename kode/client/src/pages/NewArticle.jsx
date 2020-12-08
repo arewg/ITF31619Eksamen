@@ -116,6 +116,7 @@ const ErrorMessage = styled.h2`
 `;
 
 const NewArticle = () => {
+  const [error, setError] = useState();
   const [disableState, setDisableState] = useState(true);
   const [categories, setCategories] = useState();
   const history = useHistory();
@@ -125,7 +126,7 @@ const NewArticle = () => {
   const [contentValue, setContentValue] = useState('');
   const [dateValue, setDateValue] = useState('');
   const [categoryValue, setCategoryValue] = useState('Generelt');
-  const [authorValue, setAuthorValue] = useState('Lars Larsen');
+  const [authorValue, setAuthorValue] = useState('Marius Wallin');
   const [classifiedArticle, setClassifiedArticle] = useState('åpen');
   const [imageId, setImageId] = useState('');
   const { user } = useAuthContext();
@@ -142,6 +143,31 @@ const NewArticle = () => {
     };
     fetchData();
   }, []);
+
+  const showModal = (e) => {
+    setModal(true);
+    e.preventDefault();
+  };
+
+  const closeModal = () => {
+    setModal(false);
+  };
+
+  const disableButton = () => {
+    if (
+      titleValue === '' ||
+      ingressValue === '' ||
+      contentValue === '' ||
+      dateValue === '' ||
+      categoryValue === '' ||
+      authorValue === '' ||
+      imageId === ''
+    ) {
+      setDisableState(true);
+    } else {
+      setDisableState(false);
+    }
+  };
 
   const handleRoute = (path) => {
     history.push(path);
@@ -175,24 +201,7 @@ const NewArticle = () => {
     setClassifiedArticle(e.target.value);
   };
 
-  const disableButton = () => {
-    if (
-      titleValue === '' ||
-      ingressValue === '' ||
-      contentValue === '' ||
-      dateValue === '' ||
-      categoryValue === '' ||
-      authorValue === '' ||
-      imageId === ''
-    ) {
-      setDisableState(true);
-    } else {
-      setDisableState(false);
-    }
-  };
-
   const handleSubmit = () => {
-    console.log('DETTE ER IMAGEID' + imageId);
     const newArticle = {
       title: titleValue,
       ingress: ingressValue,
@@ -200,12 +209,12 @@ const NewArticle = () => {
       date: dateValue,
       category: categoryValue,
       author: authorValue,
-      user: user,
+      user,
       image: imageId,
       classified: classifiedArticle,
     };
 
-    console.log(JSON.stringify(newArticle));
+    console.log(newArticle);
 
     const createArticle = async () => {
       await create(newArticle);
@@ -214,28 +223,19 @@ const NewArticle = () => {
     alert('Fagartikkel opprettet');
   };
 
-  const showModal = (e) => {
-    setModal(true);
-    e.preventDefault();
-  };
-
-  const closeModal = () => {
-    setModal(false);
-  };
-
   return (
     <>
       <Header title="Ny artikkel" />
       <ArticleWrapper>
         <ArticleForm>
           <Label>Title</Label>
-          <Input autoFocus={true} onChange={handleTitleChange} />
+          <Input autoFocus onChange={handleTitleChange} />
           <Label>Ingress</Label>
           <Input onChange={handleIngressChange} />
           <Label>Innhold</Label>
           <TextArea onChange={handleContentChange} />
           <Label>Dato</Label>
-          <Input onChange={handleDateChange} />
+          <Input type="date" onChange={handleDateChange} />
           <Label>Kategori</Label>
           <CategoryBox>
             <Dropdown onChange={handleCategoryChange} value={categoryValue}>
@@ -273,7 +273,6 @@ const NewArticle = () => {
             onClick={() => {
               handleSubmit();
               handleRoute('/fagartikler');
-              updateState('Fagartikler');
             }}
             disabled={disableState}
           >
