@@ -22,6 +22,11 @@ export const list = async (req, res, next) => {
         res.status(200).json(result)
     }
 
+export const listArticlesPage = async (req, res, next) => {
+    const result = articleService.listArticlesPage;
+    res.status(200).json(result)
+}
+
 export const listByCategory = async (req, res, next) => {
     console.log("ID I LISTBYCATEGORY: " + req.params.id)
     const result = await articleService.listByCategory(req.params.id);

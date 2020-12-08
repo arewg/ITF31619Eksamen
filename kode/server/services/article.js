@@ -1,4 +1,5 @@
 import Article from '../models/article.js';
+import { ApiFilters } from '../utils/apiFilters.js';
 
 export const getArticleById = async (id) => Article.findById(id).populate('category', 'category');
 
@@ -6,6 +7,21 @@ export const listArticles = async () => Article.find().populate('category', 'cat
 
 export const listByCategory = async (categoryId) => Article.find({category: {$in : categoryId}}).populate('category', 'category');
 
+// Leksjon 14
+export const listArticlesPage = async (queryStr) => {
+  const { limit, page } = queryStr;
+  const filters = new ApiFilters(Article.find(), queryStr);
+  const articles = await filters.query
+  const paginated = await filters.pagination().query.populate('title', 'author');
+
+  return {
+    results: articles.length,
+    totalPages: Math.ceil(articles.length / limit) || 1,
+    currentPage: page && page > 0 ? parseInt(page) : 1,
+    data: paginated,
+  };
+    
+}
 
 export const listBySearch = async (search) => Article.find({title: {$regex: search }}).populate('category', 'category');
 

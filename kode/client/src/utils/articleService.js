@@ -13,6 +13,14 @@ export const list = async () => {
     }
   };
 
+export const listArticlesPage = async () => {
+  try {
+    return await http.get(`${API_URL}`);
+  } catch (err) {
+    return err.response.data;
+  }
+};
+
   export const listByCategory = async (id) => {
     console.log("ID I LISTSPECIFIC: " + id)
     try {
@@ -70,6 +78,7 @@ export const update = async (id, data) => {
 export default {
   create,
   list,
+  listArticlesPage,
   listByCategory,
   listBySearchWord,
   update,
