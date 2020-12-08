@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import moment from 'moment';
 import AddCategoryModal from '../components/AddCategoryModal.jsx';
 import { create } from '../utils/articleService';
 import { get } from '../utils/categoryService';
@@ -129,8 +130,8 @@ const NewArticle = () => {
   const [titleValue, setTitleValue] = useState('');
   const [ingressValue, setIngressValue] = useState('');
   const [contentValue, setContentValue] = useState('');
-  const [dateValue, setDateValue] = useState('');
-  const [categoryValue, setCategoryValue] = useState('Generelt');
+  const [dateValue, setDateValue] = useState();
+  const [categoryValue, setCategoryValue] = useState('');
   const [authorValue, setAuthorValue] = useState('Marius Wallin');
   const [classifiedArticle, setClassifiedArticle] = useState('åpen');
   const [imageId, setImageId] = useState('');
@@ -147,6 +148,7 @@ const NewArticle = () => {
       }
     };
     fetchData();
+    setDateValue(moment(Date.now()).format('YYYY-MM-DD'));
   }, []);
 
   const showModal = (e) => {
@@ -166,9 +168,9 @@ const NewArticle = () => {
       ingressValue.length <= 10 ||
       contentValue === '' ||
       contentValue.length <= 10 ||
-      dateValue === '' ||
       categoryValue === '' ||
-      authorValue === ''
+      authorValue === '' ||
+      imageId === ''
     ) {
       setDisableState(true);
     } else {
@@ -180,31 +182,31 @@ const NewArticle = () => {
     history.push(path);
   };
 
-  const handleTitleChange = (e) => {
+  const handleTitleChange = async (e) => {
     setTitleValue(e.target.value);
     disableButton();
   };
-  const handleIngressChange = (e) => {
+  const handleIngressChange = async (e) => {
     setIngressValue(e.target.value);
     disableButton();
   };
-  const handleContentChange = (e) => {
+  const handleContentChange = async (e) => {
     setContentValue(e.target.value);
     disableButton();
   };
-  const handleDateChange = (e) => {
+  const handleDateChange = async (e) => {
     setDateValue(e.target.value);
     disableButton();
   };
-  const handleCategoryChange = (e) => {
+  const handleCategoryChange = async (e) => {
     setCategoryValue(e.target.value);
     disableButton();
   };
-  const handleAuthorChange = (e) => {
+  const handleAuthorChange = async (e) => {
     setAuthorValue(e.target.value);
     disableButton();
   };
-  const handleClassifiedArticleChange = (e) => {
+  const handleClassifiedArticleChange = async (e) => {
     setClassifiedArticle(e.target.value);
   };
 
@@ -216,7 +218,7 @@ const NewArticle = () => {
       date: dateValue,
       category: categoryValue,
       author: authorValue,
-      user,
+      user: user.id,
       image: imageId,
       classified: classifiedArticle,
     };
@@ -241,12 +243,18 @@ const NewArticle = () => {
             {titleValue.length > 0 && titleValue.length < 4
               ? 'Tittel må være mer enn 3 bokstaver'
               : ''}
+            {titleValue.length > 100
+              ? 'Tittel kan ikke overskride 100 bokstaver'
+              : ''}
           </AlertText>
           <Label>Ingress</Label>
           <Input onChange={(e) => handleIngressChange(e)} />
           <AlertText>
             {ingressValue.length > 0 && ingressValue.length < 11
               ? 'Ingress må være mer enn 10 bokstaver'
+              : ''}
+            {ingressValue.length > 150
+              ? 'Ingress kan ikke overskride 150 bokstaver'
               : ''}
           </AlertText>
           <Label>Innhold</Label>
@@ -255,10 +263,14 @@ const NewArticle = () => {
             {contentValue.length > 0 && contentValue.length < 11
               ? 'Innhold må være mer enn 10 bokstaver'
               : ''}
+            {contentValue.length > 10000
+              ? 'Innhold kan ikke overskride 10 000 bokstaver'
+              : ''}
           </AlertText>
-            <Label>Dato</Label>
+          <Label>Dato</Label>
           <Input
             type="date"
+            defaultValue={moment(Date.now()).format('YYYY-MM-DD')}
             onChange={(e) => handleDateChange(e)}
           />
           <Label>Kategori</Label>
@@ -267,7 +279,6 @@ const NewArticle = () => {
               onChange={(e) => handleCategoryChange(e)}
               value={categoryValue}
             >
-              <option value="Generelt">Generelt</option>
               {categories &&
                 categories.map((category) => (
                   <option key={category.id} value={category.id}>
