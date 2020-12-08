@@ -125,7 +125,7 @@ const SingleArticle = () => {
                 <DeleteButton onClick={() => handleDelete(article.id)}>
                   Slett
                 </DeleteButton>
-                <EditButton onClick={() => handleEdit(article)}>
+                <EditButton onClick={() => handleEdit(article.id)}>
                   Rediger
                 </EditButton>
               </DivButton>

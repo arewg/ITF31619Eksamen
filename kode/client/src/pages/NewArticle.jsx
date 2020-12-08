@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import moment from 'moment';
 import AddCategoryModal from '../components/AddCategoryModal.jsx';
 import { create } from '../utils/articleService';
 import { get } from '../utils/categoryService';
@@ -15,6 +16,11 @@ const ArticleWrapper = styled.div`
 
 const ArticleForm = styled.form`
   width: 100%;
+`;
+
+const AlertText = styled.label`
+  font-size: 14px;
+  color: red;
 `;
 
 const Input = styled.input`
@@ -125,9 +131,9 @@ const NewArticle = () => {
   const [ingressValue, setIngressValue] = useState('');
   const [contentValue, setContentValue] = useState('');
   const [dateValue, setDateValue] = useState('');
-  const [categoryValue, setCategoryValue] = useState('Generelt');
-  const [authorValue, setAuthorValue] = useState('Marius Wallin');
-  const [classifiedArticle, setClassifiedArticle] = useState('åpen');
+  const [categoryValue, setCategoryValue] = useState('');
+  const [authorValue, setAuthorValue] = useState('');
+  const [classifiedArticle, setClassifiedArticle] = useState('');
   const [imageId, setImageId] = useState('');
   const { user } = useAuthContext();
 
@@ -142,6 +148,7 @@ const NewArticle = () => {
       }
     };
     fetchData();
+    setDateValue(moment(Date.now()).format('YYYY-MM-DD'));
   }, []);
 
   const showModal = (e) => {
@@ -156,9 +163,14 @@ const NewArticle = () => {
   const disableButton = () => {
     if (
       titleValue === '' ||
+      titleValue <= 3 ||
       ingressValue === '' ||
+      ingressValue.length <= 10 ||
       contentValue === '' ||
-      dateValue === ''
+      contentValue.length <= 10 ||
+      categoryValue === '' ||
+      authorValue === '' ||
+      imageId === ''
     ) {
       setDisableState(true);
     } else {
@@ -170,32 +182,33 @@ const NewArticle = () => {
     history.push(path);
   };
 
-  const handleTitleChange = (e) => {
+  const handleTitleChange = async (e) => {
     setTitleValue(e.target.value);
     disableButton();
   };
-  const handleIngressChange = (e) => {
+  const handleIngressChange = async (e) => {
     setIngressValue(e.target.value);
     disableButton();
   };
-  const handleContentChange = (e) => {
+  const handleContentChange = async (e) => {
     setContentValue(e.target.value);
     disableButton();
   };
-  const handleDateChange = (e) => {
+  const handleDateChange = async (e) => {
     setDateValue(e.target.value);
     disableButton();
   };
-  const handleCategoryChange = (e) => {
+  const handleCategoryChange = async (e) => {
     setCategoryValue(e.target.value);
     disableButton();
   };
-  const handleAuthorChange = (e) => {
+  const handleAuthorChange = async (e) => {
     setAuthorValue(e.target.value);
     disableButton();
   };
-  const handleClassifiedArticleChange = (e) => {
+  const handleClassifiedArticleChange = async (e) => {
     setClassifiedArticle(e.target.value);
+    disableButton();
   };
 
   const handleSubmit = () => {
@@ -206,7 +219,7 @@ const NewArticle = () => {
       date: dateValue,
       category: categoryValue,
       author: authorValue,
-      user,
+      user: user.id,
       image: imageId,
       classified: classifiedArticle,
     };
@@ -226,17 +239,48 @@ const NewArticle = () => {
       <ArticleWrapper>
         <ArticleForm>
           <Label>Title</Label>
-          <Input autoFocus onChange={handleTitleChange} />
+          <Input autoFocus onChange={(e) => handleTitleChange(e)} />
+          <AlertText>
+            {titleValue.length > 0 && titleValue.length < 4
+              ? 'Tittel må være mer enn 3 bokstaver'
+              : ''}
+            {titleValue.length > 100
+              ? 'Tittel kan ikke overskride 100 bokstaver'
+              : ''}
+          </AlertText>
           <Label>Ingress</Label>
-          <Input onChange={handleIngressChange} />
+          <Input onChange={(e) => handleIngressChange(e)} />
+          <AlertText>
+            {ingressValue.length > 0 && ingressValue.length < 11
+              ? 'Ingress må være mer enn 10 bokstaver'
+              : ''}
+            {ingressValue.length > 150
+              ? 'Ingress kan ikke overskride 150 bokstaver'
+              : ''}
+          </AlertText>
           <Label>Innhold</Label>
-          <TextArea onChange={handleContentChange} />
+          <TextArea onChange={(e) => handleContentChange(e)} />
+          <AlertText>
+            {contentValue.length > 0 && contentValue.length < 11
+              ? 'Innhold må være mer enn 10 bokstaver'
+              : ''}
+            {contentValue.length > 10000
+              ? 'Innhold kan ikke overskride 10 000 bokstaver'
+              : ''}
+          </AlertText>
           <Label>Dato</Label>
-          <Input type="date" onSelect={handleDateChange} />
+          <Input
+            type="date"
+            defaultValue={moment(Date.now()).format('YYYY-MM-DD')}
+            onChange={(e) => handleDateChange(e)}
+          />
           <Label>Kategori</Label>
           <CategoryBox>
-            <Dropdown onChange={handleCategoryChange} value={categoryValue}>
-              <option value="Generelt">Generelt</option>
+            <Dropdown
+              onChange={(e) => handleCategoryChange(e)}
+              value={categoryValue}
+            >
+              <option value="">Velg kategori</option>
               {categories &&
                 categories.map((category) => (
                   <option key={category.id} value={category.id}>
@@ -247,7 +291,8 @@ const NewArticle = () => {
             <NewCategoryButton onClick={showModal}>NY</NewCategoryButton>
           </CategoryBox>
           <Label>Forfatter</Label>
-          <Dropdown onChange={handleAuthorChange} value={authorValue}>
+          <Dropdown onChange={(e) => handleAuthorChange(e)} value={authorValue}>
+            <option value="">Velg forfatter</option>
             <option value="Marius Wallin">Marius Wallin</option>
             <option value="Vanja Vannlekkasje">Vanja Vannlekkasje</option>
             <option value="Fredrik Flom">Fredrik Flom</option>
@@ -255,16 +300,22 @@ const NewArticle = () => {
             <option value="Ove Oversvømmelse">Ove Oversvømmelse</option>
             <option value="Sissel Sluk">Sissel Sluk</option>
           </Dropdown>
-          <Label>Tilgangsnivå</Label>
+          <Label>Klassifisering</Label>
           <Dropdown
-            onChange={handleClassifiedArticleChange}
+            onChange={(e) => handleClassifiedArticleChange(e)}
             value={classifiedArticle}
           >
+            <option value="">Velg klassifisering</option>
             <option value="åpen">Åpen</option>
             <option value="hemmelig">Hemmelig</option>
           </Dropdown>
         </ArticleForm>
-        <ImageUpload setImageId={setImageId} id={imageId} />
+        <Label>Bilde</Label>
+        <ImageUpload
+          handleChange={disableButton}
+          setImageId={(e) => setImageId(e)}
+          id={imageId}
+        />
         <DisableBar>
           <CreateArticleButton
             onClick={() => {

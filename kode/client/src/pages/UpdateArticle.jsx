@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
-
+import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { TitleContext } from '../contexts/TitleProvider.jsx';
+import { download } from '../utils/imageService.js';
 import AddCategoryModal from '../components/AddCategoryModal.jsx';
-import articleService from '../utils/articleService';
+import { get, update } from '../utils/articleService';
 import categoryService from '../utils/categoryService';
 import Header from '../components/Header.jsx';
+import ImageUpload from '../components/ImageUpload.jsx';
 
 const ArticleWrapper = styled.div`
   width: 60%;
@@ -98,9 +98,11 @@ const CreateArticleButton = styled.button`
   }
 `;
 
-const DisableBar = styled.div`
+const ButtonBar = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
 `;
 
 const ErrorMessage = styled.h2`
@@ -111,8 +113,7 @@ const ErrorMessage = styled.h2`
 `;
 
 const UpdateArticle = () => {
-  const [disableState, setDisableState] = useState(true);
-  const { updateState } = useContext(TitleContext);
+  const [error, setError] = useState();
   const [article, setArticle] = useState();
   const [categories, setCategories] = useState();
   const history = useHistory();
@@ -123,16 +124,28 @@ const UpdateArticle = () => {
   const [dateValue, setDateValue] = useState();
   const [categoryValue, setCategoryValue] = useState();
   const [authorValue, setAuthorValue] = useState();
+  const [classifiedArticle, setClassifiedArticle] = useState();
+  const [imageId, setImageId] = useState();
+  const [src, setSrc] = useState();
   const { id } = useParams();
+
+  const downloadImage = async (id) => {
+    const { data } = await download(id);
+    const imgUrl = `${process.env.BASE_URL}/${data?.data?.imagePath}`;
+    console.log(`dette er image url:  ${imgUrl}`);
+    setSrc(imgUrl);
+    console.log(`dette er src${src}`);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, error } = await articleService.get(id);
+      const { data, error } = await get(id);
       if (error) {
         setError(error);
       } else {
         console.log(data);
         setArticle(data);
+        downloadImage(data.image);
       }
     };
     const fetchCategories = async () => {
@@ -169,6 +182,9 @@ const UpdateArticle = () => {
   const handleAuthorChange = (e) => {
     setAuthorValue(e.target.value);
   };
+  const handleClassifiedArticleChange = async (e) => {
+    setClassifiedArticle(e.target.value);
+  };
 
   const handleSubmit = () => {
     const updatedArticle = {
@@ -178,10 +194,13 @@ const UpdateArticle = () => {
       date: dateValue,
       category: categoryValue,
       author: authorValue,
+      image: imageId,
+      classified: classifiedArticle,
     };
 
     const updateArticle = async () => {
-      await articleService.update(id, updatedArticle);
+      console.log("ARTIKKELID SOM SKAL OPPDATERES FRA UPDATEARTICLE.JSX: " + id)
+      await update(id, updatedArticle);
     };
     updateArticle();
     alert('Fagartikkel oppdatert');
@@ -203,11 +222,7 @@ const UpdateArticle = () => {
         <ArticleWrapper>
           <ArticleForm>
             <Label>Title</Label>
-            <Input
-              autoFocus
-              onChange={handleTitleChange}
-              defaultValue={article.title}
-            />
+            <Input onChange={handleTitleChange} defaultValue={article.title} />
             <Label>Ingress</Label>
             <Input
               onChange={handleIngressChange}
@@ -228,7 +243,7 @@ const UpdateArticle = () => {
             <CategoryBox>
               <Dropdown onChange={handleCategoryChange} value={categoryValue}>
                 <option value={article.category.id}>
-                  Behold kategori {article.category.category}
+                  Behold kategori: {article.category.category}
                 </option>
                 {categories &&
                   categories.map((category) => (
@@ -242,7 +257,7 @@ const UpdateArticle = () => {
             <Label>Forfatter</Label>
             <Dropdown onChange={handleAuthorChange} value={authorValue}>
               <option value={article.author}>
-                Behold forfatter {article.author}
+                Behold forfatter: {article.author}
               </option>
               <option value="Marius Wallin">Marius Wallin</option>
               <option value="Vanja Vannlekkasje">Vanja Vannlekkasje</option>
@@ -251,18 +266,45 @@ const UpdateArticle = () => {
               <option value="Ove Oversvømmelse">Ove Oversvømmelse</option>
               <option value="Sissel Sluk">Sissel Sluk</option>
             </Dropdown>
+            <Label>Klassifisering</Label>
+            <Dropdown
+              onChange={(e) => handleClassifiedArticleChange(e)}
+              value={classifiedArticle}
+            >
+              <option value="">
+                Behold klassifisering: {article.classified}
+              </option>
+              <option value="åpen">Åpen</option>
+              <option value="hemmelig">Hemmelig</option>
+            </Dropdown>
+            <Label>Bilde</Label>
+            <ImageUpload
+              setImageId={(e) => setImageId(e)}
+              id={imageId}
+            />
           </ArticleForm>
-          <DisableBar>
+          <ButtonBar>
             <CreateArticleButton
               onClick={() => {
                 handleSubmit();
                 handleRoute('/fagartikler');
-                updateState('Fagartikler');
               }}
             >
               UPDATE
             </CreateArticleButton>
-          </DisableBar>
+            <div>
+              <Label>Nåværende bilde</Label>
+              <div
+                style={{
+                  backgroundImage: `url(${src})`,
+                  width: '100%',
+                  height: '200px',
+                  backgroundPosition: 'center',
+                  backgroundSize: 'cover',
+                }}
+              />{' '}
+            </div>
+          </ButtonBar>
           <AddCategoryModal modal={modal} close={closeModal} />
         </ArticleWrapper>
       )}

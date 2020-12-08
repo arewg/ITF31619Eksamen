@@ -9,8 +9,6 @@ export const listByCategory = async (categoryId) => Article.find({category: {$in
 
 export const listBySearch = async (search) => Article.find({title: {$regex: search }}).populate('category', 'category');
 
-//Tror kanskje denne må ha populate med email og user? Kanskje ikke
-//typ: .populate('user', 'email');
 export const createArticle = async (data) => Article.create(data);
 
 export const removeArticle = async (id) => {
@@ -18,9 +16,11 @@ export const removeArticle = async (id) => {
     article.remove();
 }
 
-export const updateArticle = async (id, data) =>
-  Article.findOneAndUpdate(id, data, {
-    new: true,
+export const updateArticle = async (id, data) => 
+
+
+  Article.findByIdAndUpdate(id, data, {
+    new: false,
     runValidators: true,
-    useFindAndModify: false,
+    useFindAndModify: true,
   });

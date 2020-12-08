@@ -42,6 +42,7 @@ const ArticleSchema = new Schema(
         image: {
             type: mongoose.Schema.ObjectId,
             ref: 'Image',
+            default: '',
         },
         classified: {
             type: String,
