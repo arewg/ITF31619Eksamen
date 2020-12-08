@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { TitleContext } from '../contexts/TitleProvider';
 
 const Title = styled.div`
   width: 100%;
   padding-top: 110px;
   padding-bottom: 110px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,18 +14,20 @@ const Title = styled.div`
   font-size: 45px;
 `;
 
-const Header = () => {
-  const headerTitle = useContext(TitleContext);
+
+
+
+
+const Header = ({title, image}) => {
+
 
   return (
     <Title
       style={{
-        backgroundImage: `url(${headerTitle.image})`
+        backgroundImage: `url(${image})`
       }}
     >
-      {headerTitle.state
-        ? headerTitle.state
-        : 'Velkommen til FG Rørleggerservice AS'}
+      {title}
     </Title>
   );
 };

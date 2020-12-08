@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { TitleContext } from '../contexts/TitleProvider.jsx';
 import AddCategoryModal from '../components/AddCategoryModal.jsx';
 import { create } from '../utils/articleService';
 import { get } from '../utils/categoryService';
 import { useAuthContext } from '../contexts/AuthProvider.jsx';
 import ImageUpload from '../components/ImageUpload.jsx';
+import Header from '../components/Header.jsx';
 
 const ArticleWrapper = styled.div`
   width: 60%;
@@ -117,7 +117,6 @@ const ErrorMessage = styled.h2`
 
 const NewArticle = () => {
   const [disableState, setDisableState] = useState(true);
-  const { updateState } = useContext(TitleContext);
   const [categories, setCategories] = useState();
   const history = useHistory();
   const [modal, setModal] = useState(false);
@@ -128,7 +127,7 @@ const NewArticle = () => {
   const [categoryValue, setCategoryValue] = useState('Generelt');
   const [authorValue, setAuthorValue] = useState('Lars Larsen');
   const [classifiedArticle, setClassifiedArticle] = useState('åpen');
-  const [imageId, setImageId] = useState('')
+  const [imageId, setImageId] = useState('');
   const { user } = useAuthContext();
 
   useEffect(() => {
@@ -193,8 +192,7 @@ const NewArticle = () => {
   };
 
   const handleSubmit = () => {
-
-    console.log("DETTE ER IMAGEID"+imageId)
+    console.log('DETTE ER IMAGEID' + imageId);
     const newArticle = {
       title: titleValue,
       ingress: ingressValue,
@@ -226,64 +224,68 @@ const NewArticle = () => {
   };
 
   return (
-    <ArticleWrapper>
-      <ArticleForm>
-        <Label>Title</Label>
-        <Input autoFocus={true} onChange={handleTitleChange} />
-        <Label>Ingress</Label>
-        <Input onChange={handleIngressChange} />
-        <Label>Innhold</Label>
-        <TextArea onChange={handleContentChange} />
-        <Label>Dato</Label>
-        <Input onChange={handleDateChange} />
-        <Label>Kategori</Label>
-        <CategoryBox>
-          <Dropdown onChange={handleCategoryChange} value={categoryValue}>
-            <option value="Generelt">Generelt</option>
-            {categories &&
-              categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.category}
-                </option>
-              ))}
+    <>
+      <Header title="Ny artikkel" />
+      <ArticleWrapper>
+        <ArticleForm>
+          <Label>Title</Label>
+          <Input autoFocus={true} onChange={handleTitleChange} />
+          <Label>Ingress</Label>
+          <Input onChange={handleIngressChange} />
+          <Label>Innhold</Label>
+          <TextArea onChange={handleContentChange} />
+          <Label>Dato</Label>
+          <Input onChange={handleDateChange} />
+          <Label>Kategori</Label>
+          <CategoryBox>
+            <Dropdown onChange={handleCategoryChange} value={categoryValue}>
+              <option value="Generelt">Generelt</option>
+              {categories &&
+                categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.category}
+                  </option>
+                ))}
+            </Dropdown>
+            <NewCategoryButton onClick={showModal}>NY</NewCategoryButton>
+          </CategoryBox>
+          <Label>Forfatter</Label>
+          <Dropdown onChange={handleAuthorChange} value={authorValue}>
+            <option value="Marius Wallin">Marius Wallin</option>
+            <option value="Vanja Vannlekkasje">Vanja Vannlekkasje</option>
+            <option value="Fredrik Flom">Fredrik Flom</option>
+            <option value="Preben Plumber">Preben Plumber</option>
+            <option value="Ove Oversvømmelse">Ove Oversvømmelse</option>
+            <option value="Sissel Sluk">Sissel Sluk</option>
           </Dropdown>
-          <NewCategoryButton onClick={showModal}>NY</NewCategoryButton>
-        </CategoryBox>
-        <Label>Forfatter</Label>
-        <Dropdown onChange={handleAuthorChange} value={authorValue}>
-          <option value="Marius Wallin">Marius Wallin</option>
-          <option value="Vanja Vannlekkasje">Vanja Vannlekkasje</option>
-          <option value="Fredrik Flom">Fredrik Flom</option>
-          <option value="Preben Plumber">Preben Plumber</option>
-          <option value="Ove Oversvømmelse">Ove Oversvømmelse</option>
-        </Dropdown>
-        <Label>Tilgangsnivå</Label>
-        <Dropdown
-          onChange={handleClassifiedArticleChange}
-          value={classifiedArticle}
-        >
-          <option value="åpen">Åpen</option>
-          <option value="hemmelig">Hemmelig</option>
-        </Dropdown>
-      </ArticleForm>
-      <ImageUpload setImageId={setImageId} id={imageId}/>
-      <DisableBar>
-        <CreateArticleButton
-          onClick={() => {
-            handleSubmit();
-            handleRoute('/fagartikler');
-            updateState('Fagartikler');
-          }}
-          disabled={disableState}
-        >
-          CREATE
-        </CreateArticleButton>
-        <ErrorMessage hidden={!disableState}>
-          Vennligst fyll ut alle feltene.
-        </ErrorMessage>
-      </DisableBar>
-      <AddCategoryModal modal={modal} close={closeModal} />
-    </ArticleWrapper>
+          <Label>Tilgangsnivå</Label>
+          <Dropdown
+            onChange={handleClassifiedArticleChange}
+            value={classifiedArticle}
+          >
+            <option value="åpen">Åpen</option>
+            <option value="hemmelig">Hemmelig</option>
+          </Dropdown>
+        </ArticleForm>
+        <ImageUpload setImageId={setImageId} id={imageId} />
+        <DisableBar>
+          <CreateArticleButton
+            onClick={() => {
+              handleSubmit();
+              handleRoute('/fagartikler');
+              updateState('Fagartikler');
+            }}
+            disabled={disableState}
+          >
+            CREATE
+          </CreateArticleButton>
+          <ErrorMessage hidden={!disableState}>
+            Vennligst fyll ut alle feltene.
+          </ErrorMessage>
+        </DisableBar>
+        <AddCategoryModal modal={modal} close={closeModal} />
+      </ArticleWrapper>
+    </>
   );
 };
 

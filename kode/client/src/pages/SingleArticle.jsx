@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { useParams, useHistory } from 'react-router-dom';
-import { TitleContext } from '../contexts/TitleProvider';
 import { get } from '../utils/articleService';
 import { useAuthContext } from '../contexts/AuthProvider';
-import {download} from '../utils/imageService.js';
+import { download } from '../utils/imageService.js';
+import Header from '../components/Header';
 
 const DetailText = styled.p`
   margin-bottom: 50px;
@@ -70,15 +70,13 @@ const EditButton = styled.button`
 const SingleArticle = () => {
   const [article, setArticle] = useState();
   const [src, setSrc] = useState(null);
-  const { setImageUrl } = useContext(TitleContext);
   const { id } = useParams();
   const history = useHistory();
-  
+
   const downloadImage = async (id) => {
-    const {data} = await download(id);
+    const { data } = await download(id);
     const imgUrl = `${process.env.BASE_URL}/${data?.data?.imagePath}`;
-    console.log("dette er image url:  "+imgUrl);
-    setImageUrl(imgUrl);
+    console.log('dette er image url:  ' + imgUrl);
     setSrc(imgUrl);
   };
 
@@ -106,23 +104,25 @@ const SingleArticle = () => {
   return (
     <>
       {article && (
-        <ContentsArticle>
-            {src && <img alt="my" src={src} />}
-          <DivAuthorAndDate>
-            <DetailText>Av: {article.author}</DetailText>
-            <DetailText>{article.date}</DetailText>
-          </DivAuthorAndDate>
-          <ContentText>{article.content}</ContentText>
-          <DetailText>{article.category.category}</DetailText>
-          {isLoggedIn && isAdmin && (
-            <DivButton>
-              <DeleteButton>Slett</DeleteButton>
-              <EditButton onClick={() => handleEdit(article.id)}>
-                Rediger
-              </EditButton>
-            </DivButton>
-          )}
-        </ContentsArticle>
+        <>
+          <Header title={article.title} image={src}/>
+          <ContentsArticle>
+            <DivAuthorAndDate>
+              <DetailText>Av: {article.author}</DetailText>
+              <DetailText>{article.date}</DetailText>
+            </DivAuthorAndDate>
+            <ContentText>{article.content}</ContentText>
+            <DetailText>{article.category.category}</DetailText>
+            {isLoggedIn && isAdmin && (
+              <DivButton>
+                <DeleteButton>Slett</DeleteButton>
+                <EditButton onClick={() => handleEdit(article.id)}>
+                  Rediger
+                </EditButton>
+              </DivButton>
+            )}
+          </ContentsArticle>
+        </>
       )}
     </>
   );
