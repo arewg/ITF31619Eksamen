@@ -17,6 +17,11 @@ const ArticleForm = styled.form`
   width: 100%;
 `;
 
+const AlertText = styled.label`
+  font-size: 14px;
+  color: red;
+`;
+
 const Input = styled.input`
   width: 100%;
   border: 2px solid black;
@@ -156,9 +161,14 @@ const NewArticle = () => {
   const disableButton = () => {
     if (
       titleValue === '' ||
+      titleValue.length <= 3 ||
       ingressValue === '' ||
+      ingressValue.length <= 10 ||
       contentValue === '' ||
-      dateValue === ''
+      contentValue.length <= 10 ||
+      dateValue === '' ||
+      categoryValue === '' ||
+      authorValue === ''
     ) {
       setDisableState(true);
     } else {
@@ -226,16 +236,37 @@ const NewArticle = () => {
       <ArticleWrapper>
         <ArticleForm>
           <Label>Title</Label>
-          <Input autoFocus onChange={handleTitleChange} />
+          <Input autoFocus onChange={(e) => handleTitleChange(e)} />
+          <AlertText>
+            {titleValue.length > 0 && titleValue.length < 4
+              ? 'Tittel må være mer enn 3 bokstaver'
+              : ''}
+          </AlertText>
           <Label>Ingress</Label>
-          <Input onChange={handleIngressChange} />
+          <Input onChange={(e) => handleIngressChange(e)} />
+          <AlertText>
+            {ingressValue.length > 0 && ingressValue.length < 11
+              ? 'Ingress må være mer enn 10 bokstaver'
+              : ''}
+          </AlertText>
           <Label>Innhold</Label>
-          <TextArea onChange={handleContentChange} />
-          <Label>Dato</Label>
-          <Input type="date" onSelect={handleDateChange} />
+          <TextArea onChange={(e) => handleContentChange(e)} />
+          <AlertText>
+            {contentValue.length > 0 && contentValue.length < 11
+              ? 'Innhold må være mer enn 10 bokstaver'
+              : ''}
+          </AlertText>
+            <Label>Dato</Label>
+          <Input
+            type="date"
+            onChange={(e) => handleDateChange(e)}
+          />
           <Label>Kategori</Label>
           <CategoryBox>
-            <Dropdown onChange={handleCategoryChange} value={categoryValue}>
+            <Dropdown
+              onChange={(e) => handleCategoryChange(e)}
+              value={categoryValue}
+            >
               <option value="Generelt">Generelt</option>
               {categories &&
                 categories.map((category) => (
@@ -247,7 +278,7 @@ const NewArticle = () => {
             <NewCategoryButton onClick={showModal}>NY</NewCategoryButton>
           </CategoryBox>
           <Label>Forfatter</Label>
-          <Dropdown onChange={handleAuthorChange} value={authorValue}>
+          <Dropdown onChange={(e) => handleAuthorChange(e)} value={authorValue}>
             <option value="Marius Wallin">Marius Wallin</option>
             <option value="Vanja Vannlekkasje">Vanja Vannlekkasje</option>
             <option value="Fredrik Flom">Fredrik Flom</option>
@@ -257,14 +288,14 @@ const NewArticle = () => {
           </Dropdown>
           <Label>Tilgangsnivå</Label>
           <Dropdown
-            onChange={handleClassifiedArticleChange}
+            onChange={(e) => handleClassifiedArticleChange(e)}
             value={classifiedArticle}
           >
             <option value="åpen">Åpen</option>
             <option value="hemmelig">Hemmelig</option>
           </Dropdown>
         </ArticleForm>
-        <ImageUpload setImageId={setImageId} id={imageId} />
+        <ImageUpload setImageId={(e) => setImageId(e)} id={imageId} />
         <DisableBar>
           <CreateArticleButton
             onClick={() => {
