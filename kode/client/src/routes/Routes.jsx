@@ -16,6 +16,7 @@ import Login from '../pages/Login.jsx';
 import UpdateArticle from '../pages/UpdateArticle.jsx';
 import Register from '../pages/register.jsx';
 import Report from '../pages/Report.jsx';
+import Superadmin from '../pages/Superadmin.jsx';
 
 const Routes = () => (
   <Router>
@@ -55,6 +56,9 @@ const Routes = () => (
             </Route>
             <Route exact path="/report">
                 <Report />
+            </Route>
+            <Route exact path="/superadmin">
+              <Superadmin />
             </Route>
             <Route path="*">
               <NoMatch />

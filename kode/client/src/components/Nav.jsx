@@ -70,7 +70,7 @@ const NavMenuItem = styled.li`
 
 const Nav = () => {
 
-    const { isLoggedIn, isAdmin } = useAuthContext();
+    const { isLoggedIn, isAdmin, isSuperadmin } = useAuthContext();
     const { updateState } = useContext(TitleContext);
 
     const updateTitle = (title) => {
@@ -115,6 +115,13 @@ const Nav = () => {
             <NavMenuItem>
               <NavLink exact to="/report" activeClassName="active" onClick={() => updateTitle("Rapport over hendvendelser")}>
                 Rapport
+              </NavLink>
+            </NavMenuItem>
+            }
+            {isLoggedIn && isSuperadmin &&
+            <NavMenuItem>
+              <NavLink exact to="superadmin" activeClassName="active" onClick={() => updateTitle("Superadmin")}>
+                Superadmin
               </NavLink>
             </NavMenuItem>
             }
