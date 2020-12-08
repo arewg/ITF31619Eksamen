@@ -158,10 +158,7 @@ const NewArticle = () => {
       titleValue === '' ||
       ingressValue === '' ||
       contentValue === '' ||
-      dateValue === '' ||
-      categoryValue === '' ||
-      authorValue === '' ||
-      imageId === ''
+      dateValue === ''
     ) {
       setDisableState(true);
     } else {
@@ -235,7 +232,7 @@ const NewArticle = () => {
           <Label>Innhold</Label>
           <TextArea onChange={handleContentChange} />
           <Label>Dato</Label>
-          <Input type="date" onChange={handleDateChange} />
+          <Input type="date" onSelect={handleDateChange} />
           <Label>Kategori</Label>
           <CategoryBox>
             <Dropdown onChange={handleCategoryChange} value={categoryValue}>

@@ -40,6 +40,14 @@ export const get = async (id) => {
   }
 };
 
+export const remove = async (id) => {
+  try{
+    return await http.delete(`${API_URL}/${id}`);
+  } catch (error) {
+    return error.response.data;
+  }
+}
+
 export const create = async (data) => {
   try {
     return await http.post(`${API_URL}/nyartikkel`, data);
@@ -66,4 +74,5 @@ export default {
   listBySearchWord,
   update,
   get,
+  remove,
 };

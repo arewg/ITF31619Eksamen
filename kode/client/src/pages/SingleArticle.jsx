@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams, useHistory } from 'react-router-dom';
-import { get } from '../utils/articleService';
+import { get, remove } from '../utils/articleService';
 import { useAuthContext } from '../contexts/AuthProvider';
 import { download } from '../utils/imageService.js';
 import Header from '../components/Header';
@@ -70,20 +70,21 @@ const EditButton = styled.button`
 const SingleArticle = () => {
   const [article, setArticle] = useState();
   const [src, setSrc] = useState(null);
+  const [error, setError] = useState();
   const { id } = useParams();
   const history = useHistory();
 
   const downloadImage = async (id) => {
     const { data } = await download(id);
     const imgUrl = `${process.env.BASE_URL}/${data?.data?.imagePath}`;
-    console.log('dette er image url:  ' + imgUrl);
+    console.log(`dette er image url:  ${imgUrl}`);
     setSrc(imgUrl);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       const { data, error } = await get(id);
-      console.log('Dette er id i useEffect single article ' + id);
+      console.log(`Dette er id i useEffect single article ${id}`);
       if (error) {
         setError(error);
       } else {
@@ -95,8 +96,14 @@ const SingleArticle = () => {
     fetchData();
   }, []);
 
-  const handleEdit = (artikkel) => {
-    history.push('oppdater/' + artikkel);
+  const handleEdit = (article) => {
+    history.push(`oppdater/${article}`);
+  };
+
+  const handleDelete = (article) => {
+    alert('Artikkel er nå slettet');
+    remove(article);
+    history.push('/fagartikler');
   };
 
   const { isLoggedIn, isAdmin } = useAuthContext();
@@ -105,7 +112,7 @@ const SingleArticle = () => {
     <>
       {article && (
         <>
-          <Header title={article.title} image={src}/>
+          <Header title={article.title} image={src} />
           <ContentsArticle>
             <DivAuthorAndDate>
               <DetailText>Av: {article.author}</DetailText>
@@ -115,8 +122,10 @@ const SingleArticle = () => {
             <DetailText>{article.category.category}</DetailText>
             {isLoggedIn && isAdmin && (
               <DivButton>
-                <DeleteButton>Slett</DeleteButton>
-                <EditButton onClick={() => handleEdit(article.id)}>
+                <DeleteButton onClick={() => handleDelete(article.id)}>
+                  Slett
+                </DeleteButton>
+                <EditButton onClick={() => handleEdit(article)}>
                   Rediger
                 </EditButton>
               </DivButton>
