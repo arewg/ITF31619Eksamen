@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.get('/:id', articleController.get);
 router.get('/category', categoryController.getCategory);
+//router.get('/', articleController.list);
 router.get('/', articleController.list);
 router.get('/category/:id', articleController.listByCategory)
 router.get('/search/:title', articleController.listBySearch)
