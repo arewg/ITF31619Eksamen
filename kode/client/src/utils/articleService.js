@@ -13,7 +13,7 @@ const API_URL = '/fagartikler';
     }
   };*/
 
-export const listArticlesPage = async () => {
+export const list = async () => {
   try {
     return await http.get(`${API_URL}/`);
   } catch (err) {
@@ -78,7 +78,6 @@ export const update = async (id, data) => {
 export default {
   create,
   list,
-  listArticlesPage,
   listByCategory,
   listBySearchWord,
   update,
