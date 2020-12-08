@@ -61,11 +61,11 @@ const Category = styled.h2`
 `;
 
 const OpenArticles = ({ articles }) => {
-  const { updateState } = useContext(TitleContext);
   const history = useHistory();
 
   const handleArticleClick = (path) => {
     history.push('/fagartikler/' + path);
+    console.log("DENNE ARTIKKELIDEN BLE TRYKKET PÅ I OPENARTICLES" + path)
   };
 
   return (
@@ -78,7 +78,6 @@ const OpenArticles = ({ articles }) => {
                 key={article.id}
                 onClick={() => {
                   handleArticleClick(article.id);
-                  updateState(article.title);
                 }}
               >
                 <ArticleImage></ArticleImage>

@@ -72,13 +72,15 @@ const AllArticles = ({ articles }) => {
 
     
     const handleArticleClick = (path) => {
+        console.log("DENNE ARTIKKELIDEN BLE TRYKKET PÅ I ALLARTICLES" + path)
         history.push("/fagartikler/"+path);
+
     };
 
     return(
         <>
             {articles && articles.map((article) => (  
-            <ArticleBox key={article.id} onClick={() => {handleArticleClick(article.id); updateState(article.title)}}>
+            <ArticleBox key={article.id} onClick={() => {handleArticleClick(article.id)}}>
                 <ArticleImage></ArticleImage>
                     <TextBox>
                         <Title>{article.title}</Title>

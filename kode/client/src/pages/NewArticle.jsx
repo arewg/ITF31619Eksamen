@@ -130,10 +130,10 @@ const NewArticle = () => {
   const [titleValue, setTitleValue] = useState('');
   const [ingressValue, setIngressValue] = useState('');
   const [contentValue, setContentValue] = useState('');
-  const [dateValue, setDateValue] = useState();
+  const [dateValue, setDateValue] = useState('');
   const [categoryValue, setCategoryValue] = useState('');
-  const [authorValue, setAuthorValue] = useState('Marius Wallin');
-  const [classifiedArticle, setClassifiedArticle] = useState('åpen');
+  const [authorValue, setAuthorValue] = useState('');
+  const [classifiedArticle, setClassifiedArticle] = useState('');
   const [imageId, setImageId] = useState('');
   const { user } = useAuthContext();
 
@@ -163,7 +163,7 @@ const NewArticle = () => {
   const disableButton = () => {
     if (
       titleValue === '' ||
-      titleValue.length <= 3 ||
+      titleValue <= 3 ||
       ingressValue === '' ||
       ingressValue.length <= 10 ||
       contentValue === '' ||
@@ -208,6 +208,7 @@ const NewArticle = () => {
   };
   const handleClassifiedArticleChange = async (e) => {
     setClassifiedArticle(e.target.value);
+    disableButton();
   };
 
   const handleSubmit = () => {
@@ -279,6 +280,7 @@ const NewArticle = () => {
               onChange={(e) => handleCategoryChange(e)}
               value={categoryValue}
             >
+              <option value="">Velg kategori</option>
               {categories &&
                 categories.map((category) => (
                   <option key={category.id} value={category.id}>
@@ -290,6 +292,7 @@ const NewArticle = () => {
           </CategoryBox>
           <Label>Forfatter</Label>
           <Dropdown onChange={(e) => handleAuthorChange(e)} value={authorValue}>
+            <option value="">Velg forfatter</option>
             <option value="Marius Wallin">Marius Wallin</option>
             <option value="Vanja Vannlekkasje">Vanja Vannlekkasje</option>
             <option value="Fredrik Flom">Fredrik Flom</option>
@@ -297,16 +300,22 @@ const NewArticle = () => {
             <option value="Ove Oversvømmelse">Ove Oversvømmelse</option>
             <option value="Sissel Sluk">Sissel Sluk</option>
           </Dropdown>
-          <Label>Tilgangsnivå</Label>
+          <Label>Klassifisering</Label>
           <Dropdown
             onChange={(e) => handleClassifiedArticleChange(e)}
             value={classifiedArticle}
           >
+            <option value="">Velg klassifisering</option>
             <option value="åpen">Åpen</option>
             <option value="hemmelig">Hemmelig</option>
           </Dropdown>
         </ArticleForm>
-        <ImageUpload setImageId={(e) => setImageId(e)} id={imageId} />
+        <Label>Bilde</Label>
+        <ImageUpload
+          handleChange={disableButton}
+          setImageId={(e) => setImageId(e)}
+          id={imageId}
+        />
         <DisableBar>
           <CreateArticleButton
             onClick={() => {
