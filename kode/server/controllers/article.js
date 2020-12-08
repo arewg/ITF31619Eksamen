@@ -18,12 +18,15 @@ export const get = async (req, res, next) => {
 };
 
 export const list = async (req, res, next) => {
+    console.log("HEI2");
         const result = await articleService.listArticles();
         res.status(200).json(result)
     }
 
 export const listArticlesPage = async (req, res, next) => {
-    const result = articleService.listArticlesPage;
+    console.log(JSON.stringify(req.query));
+    console.log("HEI");
+    const result = await articleService.listArticlesPage(req.query);
     res.status(200).json(result)
 }
 

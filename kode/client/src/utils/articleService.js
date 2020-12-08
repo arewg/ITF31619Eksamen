@@ -5,17 +5,17 @@ const API_URL = '/fagartikler';
 
 //trenger vi alle her? 
 
-export const list = async () => {
+/*export const list = async () => {
     try {
       return await http.get(`${API_URL}`);
     } catch (err) {
       return err.response.data;
     }
-  };
+  };*/
 
 export const listArticlesPage = async () => {
   try {
-    return await http.get(`${API_URL}`);
+    return await http.get(`${API_URL}/`);
   } catch (err) {
     return err.response.data;
   }

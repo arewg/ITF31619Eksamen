@@ -9,10 +9,16 @@ export const listByCategory = async (categoryId) => Article.find({category: {$in
 
 // Leksjon 14
 export const listArticlesPage = async (queryStr) => {
+  console.log(JSON.stringify(queryStr));
   const { limit, page } = queryStr;
-  const filters = new ApiFilters(Article.find(), queryStr);
+  const filters = new ApiFilters(Article.find(), queryStr)
+    .filter()
+    .sort()
+    .limitFields()
+    .searchByQuery();
+
   const articles = await filters.query
-  const paginated = await filters.pagination().query.populate('title', 'author');
+  const paginated = await filters.pagination().query.populate('category', 'category');
 
   return {
     results: articles.length,
