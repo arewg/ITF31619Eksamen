@@ -107,7 +107,7 @@ const Nav = () => {
             </NavMenuItem>
             {!isLoggedIn &&
             <NavMenuItem>
-            <NavLink exact to="register" activeClassName="active" onClick={() => updateTitle("Opprett bruker")}>
+            <NavLink exact to="/register" activeClassName="active" onClick={() => updateTitle("Opprett bruker")}>
                   Opprett bruker
                 </NavLink>
             </NavMenuItem>}

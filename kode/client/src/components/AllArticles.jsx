@@ -69,7 +69,6 @@ const AllArticles = ({ articles }) => {
 
     const { updateState } = useContext(TitleContext);
     const history = useHistory();
-    const { isLoggedIn, isAdmin } = useAuthContext();
 
     
     const handleArticleClick = (path) => {

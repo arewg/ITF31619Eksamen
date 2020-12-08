@@ -1,12 +1,19 @@
 // Leksjon 13
 
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import LoginForm from '../components/LoginForm';
+import Header from '../components/Header.jsx';
 
-const Login = () => <LoginForm />;
-
+const Login = () => {
+  return (
+    <>
+      <Header title="Logg inn" />
+      <LoginForm />;
+    </>
+  );
+};
 
 /*const LoginWrapper = styled.div`
     width: 60%;

@@ -41,17 +41,15 @@ const StyledNavbar = styled.div`
 `;
 
 
-
+//FJERNET STYLEDHEADER
 const MainLayout = ({ children }) => (
   <Box>
-      <StyledHeader>
+      
         <StyledNavbar>
             <Logo>FG</Logo>
             <Nav />
         </StyledNavbar>
-        <Header />
-    </StyledHeader>
-    <Box w="100%" padding="20px 20px" margin="0 auto">
+    <Box w="100%" margin="0 auto">
       {children}
     </Box>
     <Footer />

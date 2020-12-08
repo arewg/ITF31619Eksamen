@@ -11,8 +11,12 @@ const List = styled.ul`
 `;
 
 const ListItem = styled.li`
+width:60%;
+margin: 0 auto;
 display:flex;
-margin-bottom: 8px;
+border-bottom: 1px solid black;
+margin-bottom: 10px;
+
 &:hover{
     transform: scale(1.01);
     cursor: pointer;
@@ -22,6 +26,7 @@ margin-bottom: 8px;
 
 const StyledListItem = styled.a`
 margin-right: 19px;
+font-size: 20px;
 &:first-child{
     font-weight: bold;
 }
