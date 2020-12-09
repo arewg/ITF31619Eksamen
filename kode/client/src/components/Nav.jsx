@@ -120,7 +120,7 @@ const Nav = () => {
             }
             {isLoggedIn && isSuperadmin &&
             <NavMenuItem>
-              <NavLink exact to="superadmin" activeClassName="active" onClick={() => updateTitle("Superadmin")}>
+              <NavLink exact to="/superadmin" activeClassName="active" onClick={() => updateTitle("Superadmin")}>
                 Superadmin
               </NavLink>
             </NavMenuItem>

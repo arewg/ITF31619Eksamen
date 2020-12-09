@@ -11,7 +11,7 @@ export const listByCategory = async (categoryId) => Article.find({category: {$in
 export const listArticlesPage = async (queryStr) => {
   console.log(JSON.stringify(queryStr));
   const { limit, page } = queryStr;
-  const filters = new ApiFilters(Article.find(), queryStr)
+  const filters = new ApiFilters(Article.find().sort({view: -1}), queryStr)
     .filter()
     .sort()
     .limitFields()

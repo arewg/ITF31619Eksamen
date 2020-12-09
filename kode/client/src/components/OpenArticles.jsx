@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useContext } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { TitleContext } from '../contexts/TitleProvider.jsx';
-import { useAuthContext } from '../contexts/AuthProvider.jsx';
 
 const ArticleBox = styled.div`
   margin-top: 50px;
