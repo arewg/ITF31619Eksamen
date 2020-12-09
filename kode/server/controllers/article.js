@@ -21,11 +21,10 @@ export const get = async (req, res, next) => {
     res.status(200).json(article);
 };
 
-/*export const list = async (req, res, next) => {
-    console.log("HEI2");
-        const result = await articleService.listArticles();
+export const listTopTen = async (req, res, next) => {
+        const result = await articleService.listTopTen();
         res.status(200).json(result)
-    }*/
+    }
 
 export const list = async (req, res, next) => {
     console.log(JSON.stringify(req.query));

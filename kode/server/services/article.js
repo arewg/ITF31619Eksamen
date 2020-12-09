@@ -3,7 +3,7 @@ import { ApiFilters } from '../utils/apiFilters.js';
 
 export const getArticleById = async (id) => Article.findById(id).populate('category', 'category');
 
-export const listArticles = async () => Article.find().populate('category', 'category');
+export const listTopTen = async () => Article.find().sort({view: -1}).limit(10).populate('category', 'category');
 
 export const listByCategory = async (categoryId) => Article.find({category: {$in : categoryId}}).populate('category', 'category');
 
@@ -11,7 +11,7 @@ export const listByCategory = async (categoryId) => Article.find({category: {$in
 export const listArticlesPage = async (queryStr) => {
   console.log(JSON.stringify(queryStr));
   const { limit, page } = queryStr;
-  const filters = new ApiFilters(Article.find().sort({view: -1}), queryStr)
+  const filters = new ApiFilters(Article.find(), queryStr)
     .filter()
     .sort()
     .limitFields()
