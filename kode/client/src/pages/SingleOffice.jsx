@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { WideWrapper } from '../styles/Styles.jsx';
 import EmployeeData from '../data/EmployeeData.jsx';
 import Header from '../components/Header';
 
-const Wrapper = styled.div`
-  padding: 20px 20px;
-`;
 
 const Title = styled.h1`
   font-weight: bold;
@@ -53,12 +52,13 @@ const PhoneBox = styled.div`
 
 const SingleOffice = () => {
   const [employees, setEmployees] = useState(EmployeeData);
+  const kontor = useParams();
 
   return (
     <>
-      <Header title="Kontor" />
-      <Wrapper>
-        <Title>Velkommen til</Title>
+      <Header title={`Kontor Rørlegger ${kontor[0]}`} />
+      <WideWrapper>
+        <Title>Velkommen til Rørlegger {kontor[0]}</Title>
         <Text>
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
           nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
@@ -79,7 +79,7 @@ const SingleOffice = () => {
         <PhoneBox>
           <Title>Kontakt oss på 69 99 00 00</Title>
         </PhoneBox>
-      </Wrapper>
+      </WideWrapper>
     </>
   );
 };

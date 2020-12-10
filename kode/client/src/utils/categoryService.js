@@ -1,9 +1,6 @@
 import http from './http';
 
-//SJEKKE OM DETTE BLIR RIKTIG URL
 const API_URL = '/category';
-
-//trenger vi alle her? 
 
 export const get = async () => {
   try {

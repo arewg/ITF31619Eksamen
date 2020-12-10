@@ -1,14 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { NarrowWrapper } from '../styles/Styles.jsx';
 import { useAuthContext } from '../contexts/AuthProvider.jsx';
 import { list } from '../utils/emailService.js';
 import Header from '../components/Header.jsx';
-
-const ReportWrapper = styled.div`
-  width: 60%;
-  margin: 0 auto;
-`;
 
 const ReportBox = styled.div`
   margin-top: 50px;
@@ -53,8 +48,6 @@ const Message = styled.p`
 const Report = () => {
   const [reports, setReports] = useState();
   const [error, setError] = useState();
-  const history = useHistory();
-  const { isLoggedIn, isAdmin } = useAuthContext();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,8 +63,8 @@ const Report = () => {
 
   return (
     <>
-      <Header title="Hendvendelser" />
-      <ReportWrapper>
+      <Header title="Henvendelser" />
+      <NarrowWrapper>
         {reports &&
           reports.map((report) => (
             <ReportBox key={report.id}>
@@ -82,7 +75,7 @@ const Report = () => {
               </TextBox>
             </ReportBox>
           ))}
-      </ReportWrapper>
+      </NarrowWrapper>
     </>
   );
 };

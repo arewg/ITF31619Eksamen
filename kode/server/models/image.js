@@ -1,3 +1,8 @@
+
+/**
+ * Denne er hentet direkte fra Marius Wallins forelesning 'Leksjon 13'
+ */
+
 import mongoose from 'mongoose';
 
 const { Schema } = mongoose;

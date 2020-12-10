@@ -1,4 +1,7 @@
-//Leksjon 14
+/**
+ * ApiFilter er hentet direkte fra Marius Wallins'
+ * leksjon 14
+ */
 
 export class ApiFilters {
     constructor(query, queryStr) {

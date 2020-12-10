@@ -1,3 +1,9 @@
+/**
+ * Services er satt opp basert på Marius Wallins' forelesninger 
+ * gjennom semestert, men blitt modifisert for prosjektet. 
+ * Denne er hentet direkte fra Marius Wallins' leksjon 13
+ */
+
 import Image from '../models/image.js';
 
 export const uploadImage = async (data) => {

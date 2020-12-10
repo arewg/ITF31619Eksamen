@@ -1,3 +1,8 @@
+/**
+ * Services er satt opp basert på Marius Wallins' forelesninger gjennom semestert, men blitt modifisert 
+ * for prosjektet. F.eks er Article.js sin listByCategory (linje 13) 
+ * modifisert ved at vi burker mongoose-feltet til å finne kategori på id.
+ */
 import Article from '../models/article.js';
 import { ApiFilters } from '../utils/apiFilters.js';
 
@@ -7,7 +12,7 @@ export const listTopTen = async () => Article.find().sort({view: -1}).limit(10).
 
 export const listByCategory = async (categoryId) => Article.find({category: {$in : categoryId}}).populate('category', 'category');
 
-// Leksjon 14
+//Hentet direkte fra leksjon 14.
 export const listArticlesPage = async (queryStr) => {
   console.log(JSON.stringify(queryStr));
   const { limit, page } = queryStr;

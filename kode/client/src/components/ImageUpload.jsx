@@ -1,13 +1,18 @@
+/**
+ * Komponenten er hentent fra Marius Wallins' 
+ * forelesning 'Leksjon 13' og er blitt litt modifisert.
+ */
+
 import React, { useState } from 'react';
-import { upload } from '../utils/imageService';
 import styled from 'styled-components';
+import { upload } from '../utils/imageService';
 
 const Wrapper = styled.div`
-
-display: flex;
-justify-content: space-between;
-align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
+
 const Button = styled.button`
   width: 135px;
   height: 70px;
@@ -22,8 +27,6 @@ const Button = styled.button`
     background-color: #a4adfa;
   }
 `;
-
-
 
 const ImageUpload = ({ setImageId }) => {
   const [file, setFile] = useState();

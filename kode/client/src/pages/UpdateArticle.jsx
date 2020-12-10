@@ -1,17 +1,19 @@
+/**
+ * UpdateArticle er basert og modifisert på obligatorisk
+ * oppgave 6 av Are Warlo Gulliksen og Elise Dalane Mellegård
+ */
+
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { NarrowWrapper } from '../styles/Styles.jsx';
 import { download } from '../utils/imageService.js';
-import AddCategoryModal from '../components/AddCategoryModal.jsx';
 import { get, update } from '../utils/articleService';
 import categoryService from '../utils/categoryService';
 import Header from '../components/Header.jsx';
+import AddCategoryModal from '../components/AddCategoryModal.jsx';
 import ImageUpload from '../components/ImageUpload.jsx';
 
-const ArticleWrapper = styled.div`
-  width: 60%;
-  margin: 0 auto;
-`;
 
 const ArticleForm = styled.form`
   width: 100%;
@@ -105,12 +107,6 @@ const ButtonBar = styled.div`
   margin-top: 10px;
 `;
 
-const ErrorMessage = styled.h2`
-  color: red;
-  font-size: 22px;
-  font-weight: bold;
-  margin-left: 10px;
-`;
 
 const UpdateArticle = () => {
   const [error, setError] = useState();
@@ -132,9 +128,7 @@ const UpdateArticle = () => {
   const downloadImage = async (id) => {
     const { data } = await download(id);
     const imgUrl = `${process.env.BASE_URL}/${data?.data?.imagePath}`;
-    console.log(`dette er image url:  ${imgUrl}`);
     setSrc(imgUrl);
-    console.log(`dette er src${src}`);
   };
 
   useEffect(() => {
@@ -143,7 +137,6 @@ const UpdateArticle = () => {
       if (error) {
         setError(error);
       } else {
-        console.log(data);
         setArticle(data);
         downloadImage(data.image);
       }
@@ -199,7 +192,6 @@ const UpdateArticle = () => {
     };
 
     const updateArticle = async () => {
-      console.log("ARTIKKELID SOM SKAL OPPDATERES FRA UPDATEARTICLE.JSX: " + id)
       await update(id, updatedArticle);
     };
     updateArticle();
@@ -219,7 +211,7 @@ const UpdateArticle = () => {
     <>
       <Header title="Oppdater artikkel" />
       {article && (
-        <ArticleWrapper>
+        <NarrowWrapper>
           <ArticleForm>
             <Label>Title</Label>
             <Input onChange={handleTitleChange} defaultValue={article.title} />
@@ -306,7 +298,7 @@ const UpdateArticle = () => {
             </div>
           </ButtonBar>
           <AddCategoryModal modal={modal} close={closeModal} />
-        </ArticleWrapper>
+        </NarrowWrapper>
       )}
     </>
   );

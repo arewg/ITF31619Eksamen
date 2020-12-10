@@ -1,3 +1,7 @@
+/**
+ * Mellomvaren er hentet direkte fra Marius Wallins' 
+ * forelesninger 'Leksjon 11', 'Leksjon 13' og 'Leksjon 14'. 
+ */
 import multer from 'multer';
 import ErrorHandler from '../utils/errorHandler.js';
 

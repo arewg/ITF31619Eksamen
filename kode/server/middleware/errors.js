@@ -1,4 +1,7 @@
-//Tatt fra oblig 6 / kodefil fra leksjon 11
+/**
+ * Mellomvaren er hentet direkte fra Marius Wallins' 
+ * forelesninger 'Leksjon 11', 'Leksjon 13' og 'Leksjon 14'. 
+ */
 import ErrorHandler from '../utils/errorHandler.js';
 
 export default (err, req, res, next) => {

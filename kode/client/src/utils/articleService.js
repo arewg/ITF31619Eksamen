@@ -1,9 +1,6 @@
 import http from './http';
 
-// SJEKKE OM DETTE BLIR RIKTIG URL
-const API_URL = '/fagartikler';
-
-// trenger vi alle her?
+const API_URL = '/article';
 
 export const list = async () => {
   try {
@@ -21,8 +18,7 @@ export const listTopTen = async () => {
   }
 };
 
-export const listByCategory = async (id) => {
-  console.log(`ID I LISTSPECIFIC: ${id}`);
+  export const listByCategory = async (id) => {
   try {
     return await http.get(`${API_URL}/category/${id}`);
   } catch (err) {
@@ -31,7 +27,6 @@ export const listByCategory = async (id) => {
 };
 
 export const listBySearchWord = async (searchWord) => {
-  console.log(`Searchword I LISTBysearchword: ${searchWord}`);
   try {
     return await http.get(`${API_URL}/search/${searchWord}`);
   } catch (err) {
@@ -57,16 +52,15 @@ export const remove = async (id) => {
 
 export const create = async (data) => {
   try {
-    return await http.post(`${API_URL}/nyartikkel`, data);
+    return await http.post(`${API_URL}/new`, data);
   } catch (err) {
     return err.response.data;
   }
 };
 
 export const update = async (id, data) => {
-  console.log(`ID FOR ARTIKKEL i articleservice under utils${id}`);
   try {
-    return await http.put(`${API_URL}/oppdater/${id}`, data);
+    return await http.put(`${API_URL}/update/${id}`, data);
   } catch (err) {
     return err.response.data;
   }

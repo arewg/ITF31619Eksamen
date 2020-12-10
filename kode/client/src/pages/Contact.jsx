@@ -1,16 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
+import { NarrowWrapper } from '../styles/Styles.jsx';
 import { useAuthContext } from '../contexts/AuthProvider.jsx';
 import { getUserInfo } from '../utils/authService.js';
 import { send, create } from '../utils/emailService';
-import Header from '../components/Header.jsx';
 
-const ContactForm = styled.section`
-margin: 0 auto;
-  width: 60%;
-  min-height: 900px;
-`;
+import Header from '../components/Header.jsx';
 
 const Label = styled.label`
   width: 100%-20px;
@@ -56,16 +52,10 @@ const SendButton = styled.button`
     transform: scale(1.04);
     background-color: #a4adfa;
   }
-  &:disabled {
-    background-color: #8f8f8f;
-    transform: scale(1);
-    cursor: none;
-  }
 `;
 
 const Contact = () => {
   const { isLoggedIn, user } = useAuthContext();
-  const [disableState, setDisableState] = useState(true);
   const history = useHistory();
   const [nameValue, setNameValue] = useState('');
   const [descriptionValue, setDescriptionValue] = useState('');
@@ -77,8 +67,6 @@ const Contact = () => {
       if (error) {
         setError(error);
       } else {
-        console.log('Data' + JSON.stringify(data));
-        console.log('Data name' + data.data.name);
         setEmailValue(data.data.email);
         setNameValue(data.data.name);
       }
@@ -86,31 +74,16 @@ const Contact = () => {
     fetchData();
   }, []);
 
-  const handleClick = (path) => {
-    history.push(path);
-  };
-
   const handleEmailChange = (e) => {
     setEmailValue(e.target.value);
-    disableButton();
   };
 
   const handleNameChange = (e) => {
     setNameValue(e.target.value);
-    disableButton();
   };
 
   const handleDescriptionChange = (e) => {
     setDescriptionValue(e.target.value);
-    disableButton();
-  };
-
-  const disableButton = () => {
-    if (nameValue === '' || descriptionValue === '') {
-      setDisableState(true);
-    } else {
-      setDisableState(false);
-    }
   };
 
   const handleSubmit = () => {
@@ -120,7 +93,6 @@ const Contact = () => {
       message: descriptionValue,
     };
 
-    console.log(NewInquiry);
     const sendEmail = async () => {
       await send(NewInquiry);
     };
@@ -130,16 +102,17 @@ const Contact = () => {
     };
     sendEmail();
     createEmail();
+    history.push('/');
   };
 
   return (
     <>
       <Header title="Kontakt oss" />
-      <ContactForm>
+      <NarrowWrapper>
         {!isLoggedIn && (
           <>
             <Label>E-post</Label>
-            <Input autoFocus={true} onChange={handleEmailChange}></Input>
+            <Input onChange={handleEmailChange} />
           </>
         )}
         {(() => {
@@ -148,31 +121,27 @@ const Contact = () => {
               return (
                 <>
                   <Label>Navn</Label>
-                  <Input
-                    autoFocus={true}
-                    defaultValue={nameValue}
-                    onChange={handleNameChange}
-                  ></Input>
+                  <Input defaultValue={nameValue} onChange={handleNameChange} />
                 </>
               );
             case false:
               return (
                 <>
                   <Label>Navn</Label>
-                  <Input autoFocus={true} onChange={handleNameChange}></Input>
+                  <Input onChange={handleNameChange} />
                 </>
               );
             default:
               return (
                 <>
                   <Label>Navn</Label>
-                  <Input autoFocus={true} onChange={handleNameChange}></Input>
+                  <Input onChange={handleNameChange} />
                 </>
               );
           }
         })()}
         <Label>Beskrivelse</Label>
-        <TextArea onChange={handleDescriptionChange}></TextArea>
+        <TextArea onChange={handleDescriptionChange} />
         <SendButton
           onClick={() => {
             handleSubmit();
@@ -180,7 +149,7 @@ const Contact = () => {
         >
           Send inn
         </SendButton>
-      </ContactForm>
+      </NarrowWrapper>
     </>
   );
 };

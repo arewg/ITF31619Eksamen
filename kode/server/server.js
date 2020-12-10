@@ -1,4 +1,6 @@
-
+/**
+ * Server.js er basert på Marius Wallins' forelesninger gjennom semestert
+ */
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
@@ -17,13 +19,10 @@ import 'dotenv/config.js';
 import errorMiddleware from './middleware/errors.js';
 import connectDatabase from './config/db.js';
 import article from './routes/article.js';
-import user from './routes/user.js';
 import auth from './routes/auth.js';
 import category from './routes/category.js';
 import image from './routes/image.js';
 import email from './routes/email.js';
-
-
 
 const app = express();
 // Sikkerhetstiltak er satt opp fra leksjon 13_08
@@ -61,18 +60,12 @@ app.use(cors({
       res.status(200).json({data: req.csrfToken() });
   });
 
-  
- 
-
   app.use(`${process.env.BASEURL}/category`, category);
-  app.use(`${process.env.BASEURL}/fagartikler`, article);
-  app.use(`${process.env.BASEURL}/users`, user);
-  app.use(`${process.env.BASEURL}/`, image);
+  app.use(`${process.env.BASEURL}/article`, article);
+  app.use(`${process.env.BASEURL}/image`, image);
   app.use(`${process.env.BASEURL}/`, auth);
   app.use(`${process.env.BASEURL}/email`, email);
-  
-  
-  //app.use(`${process.env.BASEURL}/XXXXX`, XXXXX);
+
 
   app.use(errorMiddleware);
 

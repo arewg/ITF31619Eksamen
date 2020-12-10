@@ -1,3 +1,6 @@
+/**
+ * Image er hentet direkte fra 'Leksjon 13' og blitt modifisert litt for å passe vårt prosjekt.
+ */
 import { imageService } from '../services/index.js';
 import catchAsyncError from '../middleware/catchAsync.js';
 import ErrorHandler from '../utils/errorHandler.js';
@@ -6,7 +9,6 @@ export const create = catchAsyncError(async(req, res, next) =>{
     if(!req.file){
         return next(new ErrorHandler('Last opp en bildefil', 400))
     }
-
     const image = await imageService.uploadImage(req.file);
 
     res.status(201).json({
@@ -21,7 +23,7 @@ export const get = catchAsyncError(async(req, res, next) =>{
     if(!image){
         return next(new ErrorHandler('Noe gikk galt i henting av bilde', 404))
     }
-
+    //Denne er modifisert for vårt prosjekt.
     const imagePath = image.file_path.replace('public\\images\\','images/');
     
     res.status(200).json({

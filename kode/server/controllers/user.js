@@ -1,11 +1,9 @@
+/**
+ * Controllerne brukt i prosjektet er basert på de vi har lært fra Marius Wallins' forelesning 'Leksjon 11', 'Leksjon 13' og 'Leksjon 14'.
+ */
 import { userService } from '../services/index.js';
 import catchAsyncErrors from '../middleware/catchAsync.js';
 import ErrorHandler from '../utils/errorHandler.js';
-import User from '../models/user.js';
-
-/*
-    Metoden her er inspirert av egne obligatoriske oppgaver og forelesers leksjon 11
-*/
 
 export const get = async (req, res, next) => {
     const user = await userService.getUserById(req.params.id);

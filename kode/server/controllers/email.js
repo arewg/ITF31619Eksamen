@@ -1,15 +1,14 @@
+/**
+ * Controllerne brukt i prosjektet er basert på de vi har lært fra Marius Wallins' forelesning 'Leksjon 11', 'Leksjon 13' og 'Leksjon 14'.
+ */
 import { sendMail } from '../utils/sendEmail.js';
 import catchAsyncErrors from '../middleware/catchAsync.js';
-//import userService from '../../client/src/utils/userService.js';
 import { userService, emailService } from '../services/index.js';
 
 
 export const send = catchAsyncErrors(async(req,res,next) => {
-    console.log("Email Controller"+ JSON.stringify(req.body));
     const {email} = req.body;
-    console.log("DETTE ER EMAIL I SENDFUNKSJONEN  "+email)
     const user = await userService.getUserByEmail({ email });
-    console.log("User i emailController" + JSON.stringify(user));
     try {
         await sendMail({
             email: user.email,

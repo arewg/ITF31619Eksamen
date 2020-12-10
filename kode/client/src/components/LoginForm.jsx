@@ -1,4 +1,7 @@
-//Leksjon 13
+/**
+ * Skjemaet er hentet fra Marius Wallins' 
+ * forelesning 'Leksjon 13' og er blitt litt modifisert.
+ */
 
 import React, { useEffect, useState } from 'react';
 import {

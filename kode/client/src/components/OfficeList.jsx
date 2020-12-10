@@ -1,14 +1,9 @@
-// Leksjon 11
 import React from 'react';
-import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { TitleContext } from '../contexts/TitleProvider';
 
 
-const List = styled.ul`
-
-`;
+const List = styled.ul``;
 
 const ListItem = styled.li`
 width:60%;
@@ -18,48 +13,47 @@ border-bottom: 1px solid black;
 margin-bottom: 10px;
 
 &:hover{
-    transform: scale(1.01);
+    transform: scale(1.02);
     cursor: pointer;
-    background-color:#e0e0e0;
+    color: white;
+    background-color: #127275;
+    box-shadow: 1px 1px 10px black;
 }
 `; 
 
-const StyledListItem = styled.a`
-margin-right: 19px;
-font-size: 20px;
-&:first-child{
-    font-weight: bold;
-}
 
+const StyledListItem = styled.a`
+  margin-right: 19px;
+  font-size: 20px;
+  &:first-child {
+    font-weight: bold;
+  }
 `;
 
 const OfficeList = ({ list }) => {
-    const { updateState } = useContext(TitleContext);
-    const history = useHistory();
+  const history = useHistory();
 
-    
-    const handleClick = (e) => {
-    history.push("/kontorer/"+e)
-   };
+  const handleClick = (e) => {
+    history.push(`/kontorer/${e}`);
+  };
 
-   
-   
-    return(
-
-   <List>
-       {list.map((listeobjekter) => (
-        
-        <ListItem key={listeobjekter.id} onClick={()=> {handleClick(`${listeobjekter.id}`); updateState(`${listeobjekter.navn}`)}}>
-             <StyledListItem>{listeobjekter.navn}</StyledListItem>
-             <StyledListItem>{listeobjekter.adresse}</StyledListItem>
-             <StyledListItem>{listeobjekter.telefon}</StyledListItem>
-             <StyledListItem>{listeobjekter.epost}</StyledListItem>
-         </ListItem>
-         ))}
-
-      
-   </List>
-    )
+  return (
+    <List>
+      {list.map((listeobjekter) => (
+        <ListItem
+          key={listeobjekter.id}
+          onClick={() => {
+            handleClick(`${listeobjekter.id}`);
+          }}
+        >
+          <StyledListItem>{listeobjekter.navn}</StyledListItem>
+          <StyledListItem>{listeobjekter.adresse}</StyledListItem>
+          <StyledListItem>{listeobjekter.telefon}</StyledListItem>
+          <StyledListItem>{listeobjekter.epost}</StyledListItem>
+        </ListItem>
+      ))}
+    </List>
+  );
 };
 
 export default OfficeList;
