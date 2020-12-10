@@ -57,7 +57,7 @@ const SingleOffice = () => {
   return (
     <>
       <Header title={`Kontor Rørlegger ${kontor[0]}`} />
-      <Wrapper>
+      <WideWrapper>
         <Title>Velkommen til Rørlegger {kontor[0]}</Title>
         <Text>
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
