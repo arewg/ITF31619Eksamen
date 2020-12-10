@@ -2,9 +2,9 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../components/Header.jsx';
+import { WideWrapper } from '../styles/Styles.jsx';
 
-const HomeSection = styled.section`
-  padding: 20px 20px;
+const HomeSection = styled(WideWrapper)`
   display: grid;
   grid-template-columns: 0.5fr 1.5fr;
   grid-template-rows: 1fr 1fr;
@@ -15,7 +15,8 @@ const HomeSection = styled.section`
 `;
 
 const HomeCard = styled.article`
-  background-color: #cecece;
+  background-color: #ebebeb;
+  border-radius: 5px;
   padding-top: 80px;
   padding-bottom: 80px;
   display: flex;
@@ -37,7 +38,7 @@ const Home = () => {
   };
   return (
     <>
-      <Header title="Velkommen til FG Rørlegger AS" />
+      <Header title="Velkommen til LG Rørlegger AS" />
       <HomeSection>
         <HomeCard
           onClick={() => {

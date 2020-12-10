@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import {NarrowWrapper} from '../styles/Styles.jsx';
 import { list, listTopTen } from '../utils/articleService.js';
 import Header from '../components/Header.jsx';
 
-const ReportWrapper = styled.div`
+const ReportWrapper = styled(NarrowWrapper)`
   width: 60%;
   margin: 0 auto;
   margin-bottom: 20px;

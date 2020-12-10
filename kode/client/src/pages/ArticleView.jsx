@@ -7,15 +7,12 @@ import {
   listBySearchWord,
   listByCategory,
 } from '../utils/articleService.js';
+import { NarrowWrapper } from '../styles/Styles.jsx';
 import { get } from '../utils/categoryService';
 import Header from '../components/Header.jsx';
 import AllArticles from '../components/AllArticles.jsx';
 import OpenArticles from '../components/OpenArticles.jsx';
 
-const ArticleWrapper = styled.div`
-  width: 60%;
-  margin: 0 auto;
-`;
 const ButtonBar = styled.div`
   width: 100%;
   min-height: 35px;
@@ -216,7 +213,7 @@ const ArticleView = () => {
   return (
     <>
       <Header title="Fagartikler"/>
-      <ArticleWrapper>
+      <NarrowWrapper>
         <ButtonBar>
           {isLoggedIn && isAdmin && (
             <Buttons
@@ -248,7 +245,7 @@ const ArticleView = () => {
               return <OfficeGrid list={filter} />;
           }
         })()}
-      </ArticleWrapper>
+      </NarrowWrapper>
     </>
   );
 };

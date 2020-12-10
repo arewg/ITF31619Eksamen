@@ -46,7 +46,7 @@ const MainLayout = ({ children }) => (
   <Box>
       
         <StyledNavbar>
-            <Logo>FG</Logo>
+            <Logo>LG</Logo>
             <Nav />
         </StyledNavbar>
     <Box w="100%" margin="0 auto">
