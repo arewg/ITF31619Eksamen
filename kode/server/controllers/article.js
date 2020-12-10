@@ -7,13 +7,13 @@ import ErrorHandler from '../utils/errorHandler.js';
 import Article from '../models/article.js';
 
 export const get = async (req, res, next) => {
-    const article = await articleService.getArticleById(req.params.id);
+    let article = await articleService.getArticleById(req.params.id);
     if(!article) {
         return res.status(404).json({error: 'Article not found'});
     }
 
     let viewCount = article;
-    console.log(JSON.stringify(viewCount));
+    console.log("HEIEEIEIIEIE" + JSON.stringify(viewCount));
     viewCount.view ++;
     article = await articleService.updateArticle(req.params.id, viewCount);
     res.status(200).json(article);

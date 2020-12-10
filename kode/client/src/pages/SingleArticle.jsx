@@ -2,9 +2,9 @@
  * Download-funksjonen på linje 77 er hentet fra Marius Wallins' forelesning 'Leksjon 13'.
  */
 import React, { useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { NarrowWrapper } from '../styles/Styles.jsx';
-import { useParams, useHistory } from 'react-router-dom';
 import { get, remove } from '../utils/articleService';
 import { useAuthContext } from '../contexts/AuthProvider';
 import { download } from '../utils/imageService.js';

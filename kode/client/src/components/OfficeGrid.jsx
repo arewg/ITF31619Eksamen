@@ -14,7 +14,7 @@ const GridCard = styled.div`
   border-radius: 8px;
   padding-left: 3px;
   background-color: whitesmoke;
-  &:hover 
+  &:hover{
     transform: scale(1.02);
     cursor: pointer;
     color: white;
