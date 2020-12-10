@@ -63,7 +63,6 @@ const AllArticles = ({ articles }) => {
   const history = useHistory();
 
   const handleArticleClick = (path) => {
-    console.log(`DENNE ARTIKKELIDEN BLE TRYKKET PÅ I ALLARTICLES${path}`);
     history.push(`/fagartikler/${path}`);
   };
 

@@ -1,4 +1,7 @@
-// leksjon 13
+/**
+ * validation.js er hentet direkte fra Marius Wallins' 
+ * 'Leksjon 13'
+ */
 
 export const validateInput = async (schema, input) => {
     try {

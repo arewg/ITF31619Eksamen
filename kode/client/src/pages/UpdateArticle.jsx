@@ -1,11 +1,17 @@
+/**
+ * UpdateArticle er basert og modifisert på obligatorisk
+ * oppgave 6 av Are Warlo Gulliksen og Elise Dalane Mellegård
+ */
+
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+
 import { download } from '../utils/imageService.js';
-import AddCategoryModal from '../components/AddCategoryModal.jsx';
 import { get, update } from '../utils/articleService';
 import categoryService from '../utils/categoryService';
 import Header from '../components/Header.jsx';
+import AddCategoryModal from '../components/AddCategoryModal.jsx';
 import ImageUpload from '../components/ImageUpload.jsx';
 
 const ArticleWrapper = styled.div`
@@ -132,9 +138,7 @@ const UpdateArticle = () => {
   const downloadImage = async (id) => {
     const { data } = await download(id);
     const imgUrl = `${process.env.BASE_URL}/${data?.data?.imagePath}`;
-    console.log(`dette er image url:  ${imgUrl}`);
     setSrc(imgUrl);
-    console.log(`dette er src${src}`);
   };
 
   useEffect(() => {
@@ -143,7 +147,6 @@ const UpdateArticle = () => {
       if (error) {
         setError(error);
       } else {
-        console.log(data);
         setArticle(data);
         downloadImage(data.image);
       }
@@ -199,7 +202,6 @@ const UpdateArticle = () => {
     };
 
     const updateArticle = async () => {
-      console.log("ARTIKKELID SOM SKAL OPPDATERES FRA UPDATEARTICLE.JSX: " + id)
       await update(id, updatedArticle);
     };
     updateArticle();

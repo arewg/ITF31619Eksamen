@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+
 import { useAuthContext } from '../contexts/AuthProvider.jsx';
 import {
   list,
@@ -73,61 +74,6 @@ const Input = styled.input`
   }
 `;
 
-const ArticleBox = styled.div`
-  margin-top: 50px;
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  grid-template-rows: 200px;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  cursor: pointer;
-  &:hover {
-    transform: scale(1.01);
-    border: 0.3px solid #cecece;
-    box-shadow: 0px 2px 3px #cecece;
-  }
-`;
-
-const TextBox = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 350px;
-  grid-template-rows: 80px 250px;
-`;
-
-const Ingress = styled.p`
-  padding-left: 20px;
-  padding-top: 20px;
-  padding-right: 20px;
-  height: 47%;
-  grid-area: 2 / 1 / 3 / 6;
-  font-size: 19px;
-  font-weight: 475;
-`;
-
-const ArticleImage = styled.div`
-  height: 90%;
-  width: 90%;
-  justify-self: center;
-  align-self: center;
-  background-color: #dbdbdb;
-`;
-
-const Title = styled.h1`
-  width: 100%-20px;
-  margin: 15px 0px 0px 20px;
-  font-weight: bold;
-  font-size: 25px;
-`;
-
-const Category = styled.h2`
-  width: 100%-20px;
-  margin: 20px 20px 0px 0px;
-  font-weight: bold;
-  font-size: 15px;
-  display: flex;
-  justify-content: flex-end;
-`;
-
 const ArticleView = () => {
   const [articles, setArticles] = useState();
   const [error, setError] = useState();
@@ -141,7 +87,6 @@ const ArticleView = () => {
       if (error) {
         setError(error);
       } else {
-        console.log(data);
         setArticles(data.data);
       }
     };
@@ -163,7 +108,6 @@ const ArticleView = () => {
 
   const fetchArticlesByCategory = async (id) => {
     const { data, error } = await listByCategory(id);
-    
     if (error) {
       setError(error);
     } else {
@@ -173,7 +117,6 @@ const ArticleView = () => {
 
   const fetchArticlesBySearch = async (searchWord) => {
     const { data, error } = await listBySearchWord(searchWord);
-
     if (error) {
       setError(error);
     } else {
@@ -181,13 +124,13 @@ const ArticleView = () => {
     }
   };
 
-  const fetchData = async () => {
+  const fetchAllArticles = async () => {
     const { data, error } = await list();
 
     if (error) {
       setError(error);
     } else {
-      setArticles(data);
+      setArticles(data.data);
     }
   };
 
@@ -195,7 +138,7 @@ const ArticleView = () => {
     const categoryId = e.target.value;
 
     if (e.target.value === 'alle') {
-      fetchData();
+      fetchAllArticles();
     } else {
       fetchArticlesByCategory(categoryId);
     }
@@ -203,9 +146,8 @@ const ArticleView = () => {
 
   const handleSeachByTitle = (e) => {
     const searchWord = e.target.value;
-
     if (searchWord === '') {
-      fetchData();
+      fetchAllArticles();
     } else {
       fetchArticlesBySearch(searchWord);
     }
@@ -243,7 +185,7 @@ const ArticleView = () => {
             case false:
               return <OpenArticles articles={articles} />;
             default:
-              return <OfficeGrid list={filter} />;
+              return <AllArticles articles={articles} />;
           }
         })()}
       </ArticleWrapper>

@@ -1,4 +1,7 @@
-// leksjon 13
+/**
+ * Mellomvaren er hentet direkte fra Marius Wallins' 
+ * forelesninger 'Leksjon 11', 'Leksjon 13' og 'Leksjon 14'. 
+ */
 
 import jwt from 'jsonwebtoken';
 import { userService } from '../services/index.js';

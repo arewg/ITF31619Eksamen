@@ -1,6 +1,6 @@
 /**
- * Navigasjonsbaren er hentet fra Marius Wallins' forelesning 
- * 'Leksjon 11' og Are Warlo Gulliksen og Elise Dalane Mellegårds' 
+ * Navigasjonsbaren er hentet fra Marius Wallins' forelesning
+ * 'Leksjon 11' og Are Warlo Gulliksen og Elise Dalane Mellegårds'
  * oblig for leksjon 11, og har blitt modifisert for dette prosjektet.
  */
 
@@ -28,6 +28,9 @@ const NavMenuItem = styled.li`
   padding: 0 20px;
   &:first-child {
     padding-left: 0;
+    @media screen and (max-width: 800px) {
+      display: none;
+    }
   }
   &:last-child {
     background-color: #127275;
@@ -44,6 +47,9 @@ const NavMenuItem = styled.li`
       color: #127275;
       border-bottom: 4px solid #127275;
     }
+    @media screen and (max-width: 800px) {
+    font-size: 10px;
+  }
   }
 `;
 
@@ -55,6 +61,9 @@ const NavLogInButton = styled.button`
   line-height: 3.456;
   padding: 5px 0;
   text-decoration: none;
+  @media screen and (max-width: 800px) {
+    font-size: 10px;
+  }
 `;
 
 const Nav = () => {
@@ -98,7 +107,7 @@ const Nav = () => {
         {isLoggedIn && isAdmin && (
           <NavMenuItem>
             <NavLink exact to="/report" activeClassName="active">
-              Hendvendelser
+              Henvendelser
             </NavLink>
           </NavMenuItem>
         )}

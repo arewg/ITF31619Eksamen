@@ -9,7 +9,7 @@ import { send, create } from '../utils/emailService';
 import Header from '../components/Header.jsx';
 
 const ContactForm = styled.section`
-margin: 0 auto;
+  margin: 0 auto;
   width: 60%;
   min-height: 900px;
 `;
@@ -58,16 +58,10 @@ const SendButton = styled.button`
     transform: scale(1.04);
     background-color: #a4adfa;
   }
-  &:disabled {
-    background-color: #8f8f8f;
-    transform: scale(1);
-    cursor: none;
-  }
 `;
 
 const Contact = () => {
   const { isLoggedIn, user } = useAuthContext();
-  const [disableState, setDisableState] = useState(true);
   const history = useHistory();
   const [nameValue, setNameValue] = useState('');
   const [descriptionValue, setDescriptionValue] = useState('');
@@ -79,8 +73,6 @@ const Contact = () => {
       if (error) {
         setError(error);
       } else {
-        console.log('Data' + JSON.stringify(data));
-        console.log('Data name' + data.data.name);
         setEmailValue(data.data.email);
         setNameValue(data.data.name);
       }
@@ -88,31 +80,16 @@ const Contact = () => {
     fetchData();
   }, []);
 
-  const handleClick = (path) => {
-    history.push(path);
-  };
-
   const handleEmailChange = (e) => {
     setEmailValue(e.target.value);
-    disableButton();
   };
 
   const handleNameChange = (e) => {
     setNameValue(e.target.value);
-    disableButton();
   };
 
   const handleDescriptionChange = (e) => {
     setDescriptionValue(e.target.value);
-    disableButton();
-  };
-
-  const disableButton = () => {
-    if (nameValue === '' || descriptionValue === '') {
-      setDisableState(true);
-    } else {
-      setDisableState(false);
-    }
   };
 
   const handleSubmit = () => {
@@ -122,7 +99,6 @@ const Contact = () => {
       message: descriptionValue,
     };
 
-    console.log(NewInquiry);
     const sendEmail = async () => {
       await send(NewInquiry);
     };
@@ -132,6 +108,7 @@ const Contact = () => {
     };
     sendEmail();
     createEmail();
+    history.push('/');
   };
 
   return (
@@ -141,7 +118,7 @@ const Contact = () => {
         {!isLoggedIn && (
           <>
             <Label>E-post</Label>
-            <Input autoFocus={true} onChange={handleEmailChange}></Input>
+            <Input onChange={handleEmailChange} />
           </>
         )}
         {(() => {
@@ -150,31 +127,27 @@ const Contact = () => {
               return (
                 <>
                   <Label>Navn</Label>
-                  <Input
-                    autoFocus={true}
-                    defaultValue={nameValue}
-                    onChange={handleNameChange}
-                  ></Input>
+                  <Input defaultValue={nameValue} onChange={handleNameChange} />
                 </>
               );
             case false:
               return (
                 <>
                   <Label>Navn</Label>
-                  <Input autoFocus={true} onChange={handleNameChange}></Input>
+                  <Input onChange={handleNameChange} />
                 </>
               );
             default:
               return (
                 <>
                   <Label>Navn</Label>
-                  <Input autoFocus={true} onChange={handleNameChange}></Input>
+                  <Input onChange={handleNameChange} />
                 </>
               );
           }
         })()}
         <Label>Beskrivelse</Label>
-        <TextArea onChange={handleDescriptionChange}></TextArea>
+        <TextArea onChange={handleDescriptionChange} />
         <SendButton
           onClick={() => {
             handleSubmit();

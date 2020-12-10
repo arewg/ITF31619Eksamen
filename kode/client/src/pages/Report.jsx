@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useAuthContext } from '../contexts/AuthProvider.jsx';
+
 import { list } from '../utils/emailService.js';
 import Header from '../components/Header.jsx';
 
@@ -53,8 +52,6 @@ const Message = styled.p`
 const Report = () => {
   const [reports, setReports] = useState();
   const [error, setError] = useState();
-  const history = useHistory();
-  const { isLoggedIn, isAdmin } = useAuthContext();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,7 +67,7 @@ const Report = () => {
 
   return (
     <>
-      <Header title="Hendvendelser" />
+      <Header title="Henvendelser" />
       <ReportWrapper>
         {reports &&
           reports.map((report) => (

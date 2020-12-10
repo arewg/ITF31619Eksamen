@@ -13,7 +13,6 @@ const Logo = styled.h1`
   font-weight: bold;
   font-size: 25px;
   padding-left: 20px;
-  //fjerner logoen når skjermen er mindre enn 800px
   @media screen and (max-width: 800px) {
     display: none;
   }
@@ -24,13 +23,8 @@ const StyledNavbar = styled.div`
   background: #fff;
   box-shadow: 1px 1px 2px #f5f5f5;
   width: 100%;
-
-  //Breakepoints for når skjermen er mindre enn 500px, større enn 500px, og over 800px
-  @media screen and (max-width: 800px) {
-    background-color: #89b69a;
   }
   @media screen and (max-width: 500px) {
-    background-color: red;
     display: none;
   }
 `;

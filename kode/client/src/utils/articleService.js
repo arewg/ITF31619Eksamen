@@ -52,9 +52,8 @@ export const create = async (data) => {
 };
 
 export const update = async (id, data) => {
-  console.log(`ID FOR ARTIKKEL i articleservice under utils${id}`);
   try {
-    return await http.put(`${API_URL}/oppdater/${id}`, data);
+    return await http.put(`${API_URL}/update/${id}`, data);
   } catch (err) {
     return err.response.data;
   }

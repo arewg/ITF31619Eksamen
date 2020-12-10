@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Icon from '@material-ui/core/Icon';
+
 import OfficeData from '../data/OfficeData';
 import OfficeGrid from '../components/OfficeGrid.jsx';
 import OfficeList from '../components/OfficeList.jsx';
@@ -50,7 +51,6 @@ const Offices = () => {
   };
 
   const switchMethod = (value) => {
-    console.log();
     setGridOrView(value);
   };
 

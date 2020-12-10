@@ -1,4 +1,7 @@
-// Leksjon 13
+/**
+ * jwtToken.js er hentet direkte fra Marius Wallins' 
+ * 'Leksjon 13'
+ */
 
 export const sendToken = (user, res) => {
     const token = user.getJwtToken();

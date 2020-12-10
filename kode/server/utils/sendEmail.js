@@ -1,5 +1,7 @@
-//Leksjon 13
-
+/**
+ * sendEmail.js er hentet direkte fra Marius Wallins' 
+ * 'Leksjon 13'
+ */
 import nodemailer from 'nodemailer';
 
 export const sendMail = async (options) => {

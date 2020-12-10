@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { create } from '../utils/userService';
-import { get } from '../utils/categoryService';
 import Header from '../components/Header.jsx';
 
 const RegisterWrapper = styled.div`
@@ -57,7 +56,6 @@ const CreateUserButton = styled.button`
   &:disabled {
     background-color: #8f8f8f;
     transform: scale(1);
-    cursor: none;
   }
 `;
 
@@ -67,22 +65,6 @@ const Register = () => {
   const [emailValue, setEmailValue] = useState('');
   const [nameValue, setNameValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data, error } = await get();
-      if (error) {
-        setError(error);
-      } else {
-        console.log(data);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const handleRout = (path) => {
-    history.push(path);
-  };
 
   const handleEmailChange = (e) => {
     setEmailValue(e.target.value);
@@ -100,7 +82,12 @@ const Register = () => {
   };
 
   const disableButton = () => {
-    if (nameValue === '' || emailValue === '' || passwordValue === '') {
+    if (
+      nameValue === '' ||
+      emailValue === '' ||
+      passwordValue === '' ||
+      passwordValue.length < 4
+    ) {
       setDisableState(true);
     } else {
       setDisableState(false);
@@ -119,13 +106,13 @@ const Register = () => {
       await create(Newuser);
     };
     createUser();
+    history.push('/');
   };
 
   return (
     <>
       <Header title="Opprett bruker" />
       <RegisterWrapper>
-
         <Label>Navn</Label>
         <Input autoFocus onChange={handleNameChange} />
         <Label>E-post</Label>

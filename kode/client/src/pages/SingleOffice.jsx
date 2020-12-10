@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 import EmployeeData from '../data/EmployeeData.jsx';
 import Header from '../components/Header';
 
@@ -53,12 +54,13 @@ const PhoneBox = styled.div`
 
 const SingleOffice = () => {
   const [employees, setEmployees] = useState(EmployeeData);
+  const kontor = useParams();
 
   return (
     <>
-      <Header title="Kontor" />
+      <Header title={`Kontor Rørlegger ${kontor[0]}`} />
       <Wrapper>
-        <Title>Velkommen til</Title>
+        <Title>Velkommen til Rørlegger {kontor[0]}</Title>
         <Text>
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
           nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,

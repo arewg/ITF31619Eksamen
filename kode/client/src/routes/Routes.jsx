@@ -1,4 +1,6 @@
-// Oblig 6 / leksjon 11
+/**
+ * Routes er basert på Marius Wallins' forelesning 'Leksjon 11' og er blitt modifisert for eksamen.
+ */
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout.jsx';
@@ -13,7 +15,7 @@ import NewArticle from '../pages/NewArticle.jsx';
 import SingleArticle from '../pages/SingleArticle.jsx';
 import Login from '../pages/Login.jsx';
 import UpdateArticle from '../pages/UpdateArticle.jsx';
-import Register from '../pages/register.jsx';
+import Register from '../pages/Register.jsx';
 import Report from '../pages/Report.jsx';
 
 import NoMatch from '../components/NoMatch.jsx';

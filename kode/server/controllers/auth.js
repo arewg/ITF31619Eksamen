@@ -1,5 +1,6 @@
-// leksjon 11 og 13
-
+/**
+ * Controllerne brukt i prosjektet er basert på de vi har lært fra Marius Wallins' forelesning 'Leksjon 11', 'Leksjon 13' og 'Leksjon 14'.
+ */
 import catchAsyncErrors from '../middleware/catchAsync.js';
 import { userService } from '../services/index.js';
 import ErrorHandler from '../utils/errorHandler.js';

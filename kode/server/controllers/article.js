@@ -1,11 +1,10 @@
+/**
+ * Controllerne brukt i prosjektet er basert på de vi har lært fra Marius Wallins' forelesning 'Leksjon 11', 'Leksjon 13' og 'Leksjon 14'.
+ */
 import { articleService } from '../services/index.js';
 import catchAsyncErrors from '../middleware/catchAsync.js';
 import ErrorHandler from '../utils/errorHandler.js';
 import Article from '../models/article.js';
-
-/*
-    Metoden her er inspirert av egne obligatoriske oppgaver og forelesers leksjon 11
-*/
 
 export const get = async (req, res, next) => {
     const article = await articleService.getArticleById(req.params.id);
@@ -17,7 +16,6 @@ export const get = async (req, res, next) => {
 };
 
 export const list = async (req, res, next) => {
-    console.log(JSON.stringify(req.query));
     const result = await articleService.listArticlesPage(req.query);
     res.status(200).json(result)
 }
@@ -44,7 +42,6 @@ export const create = async (req, res, next) => {
 export const update = catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params
     let articleToUpdate = req.body
-    console.log("DETTE ER ID SOM SKAL OPPDATERES I ARTICLE CONTROLLER" + JSON.stringify(articleToUpdate))
     let article = Article.findById(req.params.id)
 
     

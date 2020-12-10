@@ -1,3 +1,8 @@
+/**
+ * Modellen for user baseres på modellen vist i leksjon 11 og leksjon 12 av Marius Wallin
+ * 
+ */
+
 import mongoose from 'mongoose';
 import validator from 'validator';
 import argon2 from 'argon2';
@@ -20,7 +25,7 @@ const UserSchema = new Schema(
         password: {
             type: String,
             required: [true, 'Vennligst skriv inn passord'],
-            minlength: [6, 'Passordet må minimum ha 6 karakterer'],
+            minlength: [3, 'Passordet må minimum ha 3 karakterer'],
             select: false,
             
         },
@@ -41,7 +46,6 @@ const UserSchema = new Schema(
         next();
     });
 
-    //Leksjon 12 Implementasjon video 2.
     UserSchema.methods.getJwtToken = function () {
         return jwt.sign({id: this._id}, process.env.JWT_SECRET, {
             expiresIn: process.env.JWT_EXPIRES_TIME
