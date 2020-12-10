@@ -13,7 +13,6 @@ export const get = async (req, res, next) => {
     }
 
     let viewCount = article;
-    console.log("HEIEEIEIIEIE" + JSON.stringify(viewCount));
     viewCount.view ++;
     article = await articleService.updateArticle(req.params.id, viewCount);
     res.status(200).json(article);
