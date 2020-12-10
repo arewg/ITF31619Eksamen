@@ -1,7 +1,12 @@
+/**
+ * Download-funksjonen på linje 82 er hentet fra Marius Wallins' forelesning 'Leksjon 13'.
+ */
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { NarrowWrapper } from '../styles/Styles.jsx';
 import { useParams, useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+
 import { get, remove } from '../utils/articleService';
 import { useAuthContext } from '../contexts/AuthProvider';
 import { download } from '../utils/imageService.js';
@@ -64,6 +69,7 @@ const EditButton = styled.button`
 `;
 
 const SingleArticle = () => {
+  const { isLoggedIn, isAdmin } = useAuthContext();
   const [article, setArticle] = useState();
   const [src, setSrc] = useState(null);
   const [error, setError] = useState();
@@ -73,18 +79,15 @@ const SingleArticle = () => {
   const downloadImage = async (id) => {
     const { data } = await download(id);
     const imgUrl = `${process.env.BASE_URL}/${data?.data?.imagePath}`;
-    console.log(`dette er image url:  ${imgUrl}`);
     setSrc(imgUrl);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       const { data, error } = await get(id);
-      console.log(`Dette er id i useEffect single article ${id}`);
       if (error) {
         setError(error);
       } else {
-        console.log(data);
         setArticle(data);
         downloadImage(data.image);
       }
@@ -102,7 +105,6 @@ const SingleArticle = () => {
     history.push('/fagartikler');
   };
 
-  const { isLoggedIn, isAdmin } = useAuthContext();
 
   return (
     <>

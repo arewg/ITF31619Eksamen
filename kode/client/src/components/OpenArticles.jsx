@@ -1,6 +1,7 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
+
 
 const ArticleBox = styled.div`
   margin-top: 50px;
@@ -61,8 +62,7 @@ const OpenArticles = ({ articles }) => {
   const history = useHistory();
 
   const handleArticleClick = (path) => {
-    history.push('/fagartikler/' + path);
-    console.log("DENNE ARTIKKELIDEN BLE TRYKKET PÅ I OPENARTICLES" + path)
+    history.push(`/fagartikler/${path}`);
   };
 
   return (
@@ -77,7 +77,7 @@ const OpenArticles = ({ articles }) => {
                   handleArticleClick(article.id);
                 }}
               >
-                <ArticleImage></ArticleImage>
+                <ArticleImage />
                 <TextBox>
                   <Title>{article.title}</Title>
                   <Category>{article.category.category}</Category>

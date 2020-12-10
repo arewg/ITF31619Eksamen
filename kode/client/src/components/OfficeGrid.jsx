@@ -1,9 +1,6 @@
-// Leksjon 11
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { TitleContext } from '../contexts/TitleProvider.jsx';
-import { SingleOfficeContext } from '../contexts/SingleOfficeProvider.jsx';
 
 const Grid = styled.div`
   display: grid;
@@ -17,7 +14,7 @@ const GridCard = styled.div`
   border-radius: 8px;
   padding-left: 3px;
   background-color: whitesmoke;
-  &:hover {
+  &:hover 
     transform: scale(1.02);
     cursor: pointer;
     color: white;
@@ -33,8 +30,6 @@ const CardItem = styled.ul`
 `;
 
 const OfficeGrid = ({ list }) => {
-  const { updateSingleOffice } = useContext(SingleOfficeContext);
-  const { updateState } = useContext(TitleContext);
   const history = useHistory();
 
   const handleClick = (e) => {
@@ -43,20 +38,18 @@ const OfficeGrid = ({ list }) => {
 
   return (
     <Grid>
-      {list.map((listeobjekter) => (
+      {list.map((listElement) => (
         <GridCard
-          key={listeobjekter.id}
-          value={listeobjekter.id}
+          key={listElement.id}
+          value={listElement.id}
           onClick={() => {
-            handleClick(`${listeobjekter.id}`);
-            updateSingleOffice(listeobjekter.epost);
-            updateState(`${listeobjekter.navn}`);
+            handleClick(`${listElement.id}`);
           }}
         >
-          <CardItem>{listeobjekter.navn}</CardItem>
-          <CardItem>{listeobjekter.adresse}</CardItem>
-          <CardItem>{listeobjekter.telefon}</CardItem>
-          <CardItem>{listeobjekter.epost}</CardItem>
+          <CardItem>{listElement.navn}</CardItem>
+          <CardItem>{listElement.adresse}</CardItem>
+          <CardItem>{listElement.telefon}</CardItem>
+          <CardItem>{listElement.epost}</CardItem>
         </GridCard>
       ))}
     </Grid>

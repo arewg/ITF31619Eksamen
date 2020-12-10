@@ -1,4 +1,6 @@
-// Leksjon 11
+/**
+ * Basert på Marius Wallins' forelesning 'Leksjon 11'
+ */
 import React from 'react';
 import { ThemeProvider, CSSReset } from '@chakra-ui/core';
 import customTheme from './src/styles/theme';

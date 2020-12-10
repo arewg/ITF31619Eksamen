@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
 
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { TitleContext } from '../contexts/TitleProvider.jsx';
-import { useAuthContext } from '../contexts/AuthProvider.jsx';
+
 
 const ArticleBox = styled.div`
   margin-top: 50px;
@@ -61,11 +60,9 @@ const Category = styled.h2`
 `;
 
 const AllArticles = ({ articles }) => {
-  const { updateState } = useContext(TitleContext);
   const history = useHistory();
 
   const handleArticleClick = (path) => {
-    console.log(`DENNE ARTIKKELIDEN BLE TRYKKET PÅ I ALLARTICLES${path}`);
     history.push(`/fagartikler/${path}`);
   };
 

@@ -1,9 +1,14 @@
-import React, { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+/**
+ * Navigasjonsbaren er hentet fra Marius Wallins' forelesning
+ * 'Leksjon 11' og Are Warlo Gulliksen og Elise Dalane Mellegårds'
+ * oblig for leksjon 11, og har blitt modifisert for dette prosjektet.
+ */
+
+import React from 'react';
 import styled from 'styled-components';
-import { TitleContext } from '../contexts/TitleProvider.jsx'
-import { useAuthContext } from '../contexts/AuthProvider.jsx'
-import { logout } from '../utils/authService'
+import { NavLink } from 'react-router-dom';
+import { useAuthContext } from '../contexts/AuthProvider.jsx';
+import { logout } from '../utils/authService';
 
 const StyledNav = styled.nav`
   width: 100%;
@@ -21,16 +26,15 @@ const NavMenu = styled.ul`
 
 const NavMenuItem = styled.li`
   padding: 0 20px;
-
   &:first-child {
     padding-left: 0;
+    @media screen and (max-width: 800px) {
+      display: none;
+    }
   }
-
   &:last-child {
     background-color: #127275;
-       
   }
-
   & > a {
     color: #333;
     display: block;
@@ -39,50 +43,38 @@ const NavMenuItem = styled.li`
     line-height: 3.456;
     padding: 5px 0;
     text-decoration: none;
-
     &.active {
       color: #127275;
       border-bottom: 4px solid #127275;
     }
+    @media screen and (max-width: 800px) {
+    font-size: 10px;
+  }
   }
 `;
 
-  const NavLogInButton = styled.button`
+const NavLogInButton = styled.button`
   color: #fff;
   display: block;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 3.456;
-    padding: 5px 0;
-    text-decoration: none;
-  `;
-
-  const CreateUserButton = styled.button `
-  color: #fff;
-  display: block;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 3.456;
-    padding: 5px 0;
-    text-decoration: none;
-  `
-
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 3.456;
+  padding: 5px 0;
+  text-decoration: none;
+  @media screen and (max-width: 800px) {
+    font-size: 10px;
+  }
+`;
 
 const Nav = () => {
+  const { isLoggedIn, isAdmin } = useAuthContext();
 
-    const { isLoggedIn, isAdmin, isSuperadmin } = useAuthContext();
-    const { updateState } = useContext(TitleContext);
+  const handleLogout = () => {
+    logout();
+    window.location.reload();
+  };
 
-    const updateTitle = (title) => {
-        updateState(title);
-    };
-
-    const handleLogout = () => {
-      logout();
-      window.location.reload(false);
-    }
-
-    return(
+  return (
     <StyledNav>
         <NavMenu>
             <NavMenuItem >
@@ -127,23 +119,20 @@ const Nav = () => {
             }
           {!isLoggedIn &&
             <NavMenuItem>
-              <NavLink exact to="/login" activeClassName="active" onClick={() => updateTitle("Logg inn")}>
-                <NavLogInButton>
-                    Logg Inn
-                </NavLogInButton>
-                </NavLink>
-            </NavMenuItem>
-          || isLoggedIn &&
-          <NavMenuItem >
               <NavLink exact to="/" activeClassName="active">
-                <NavLogInButton onClick={() => {updateTitle("Velkommen til FG Rørleggerservice AS"); handleLogout()}}>
-                    Logg Ut
+                <NavLogInButton
+                  onClick={() => {
+                    handleLogout();
+                  }}
+                >
+                  Logg Ut
                 </NavLogInButton>
-                </NavLink>
-            </NavMenuItem>}
-        </NavMenu>
-  </StyledNav>
-    )
+              </NavLink>
+            </NavMenuItem>
+          ))}
+      </NavMenu>
+    </StyledNav>
+  );
 };
 
 export default Nav;

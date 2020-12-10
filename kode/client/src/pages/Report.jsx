@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { NarrowWrapper } from '../styles/Styles.jsx';
 import { useAuthContext } from '../contexts/AuthProvider.jsx';
@@ -49,8 +48,6 @@ const Message = styled.p`
 const Report = () => {
   const [reports, setReports] = useState();
   const [error, setError] = useState();
-  const history = useHistory();
-  const { isLoggedIn, isAdmin } = useAuthContext();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,7 +63,7 @@ const Report = () => {
 
   return (
     <>
-      <Header title="Hendvendelser" />
+      <Header title="Henvendelser" />
       <NarrowWrapper>
         {reports &&
           reports.map((report) => (

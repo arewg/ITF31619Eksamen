@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { NarrowWrapper } from '../styles/Styles.jsx';
 import moment from 'moment';
+
 import AddCategoryModal from '../components/AddCategoryModal.jsx';
 import { create } from '../utils/articleService';
 import { get } from '../utils/categoryService';
@@ -112,17 +113,18 @@ const DisableBar = styled.div`
 `;
 
 const ErrorMessage = styled.h2`
-  color: red;
+  color: #ae0000;
   font-size: 22px;
   font-weight: bold;
   margin-left: 10px;
 `;
 
 const NewArticle = () => {
+  const history = useHistory();
+  const { user } = useAuthContext();
   const [error, setError] = useState();
   const [disableState, setDisableState] = useState(true);
   const [categories, setCategories] = useState();
-  const history = useHistory();
   const [modal, setModal] = useState(false);
   const [titleValue, setTitleValue] = useState('');
   const [ingressValue, setIngressValue] = useState('');
@@ -132,7 +134,6 @@ const NewArticle = () => {
   const [authorValue, setAuthorValue] = useState('');
   const [classifiedArticle, setClassifiedArticle] = useState('');
   const [imageId, setImageId] = useState('');
-  const { user } = useAuthContext();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -140,7 +141,6 @@ const NewArticle = () => {
       if (error) {
         setError(error);
       } else {
-        console.log(data);
         setCategories(data);
       }
     };
@@ -221,8 +221,6 @@ const NewArticle = () => {
       classified: classifiedArticle,
     };
 
-    console.log(newArticle);
-
     const createArticle = async () => {
       await create(newArticle);
     };
@@ -235,7 +233,7 @@ const NewArticle = () => {
       <Header title="Ny artikkel" />
       <NarrowWrapper>
         <ArticleForm>
-          <Label>Title</Label>
+          <Label>Tittel</Label>
           <Input autoFocus onChange={(e) => handleTitleChange(e)} />
           <AlertText>
             {titleValue.length > 0 && titleValue.length < 4
