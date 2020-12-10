@@ -1,16 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { NarrowWrapper } from '../styles/Styles.jsx';
 import { useAuthContext } from '../contexts/AuthProvider.jsx';
 import { getUserInfo } from '../utils/authService.js';
 import { send, create } from '../utils/emailService';
 import Header from '../components/Header.jsx';
-
-const ContactForm = styled.section`
-margin: 0 auto;
-  width: 60%;
-  min-height: 900px;
-`;
 
 const Label = styled.label`
   width: 100%-20px;
@@ -135,7 +130,7 @@ const Contact = () => {
   return (
     <>
       <Header title="Kontakt oss" />
-      <ContactForm>
+      <NarrowWrapper>
         {!isLoggedIn && (
           <>
             <Label>E-post</Label>
@@ -180,7 +175,7 @@ const Contact = () => {
         >
           Send inn
         </SendButton>
-      </ContactForm>
+      </NarrowWrapper>
     </>
   );
 };

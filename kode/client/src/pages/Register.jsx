@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { NarrowWrapper } from '../styles/Styles.jsx';
 import { create } from '../utils/userService';
 import { get } from '../utils/categoryService';
 import Header from '../components/Header.jsx';
 
-const RegisterWrapper = styled.div`
-  width: 60%;
-  margin: 0 auto;
-`;
 
 const Input = styled.input`
   width: 100%;
@@ -124,8 +121,7 @@ const Register = () => {
   return (
     <>
       <Header title="Opprett bruker" />
-      <RegisterWrapper>
-
+      <NarrowWrapper>
         <Label>Navn</Label>
         <Input autoFocus onChange={handleNameChange} />
         <Label>E-post</Label>
@@ -145,7 +141,7 @@ const Register = () => {
             Vennligst fyll ut alle feltene
           </ErrorMessage>
         </DisableBar>
-      </RegisterWrapper>
+      </NarrowWrapper>
     </>
   );
 };

@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { WideWrapper } from '../styles/Styles.jsx';
 import EmployeeData from '../data/EmployeeData.jsx';
 import Header from '../components/Header';
 
-const Wrapper = styled.div`
-  padding: 20px 20px;
-`;
 
 const Title = styled.h1`
   font-weight: bold;
@@ -57,7 +55,7 @@ const SingleOffice = () => {
   return (
     <>
       <Header title="Kontor" />
-      <Wrapper>
+      <WideWrapper>
         <Title>Velkommen til</Title>
         <Text>
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
@@ -79,7 +77,7 @@ const SingleOffice = () => {
         <PhoneBox>
           <Title>Kontakt oss på 69 99 00 00</Title>
         </PhoneBox>
-      </Wrapper>
+      </WideWrapper>
     </>
   );
 };

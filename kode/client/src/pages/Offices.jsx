@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { WideWrapper } from '../styles/Styles.jsx';
 import Icon from '@material-ui/core/Icon';
 import OfficeData from '../data/OfficeData';
 import OfficeGrid from '../components/OfficeGrid.jsx';
 import OfficeList from '../components/OfficeList.jsx';
 import Header from '../components/Header.jsx';
 
-const Wrapper = styled.div`
-  padding: 20px 20px;
-`;
+
 const FilterButtonDiv = styled.div`
   width: 100%;
   display: flex;
@@ -18,9 +17,8 @@ const FilterButtonDiv = styled.div`
 `;
 
 const DropdownFilter = styled.select`
-  background-color: #999999;
+  background-color: #ebebeb;
   display: inline-block;
-  color: white;
   text-align: center;
   padding: 10px 12px;
   text-decoration: none;
@@ -57,7 +55,7 @@ const Offices = () => {
   return (
     <>
       <Header title="Kontorer" />
-      <Wrapper>
+      <WideWrapper>
         <FilterButtonDiv>
           <GridOrList onClick={() => switchMethod('2')}>
             <Icon>reorder</Icon>
@@ -87,7 +85,7 @@ const Offices = () => {
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet"
         />
-      </Wrapper>
+      </WideWrapper>
     </>
   );
 };
