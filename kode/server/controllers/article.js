@@ -8,7 +8,6 @@ import Article from '../models/article.js';
 */
 
 export const get = async (req, res, next) => {
-    console.log("Dette er req.params.iee for article" + JSON.stringify(req.params))
     const article = await articleService.getArticleById(req.params.id);
     if(!article) {
         return res.status(404).json({error: 'Article not found'});
@@ -17,34 +16,24 @@ export const get = async (req, res, next) => {
     res.status(200).json(article);
 };
 
-/*export const list = async (req, res, next) => {
-    console.log("HEI2");
-        const result = await articleService.listArticles();
-        res.status(200).json(result)
-    }*/
-
 export const list = async (req, res, next) => {
     console.log(JSON.stringify(req.query));
-    console.log("HEI");
     const result = await articleService.listArticlesPage(req.query);
     res.status(200).json(result)
 }
 
 export const listByCategory = async (req, res, next) => {
-    console.log("ID I LISTBYCATEGORY: " + req.params.id)
     const result = await articleService.listByCategory(req.params.id);
     res.status(200).json(result);
 }
 
 export const listBySearch = async (req, res, next) => {
-    console.log("ID I LISTBYCATEGORY: " + JSON.stringify(req.params.title))
     const result = await articleService.listBySearch(req.params.title);
     res.status(200).json(result);
 }
 
 export const create = async (req, res, next) => {
     try{
-        //req.body.user = req.user.id;
         const article = await articleService.createArticle(req.body);
         res.status(201).json(article);
     } catch (error) {
@@ -67,7 +56,7 @@ export const remove = catchAsyncErrors(async (req, res, next) => {
     let article = await articleService.getArticleById(req.params.id);
     if(!article) {
         return next(
-            new ErrorHandler(`Finner ikke artikkel med ID: ${req.params.id} i remove i controllers/article.js`)
+            new ErrorHandler(`Finner ikke artikkel med ID: ${req.params.id}`)
         );
     }
     article = await articleService.removeArticle(req.params.id);

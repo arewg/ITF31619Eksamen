@@ -8,11 +8,6 @@ import styled from 'styled-components';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 
-const StyledHeader = styled.header`
-  width: 100%;
-  float: center;
-`;
-
 const Logo = styled.h1`
   align-self: center;
   font-weight: bold;

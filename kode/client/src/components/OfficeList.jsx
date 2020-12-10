@@ -41,7 +41,6 @@ const OfficeList = ({ list }) => {
           key={listeobjekter.id}
           onClick={() => {
             handleClick(`${listeobjekter.id}`);
-            updateState(`${listeobjekter.navn}`);
           }}
         >
           <StyledListItem>{listeobjekter.navn}</StyledListItem>

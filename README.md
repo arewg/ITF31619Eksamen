@@ -1,6 +1,31 @@
 # ITF31619Eksamen
 Eksamensoppgave i ITF31619 Webapplikasjoner 2020 Høst
 
+# .env-fil client-mappe
+
+```
+BASE_URL=http://localhost:5000
+API_VERSION=/api
+```
+
+# .env-fil server-mappe
+
+```
+BASEURL=/api
+NODE_ENV=development
+PORT=5000
+DATABASE_LOCAL=mongodb://localhost:27017/webeksamen
+JWT_SECRET=hemmelig
+JWT_EXPIRES_TIME=7d
+COOKIE_EXPIRE_TIME=7d
+EMAIL_HOST=smtp.mailtrap.io
+EMAIL_PORT=2525
+EMAIL_USER=76c4623c6db5fa
+EMAIL_PASSWORD=509ca7e5ec2707
+EMAIL_FROM=noreply@contactUs.no
+EMAIL_FROM_NAME=contactUs
+```
+
 # Referering av kode
 
 ## Client

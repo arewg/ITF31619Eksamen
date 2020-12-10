@@ -37,7 +37,7 @@ app.use(cors({
  
 
   app.use(`${process.env.BASEURL}/category`, category);
-  app.use(`${process.env.BASEURL}/fagartikler`, article);
+  app.use(`${process.env.BASEURL}/article`, article);
   app.use(`${process.env.BASEURL}/users`, user);
   app.use(`${process.env.BASEURL}/`, image);
   app.use(`${process.env.BASEURL}/`, auth);
