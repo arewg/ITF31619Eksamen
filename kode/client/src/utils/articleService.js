@@ -1,7 +1,7 @@
 import http from './http';
 
 // SJEKKE OM DETTE BLIR RIKTIG URL
-const API_URL = '/fagartikler';
+const API_URL = '/article';
 
 // trenger vi alle her?
 

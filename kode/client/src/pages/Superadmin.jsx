@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import {NarrowWrapper} from '../styles/Styles.jsx';
+import { NarrowWrapper } from '../styles/Styles.jsx';
 import { list, listTopTen } from '../utils/articleService.js';
 import Header from '../components/Header.jsx';
+import { useAuthContext } from '../contexts/AuthProvider.jsx';
 
 const ReportWrapper = styled(NarrowWrapper)`
   width: 60%;
@@ -64,8 +65,10 @@ const Message = styled.p`
 `;
 
 const Superadmin = () => {
+  const { isLoggedIn, isSuperadmin } = useAuthContext();
   const [topTen, setTopTen] = useState();
   const [articles, setArticles] = useState();
+  const [error, setError] = useState();
 
   let i = 1;
 
@@ -92,38 +95,47 @@ const Superadmin = () => {
 
   return (
     <>
-      <Header title="Rapport for superadmin" />
-      <ReportWrapper>
-        <Label>Top 10</Label>
-        {topTen &&
-          topTen.map((article) => (
-            <ReportBox
-              style={{ backgroundColor: `#dbbd${i - 1}d` }}
-              key={article.id}
-            >
-              <TextBox>
-                <Name>
-                  #{i++} Tittel: {article.title}
-                </Name>
-                <Email>Kategori: {article.category.category}</Email>
-                <Message>Antall visninger: {article.view}</Message>
-              </TextBox>
-            </ReportBox>
-          ))}
-      </ReportWrapper>
-      <ReportWrapper>
-        <Label>Antall visninger for alle artikler</Label>
-        {articles &&
-          articles.map((article) => (
-            <ReportBox style={{ backgroundColor: `#e4e4e4` }} key={article.id}>
-              <TextBox>
-                <Name>Tittel: {article.title}</Name>
-                <Email>Kategori: {article.category.category}</Email>
-                <Message>Antall visninger: {article.view}</Message>
-              </TextBox>
-            </ReportBox>
-          ))}
-      </ReportWrapper>
+      {' '}
+      {isLoggedIn && isSuperadmin && (
+        <>
+          <Header title="Rapport for superadmin" />
+          <ReportWrapper>
+            <Label>Top 10</Label>
+            {topTen &&
+              topTen.map((article) => (
+                <ReportBox
+                  style={{ backgroundColor: `#dbbd${i - 1}d` }}
+                  key={article.id}
+                >
+                  <TextBox>
+                    <Name>
+                      #{i++} Tittel: {article.title}
+                    </Name>
+                    <Email>Kategori: {article.category.category}</Email>
+                    <Message>Antall visninger: {article.view}</Message>
+                  </TextBox>
+                </ReportBox>
+              ))}
+          </ReportWrapper>
+          <ReportWrapper>
+            <Label>Antall visninger for alle artikler</Label>
+            {articles &&
+              articles.map((article) => (
+                <ReportBox
+                  style={{ backgroundColor: `#e4e4e4` }}
+                  key={article.id}
+                >
+                  <TextBox>
+                    <Name>Tittel: {article.title}</Name>
+                    <Email>Kategori: {article.category.category}</Email>
+                    <Message>Antall visninger: {article.view}</Message>
+                  </TextBox>
+                </ReportBox>
+              ))}
+          </ReportWrapper>
+        </>
+      )}
+      {!isSuperadmin && (<h1>403 Forbidden</h1>)}
     </>
   );
 };
