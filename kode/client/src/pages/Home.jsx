@@ -25,6 +25,13 @@ const HomeCard = styled.article`
   font-weight: bold;
   font-size: 25px;
   cursor: pointer;
+&:hover{
+  background-color: #127275;
+  color: white;
+  transform: scale(1.01);
+  box-shadow: 1px 1px 10px black;
+}
+
   &:nth-child(3) {
     grid-area: 2 / 1 / 3 / 3;
   }

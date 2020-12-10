@@ -20,7 +20,9 @@ const GridCard = styled.div`
   &:hover {
     transform: scale(1.02);
     cursor: pointer;
-    background-color: #e7e7e7;
+    color: white;
+    background-color: #127275;
+    box-shadow: 1px 1px 10px black;
   }
 `;
 
