@@ -50,7 +50,7 @@ export class ApiFilters {
 
       pagination() {
         const page = parseInt(this.queryStr.page, 10) || 1;
-        const limit = parseInt(this.queryStr.limit, 10) || 5;
+        const limit = parseInt(this.queryStr.limit, 10) || 20;
         const skipResults = (page - 1) * limit;
         this.query = this.query.skip(skipResults).limit(limit);
         return this;

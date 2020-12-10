@@ -5,17 +5,17 @@ const API_URL = '/fagartikler';
 
 // trenger vi alle her?
 
-/* export const list = async () => {
-    try {
-      return await http.get(`${API_URL}`);
-    } catch (err) {
-      return err.response.data;
-    }
-  }; */
-
 export const list = async () => {
   try {
     return await http.get(`${API_URL}/`);
+  } catch (err) {
+    return err.response.data;
+  }
+};
+
+export const listTopTen = async () => {
+  try {
+    return await http.get(`${API_URL}/topten`);
   } catch (err) {
     return err.response.data;
   }
@@ -75,6 +75,7 @@ export const update = async (id, data) => {
 export default {
   create,
   list,
+  listTopTen,
   listByCategory,
   listBySearchWord,
   update,
