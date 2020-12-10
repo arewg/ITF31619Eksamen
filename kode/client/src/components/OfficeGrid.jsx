@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { SingleOfficeContext } from '../contexts/SingleOfficeProvider.jsx';
 
 const Grid = styled.div`
   display: grid;
