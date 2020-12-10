@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuthContext } from '../contexts/AuthProvider.jsx';
@@ -31,24 +31,22 @@ const Buttons = styled.button`
   border-radius: 8px;
   margin: 0px 0px 0px 10px;
   width: 125px;
-
   &:hover {
     background-color: #cac5c6;
     transform: scale(1.02);
   }
-
   &:first-child {
     background-color: #127275;
     color: white;
     margin-left: 0px;
     margin-right: 45%;
-
     &:hover {
       background-color: #179397;
       transform: scale(1.02);
     }
   }
 `;
+
 const DropdownFilter = styled.select`
   background-color: #cfcfcf;
   border-radius: 8px;
@@ -160,12 +158,12 @@ const ArticleView = () => {
   }, []);
 
   const handleNewArticleClick = (path) => {
-    history.replace('/fagartikler/' + path);
+    history.replace(`/fagartikler/${path}`);
   };
 
   const fetchArticlesByCategory = async (id) => {
-    console.log('ID I FETCHARTICLESBYCATEGORY: ' + id);
     const { data, error } = await listByCategory(id);
+    
     if (error) {
       setError(error);
     } else {
@@ -174,8 +172,8 @@ const ArticleView = () => {
   };
 
   const fetchArticlesBySearch = async (searchWord) => {
-    console.log('sewarchword I FETCHARTICLESBYCATEGORY: ' + searchWord);
     const { data, error } = await listBySearchWord(searchWord);
+
     if (error) {
       setError(error);
     } else {
@@ -185,6 +183,7 @@ const ArticleView = () => {
 
   const fetchData = async () => {
     const { data, error } = await list();
+
     if (error) {
       setError(error);
     } else {
@@ -194,7 +193,6 @@ const ArticleView = () => {
 
   const handleFilterByCategory = (e) => {
     const categoryId = e.target.value;
-    console.log(categoryId);
 
     if (e.target.value === 'alle') {
       fetchData();
@@ -215,7 +213,7 @@ const ArticleView = () => {
 
   return (
     <>
-      <Header title="Fagartikler"/>
+      <Header title="Fagartikler" />
       <ArticleWrapper>
         <ButtonBar>
           {isLoggedIn && isAdmin && (
@@ -236,7 +234,7 @@ const ArticleView = () => {
                 </option>
               ))}
           </DropdownFilter>
-          <Input placeholder=" Søk..." onChange={handleSeachByTitle}></Input>
+          <Input placeholder=" Søk..." onChange={handleSeachByTitle} />
         </ButtonBar>
         {(() => {
           switch (isLoggedIn) {

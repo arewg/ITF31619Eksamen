@@ -1,4 +1,7 @@
-// Leksjon 11
+/**
+ * NoMatch er direkte hentet fra 
+ * Marius Wallins' forelesning 'Leksjon 11'.
+ */
 import React from 'react';
 import { Heading } from '@chakra-ui/core';
 

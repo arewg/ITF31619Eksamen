@@ -1,4 +1,7 @@
-// Leksjon 13
+/**
+ * Denne konteksten er hentent fra Marius Wallins' 
+ * forelensing 'Leksjon 13' og blitt modifisert litt i etterkant.
+ */
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { getUserInfo } from '../utils/authService';
@@ -48,3 +51,4 @@ const AuthProvider = ({ children }) => {
 export const useAuthContext = () => useContext(AuthContext);
 
 export default AuthProvider;
+

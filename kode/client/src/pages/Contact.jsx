@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 import { useAuthContext } from '../contexts/AuthProvider.jsx';
+
 import { getUserInfo } from '../utils/authService.js';
 import { send, create } from '../utils/emailService';
+
 import Header from '../components/Header.jsx';
 
 const ContactForm = styled.section`
