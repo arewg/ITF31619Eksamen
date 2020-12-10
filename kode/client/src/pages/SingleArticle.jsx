@@ -2,6 +2,8 @@
  * Download-funksjonen på linje 82 er hentet fra Marius Wallins' forelesning 'Leksjon 13'.
  */
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { NarrowWrapper } from '../styles/Styles.jsx';
 import { useParams, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -32,17 +34,12 @@ const DivAuthorAndDate = styled.div`
   justify-content: space-between;
 `;
 
-const ContentsArticle = styled.div`
-  width: 60%;
-  margin: 0 auto;
-`;
-
 const DivButton = styled.div`
   display: flex;
 `;
 
 const DeleteButton = styled.button`
-  background-color: red;
+  background-color: #b30000;
   margin-top: 10px;
   margin-right: 10px;
   padding: 5px 15px 5px 15px;
@@ -57,7 +54,7 @@ const DeleteButton = styled.button`
 `;
 
 const EditButton = styled.button`
-  background-color: green;
+  background-color: #127275;
   margin-top: 10px;
   margin-right: 10px;
   padding: 5px 15px 5px 15px;
@@ -114,7 +111,7 @@ const SingleArticle = () => {
       {article && (
         <>
           <Header title={article.title} image={src} />
-          <ContentsArticle>
+          <NarrowWrapper>
             <DivAuthorAndDate>
               <DetailText>Av: {article.author}</DetailText>
               <DetailText>{article.date}</DetailText>
@@ -131,7 +128,7 @@ const SingleArticle = () => {
                 </EditButton>
               </DivButton>
             )}
-          </ContentsArticle>
+          </NarrowWrapper>
         </>
       )}
     </>

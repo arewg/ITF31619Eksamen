@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { NarrowWrapper } from '../styles/Styles.jsx';
 import moment from 'moment';
 
 import AddCategoryModal from '../components/AddCategoryModal.jsx';
@@ -10,10 +11,6 @@ import { useAuthContext } from '../contexts/AuthProvider.jsx';
 import ImageUpload from '../components/ImageUpload.jsx';
 import Header from '../components/Header.jsx';
 
-const ArticleWrapper = styled.div`
-  width: 60%;
-  margin: 0 auto;
-`;
 
 const ArticleForm = styled.form`
   width: 100%;
@@ -234,7 +231,7 @@ const NewArticle = () => {
   return (
     <>
       <Header title="Ny artikkel" />
-      <ArticleWrapper>
+      <NarrowWrapper>
         <ArticleForm>
           <Label>Tittel</Label>
           <Input autoFocus onChange={(e) => handleTitleChange(e)} />
@@ -329,7 +326,7 @@ const NewArticle = () => {
           </ErrorMessage>
         </DisableBar>
         <AddCategoryModal modal={modal} close={closeModal} />
-      </ArticleWrapper>
+      </NarrowWrapper>
     </>
   );
 };

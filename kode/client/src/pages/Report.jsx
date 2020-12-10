@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
+import { NarrowWrapper } from '../styles/Styles.jsx';
+import { useAuthContext } from '../contexts/AuthProvider.jsx';
 import { list } from '../utils/emailService.js';
 import Header from '../components/Header.jsx';
-
-const ReportWrapper = styled.div`
-  width: 60%;
-  margin: 0 auto;
-`;
 
 const ReportBox = styled.div`
   margin-top: 50px;
@@ -68,7 +64,7 @@ const Report = () => {
   return (
     <>
       <Header title="Henvendelser" />
-      <ReportWrapper>
+      <NarrowWrapper>
         {reports &&
           reports.map((report) => (
             <ReportBox key={report.id}>
@@ -79,7 +75,7 @@ const Report = () => {
               </TextBox>
             </ReportBox>
           ))}
-      </ReportWrapper>
+      </NarrowWrapper>
     </>
   );
 };

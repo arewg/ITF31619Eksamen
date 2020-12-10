@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
+
 const ArticleBox = styled.div`
   margin-top: 50px;
   display: grid;

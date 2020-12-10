@@ -31,10 +31,10 @@ const StyledNavbar = styled.div`
 
 const MainLayout = ({ children }) => (
   <Box>
-    <StyledNavbar>
-      <Logo>FG</Logo>
-      <Nav />
-    </StyledNavbar>
+        <StyledNavbar>
+            <Logo>LG</Logo>
+            <Nav />
+        </StyledNavbar>
     <Box w="100%" margin="0 auto">
       {children}
     </Box>

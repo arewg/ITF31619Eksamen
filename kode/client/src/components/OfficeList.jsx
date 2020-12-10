@@ -6,17 +6,21 @@ import styled from 'styled-components';
 const List = styled.ul``;
 
 const ListItem = styled.li`
-  width: 60%;
-  margin: 0 auto;
-  display: flex;
-  border-bottom: 1px solid black;
-  margin-bottom: 10px;
-  &:hover {
-    transform: scale(1.01);
+width:60%;
+margin: 0 auto;
+display:flex;
+border-bottom: 1px solid black;
+margin-bottom: 10px;
+
+&:hover{
+    transform: scale(1.02);
     cursor: pointer;
-    background-color: #e0e0e0;
-  }
-`;
+    color: white;
+    background-color: #127275;
+    box-shadow: 1px 1px 10px black;
+}
+`; 
+
 
 const StyledListItem = styled.a`
   margin-right: 19px;

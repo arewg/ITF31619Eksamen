@@ -12,8 +12,17 @@ export const get = async (req, res, next) => {
         return res.status(404).json({error: 'Article not found'});
     }
 
+    let viewCount = article;
+    console.log(JSON.stringify(viewCount));
+    viewCount.view ++;
+    article = await articleService.updateArticle(req.params.id, viewCount);
     res.status(200).json(article);
 };
+
+export const listTopTen = async (req, res, next) => {
+        const result = await articleService.listTopTen();
+        res.status(200).json(result)
+    }
 
 export const list = async (req, res, next) => {
     const result = await articleService.listArticlesPage(req.query);

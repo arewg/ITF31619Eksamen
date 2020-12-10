@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
+import { WideWrapper } from '../styles/Styles.jsx';
 import EmployeeData from '../data/EmployeeData.jsx';
 import Header from '../components/Header';
 
-const Wrapper = styled.div`
-  padding: 20px 20px;
-`;
 
 const Title = styled.h1`
   font-weight: bold;
@@ -81,7 +79,7 @@ const SingleOffice = () => {
         <PhoneBox>
           <Title>Kontakt oss på 69 99 00 00</Title>
         </PhoneBox>
-      </Wrapper>
+      </WideWrapper>
     </>
   );
 };

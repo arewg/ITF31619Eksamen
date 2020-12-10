@@ -76,49 +76,48 @@ const Nav = () => {
 
   return (
     <StyledNav>
-      <NavMenu>
-        <NavMenuItem>
-          <NavLink exact to="/" activeClassName="active">
-            Hjem
-          </NavLink>
-        </NavMenuItem>
-        <NavMenuItem>
-          <NavLink exact to="/kontorer" activeClassName="active">
-            Kontorer
-          </NavLink>
-        </NavMenuItem>
-        <NavMenuItem>
-          <NavLink exact to="/fagartikler" activeClassName="active">
-            Fagartikler
-          </NavLink>
-        </NavMenuItem>
-        <NavMenuItem>
-          <NavLink exact to="/kontakt" activeClassName="active">
-            Kontakt
-          </NavLink>
-        </NavMenuItem>
-        {!isLoggedIn && (
-          <NavMenuItem>
-            <NavLink exact to="/register" activeClassName="active">
-              Opprett bruker
-            </NavLink>
-          </NavMenuItem>
-        )}
-        {isLoggedIn && isAdmin && (
-          <NavMenuItem>
-            <NavLink exact to="/report" activeClassName="active">
-              Henvendelser
-            </NavLink>
-          </NavMenuItem>
-        )}
-        {(!isLoggedIn && (
-          <NavMenuItem>
-            <NavLink exact to="/login" activeClassName="active">
-              <NavLogInButton>Logg Inn</NavLogInButton>
-            </NavLink>
-          </NavMenuItem>
-        )) ||
-          (isLoggedIn && (
+        <NavMenu>
+            <NavMenuItem >
+                <NavLink exact to="/" activeClassName="active" onClick={() => updateTitle("Velkommen til FG Rørleggerservice AS")}>
+                    Hjem
+                </NavLink>
+            </NavMenuItem>
+            <NavMenuItem >
+                <NavLink exact to="/kontorer" activeClassName="active" onClick={() => updateTitle("Våre kontorer")}>
+                    Kontorer
+                </NavLink>
+            </NavMenuItem>
+            <NavMenuItem >
+                <NavLink exact to="/fagartikler" activeClassName="active" onClick={() => updateTitle("Fagartikler")}>
+                    Fagartikler
+                </NavLink>
+            </NavMenuItem>
+            <NavMenuItem >
+                <NavLink exact to="/kontakt" activeClassName="active" onClick={() => updateTitle("Kontakt oss")}>
+                    Kontakt
+                </NavLink>
+            </NavMenuItem>
+            {!isLoggedIn &&
+            <NavMenuItem>
+            <NavLink exact to="/register" activeClassName="active" onClick={() => updateTitle("Opprett bruker")}>
+                  Opprett bruker
+                </NavLink>
+            </NavMenuItem>}
+            {isLoggedIn && isAdmin &&
+            <NavMenuItem>
+              <NavLink exact to="/report" activeClassName="active" onClick={() => updateTitle("Rapport over hendvendelser")}>
+                Rapport
+              </NavLink>
+            </NavMenuItem>
+            }
+            {isLoggedIn && isSuperadmin &&
+            <NavMenuItem>
+              <NavLink exact to="/superadmin" activeClassName="active" onClick={() => updateTitle("Superadmin")}>
+                Superadmin
+              </NavLink>
+            </NavMenuItem>
+            }
+          {!isLoggedIn &&
             <NavMenuItem>
               <NavLink exact to="/" activeClassName="active">
                 <NavLogInButton

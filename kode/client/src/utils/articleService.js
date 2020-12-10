@@ -2,7 +2,6 @@ import http from './http';
 
 const API_URL = '/article';
 
-
 export const list = async () => {
   try {
     return await http.get(`${API_URL}/`);
@@ -11,7 +10,15 @@ export const list = async () => {
   }
 };
 
-export const listByCategory = async (id) => {
+export const listTopTen = async () => {
+  try {
+    return await http.get(`${API_URL}/topten`);
+  } catch (err) {
+    return err.response.data;
+  }
+};
+
+  export const listByCategory = async (id) => {
   try {
     return await http.get(`${API_URL}/category/${id}`);
   } catch (err) {
@@ -62,6 +69,7 @@ export const update = async (id, data) => {
 export default {
   create,
   list,
+  listTopTen,
   listByCategory,
   listBySearchWord,
   update,
