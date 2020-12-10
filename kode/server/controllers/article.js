@@ -9,19 +9,22 @@ import Article from '../models/article.js';
 
 export const get = async (req, res, next) => {
     console.log("Dette er req.params.iee for article" + JSON.stringify(req.params))
-    const article = await articleService.getArticleById(req.params.id);
+    let article = await articleService.getArticleById(req.params.id);
     if(!article) {
         return res.status(404).json({error: 'Article not found'});
     }
 
+    let viewCount = article;
+    console.log(JSON.stringify(viewCount));
+    viewCount.view ++;
+    article = await articleService.updateArticle(req.params.id, viewCount);
     res.status(200).json(article);
 };
 
-/*export const list = async (req, res, next) => {
-    console.log("HEI2");
-        const result = await articleService.listArticles();
+export const listTopTen = async (req, res, next) => {
+        const result = await articleService.listTopTen();
         res.status(200).json(result)
-    }*/
+    }
 
 export const list = async (req, res, next) => {
     console.log(JSON.stringify(req.query));
