@@ -144,7 +144,7 @@ const ArticleView = () => {
         setError(error);
       } else {
         console.log(data);
-        setArticles(data);
+        setArticles(data.data);
       }
     };
     const fetchCategories = async () => {

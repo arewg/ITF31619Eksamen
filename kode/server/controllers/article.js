@@ -8,19 +8,30 @@ import Article from '../models/article.js';
 */
 
 export const get = async (req, res, next) => {
-    console.log("Dette er req.params.id i get for article" + req.params.id)
-    const article = await articleService.getArticleById(req.params.id);
+    console.log("Dette er req.params.iee for article" + JSON.stringify(req.params))
+    let article = await articleService.getArticleById(req.params.id);
     if(!article) {
         return res.status(404).json({error: 'Article not found'});
     }
 
+    let viewCount = article;
+    console.log(JSON.stringify(viewCount));
+    viewCount.view ++;
+    article = await articleService.updateArticle(req.params.id, viewCount);
     res.status(200).json(article);
 };
 
-export const list = async (req, res, next) => {
-        const result = await articleService.listArticles();
+export const listTopTen = async (req, res, next) => {
+        const result = await articleService.listTopTen();
         res.status(200).json(result)
     }
+
+export const list = async (req, res, next) => {
+    console.log(JSON.stringify(req.query));
+    console.log("HEI");
+    const result = await articleService.listArticlesPage(req.query);
+    res.status(200).json(result)
+}
 
 export const listByCategory = async (req, res, next) => {
     console.log("ID I LISTBYCATEGORY: " + req.params.id)
@@ -45,12 +56,13 @@ export const create = async (req, res, next) => {
 };
 
 export const update = catchAsyncErrors(async (req, res, next) => {
-
-    let articleUpdate = req.body;
-    console.log("DETTE ER ARTICLEUPDATE I UPDATE CONTROLLER ARTICLE "+ JSON.stringify(articleUpdate))
+    const { id } = req.params
+    let articleToUpdate = req.body
+    console.log("DETTE ER ID SOM SKAL OPPDATERES I ARTICLE CONTROLLER" + JSON.stringify(articleToUpdate))
     let article = Article.findById(req.params.id)
 
-    article = await articleService.updateArticle(req.params.id, req.body);
+    
+    article = await articleService.updateArticle( id, articleToUpdate);
     res.status(200).json(article);
 });
 

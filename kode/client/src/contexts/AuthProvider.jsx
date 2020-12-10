@@ -33,6 +33,7 @@ const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         isLoading: loading,
+        isSuperadmin: user?.role === 'superadmin',
         isAdmin: user?.role === 'admin',
         isLoggedIn: !!user,
         isUser: user?.role === 'user',

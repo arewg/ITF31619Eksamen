@@ -42,6 +42,7 @@ const ArticleSchema = new Schema(
         image: {
             type: mongoose.Schema.ObjectId,
             ref: 'Image',
+            default: '',
         },
         classified: {
             type: String,
@@ -49,10 +50,15 @@ const ArticleSchema = new Schema(
                 values: ['åpen', 'hemmelig']
             },
             default: 'åpen',
+        },
+        view: {
+            type: Number,
+            default: 0,
         }
     },
     { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true} }
 );
+
 
 const Article = mongoose.model('Article', ArticleSchema);
 
