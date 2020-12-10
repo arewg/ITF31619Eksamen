@@ -1,4 +1,7 @@
-// Leksjon 11
+/**
+ * Denne layouten er hentet fra Marius Wallins' 
+ * forelesning 'Leksjon 11' og er blitt modifisert for dette prosjektet.
+ */
 import React from 'react';
 import { Box } from '@chakra-ui/core';
 import styled from 'styled-components';
