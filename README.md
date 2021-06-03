@@ -1,7 +1,7 @@
 # ITF31619Eksamen
 Eksamensoppgave i ITF31619 Webapplikasjoner 2020 Høst
 Gruppe: Webapplikasjoner 6
-Deltakere: Are Warlo Gulliksen og Elise Dalane Mellegård
+Deltakere: Are og Elise 
 
 ## Du trenger:
 1. MongoDB og MongoDB Compass som kommer med MongoDB. Lastes ned som vist i Marius sin forelesningsvideo eller ved å google "MongoDB Download" + operativsystemet ditt.
